@@ -1,0 +1,105 @@
+<div *ngIf="searchItemCode else productList" class="inventory-container">
+  <p-splitter>
+    <ng-template pTemplate>
+      <div class="inventory-sidebar">
+        <search-form [RefName]="'inventory'"/>
+        <p-table
+          [paginator]="true"
+          [rowsPerPageOptions]="[100, 250, 500]"
+          [rows]="100"
+          [showCurrentPageReport]="true"
+          [tableStyle]="{'min-width': '50rem'}"
+          [value]="DBirchItems"
+          class="product-sidetable"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 13%">Item Code</th>
+              <th style="width: 11%">Qty on Shelf</th>
+              <th style="width: 11%">Tagged Box #</th>
+              <th style="width: 13%">Qty for Tagged</th>
+              <th style="width: 11%">Loose Box #</th>
+              <th style="width: 12%">Qty for Loose</th>
+              <th style="width: 11%">Tags left</th>
+            </tr>
+          </ng-template>
+          <ng-template let-birchItem pTemplate="body">
+            <tr>
+              <td><a [queryParams]="{search: birchItem.itemcode}"
+                     [routerLink]="['/inventory']"
+
+              >{{ birchItem.itemcode }}</a></td>
+              <td>{{ birchItem.qtyShelf }}</td>
+              <td>{{ birchItem.taggedBoxNum }}</td>
+              <td>{{ birchItem.qtyTagged }}</td>
+              <td>{{ birchItem.looseBoxNum }}</td>
+              <td>{{ birchItem.qtyLoose }}</td>
+              <td>{{ birchItem.tagsLeft }}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="paginatorleft">
+            <p-button icon="pi pi-plus" styleClass="p-button-text" type="button"/>
+          </ng-template>
+          <ng-template pTemplate="paginatorright">
+            <p-button icon="pi pi-cloud" styleClass="p-button-text" type="button"/>
+          </ng-template>
+        </p-table>
+      </div>
+    </ng-template>
+    <ng-template pTemplate>
+      <div class="inventory-product-info">
+        <product [ItemCode]="searchItemCode"></product>
+      </div>
+    </ng-template>
+  </p-splitter>
+</div>
+
+<ng-template #productList>
+  <div class="inventory-sidebar">
+    <search-form [RefName]="'inventory'"/>
+    <p-table
+      [paginator]="true"
+      [rowsPerPageOptions]="[100, 250, 500]"
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      [tableStyle]="{'min-width': '50rem'}"
+      [value]="DBirchItems"
+      class="product-sidetable"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 13%">Item Code</th>
+          <th style="width: 11%">Qty on Shelf</th>
+          <th style="width: 11%">Tagged Box #</th>
+          <th style="width: 13%">Qty for Tagged</th>
+          <th style="width: 11%">Loose Box #</th>
+          <th style="width: 12%">Qty for Loose</th>
+          <th style="width: 11%">Tags left</th>
+        </tr>
+      </ng-template>
+      <ng-template let-birchItem pTemplate="body">
+        <tr>
+          <td>
+            <a
+              [routerLink]="['/inventory']"
+              [queryParams]="{search: birchItem.itemcode}">
+              {{ birchItem.itemcode }}
+            </a>
+          </td>
+          <td>{{ birchItem.qtyShelf }}</td>
+          <td>{{ birchItem.taggedBoxNum }}</td>
+          <td>{{ birchItem.qtyTagged }}</td>
+          <td>{{ birchItem.looseBoxNum }}</td>
+          <td>{{ birchItem.qtyLoose }}</td>
+          <td>{{ birchItem.tagsLeft }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="paginatorleft">
+        <p-button icon="pi pi-plus" styleClass="p-button-text" type="button"/>
+      </ng-template>
+      <ng-template pTemplate="paginatorright">
+        <p-button icon="pi pi-cloud" styleClass="p-button-text" type="button"/>
+      </ng-template>
+    </p-table>
+  </div>
+</ng-template>

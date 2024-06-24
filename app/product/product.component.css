@@ -1,0 +1,22 @@
+.product-page-container {
+  width: 100%;
+}
+.product-info-wrapper {
+  width: 100%;
+}
+.form-control {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  margin: 1.5rem 0;
+  align-items: center;
+}
+nav {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+nav button {
+  margin-left: 1rem;
+}
+

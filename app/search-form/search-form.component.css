@@ -1,0 +1,29 @@
+@media (max-width: 500px) {
+  form {
+    width: 100%;
+  }
+}
+
+@media (501px <= width <= 600px) {
+  form {
+    width: 66%;
+  }
+}
+
+@media ( 600px <= width <= 1024px) {
+  form {
+    width: 40%;
+  }
+}
+
+@media ( width > 1024px) {
+  form {
+    width: 30%;
+  }
+}
+
+.form-control {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  margin: 1rem 0;
+}

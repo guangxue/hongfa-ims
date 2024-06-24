@@ -1,0 +1,17 @@
+<header>
+  <a href="/"><img alt="" height="192" ngSrc="/hongfa.png" width="192"></a>
+  <h1>Hongfa Inventory Management System</h1>
+</header>
+
+<main>
+  <p-menubar [model]="items"/>
+  <router-outlet></router-outlet>
+</main>
+
+
+<footer *ngIf="isDevMode else isProdMode"></footer>
+<ng-template #isProdMode>
+  <footer>
+    2024 &copy; Hongfa International AUSTRALIA
+  </footer>
+</ng-template>
