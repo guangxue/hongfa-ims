@@ -1,7 +1,6 @@
-<h1>Import Data</h1>
-
 <section>
-  <form>
+  <h1>Import Data - Product</h1>
+  <div class="form-group">
     <div class="form-control">
       <label for="data-type">Data Type</label>
       <p-dropdown
@@ -19,8 +18,10 @@
              (change)="onFileChange($event)"
       >
     </div>
-    <button (click)="onNextButtonClicked()">Next</button>
-  </form>
+    <div class="form-control">
+      <button pButton (click)="showTableButtonClicked()">Show Data Table</button>
+    </div>
+  </div>
   <div *ngIf="dataImported">
     <div class="mb-3">
       <p-button
@@ -41,28 +42,28 @@
         [disabled]="isLastPage()"
         styleClass="p-button-text" />
     </div>
-    <p-table [value]="parsedDataFile"
-             responsiveLayout="stack"
+    <p-table [value]="dataFileRows"
              [breakpoint]="'960px'"
              [paginator]="true"
-             [rows]="50"
+             [rows]="20"
              [first]="first"
+             responsiveLayout="stack"
       styleClass="p-datatable-striped"
     >
       <ng-template pTemplate="header">
         <tr>
-          <th style="width:1%">{{parsedDataFile[0].split(',')[0]}}</th>
-          <th style="width:1%">{{parsedDataFile[0].split(',')[2]}}</th>
-          <th style="width:1%">{{parsedDataFile[0].split(',')[8]}}</th>
-          <th style="width:3%">{{parsedDataFile[0].split(',')[9]}}</th>
+          <th style="width:1%">{{dataFileTHeads[0]}}</th>
+          <th style="width:1%">{{dataFileTHeads[2]}}</th>
+          <th style="width:1%">{{dataFileTHeads[8]}}</th>
+          <th style="width:1%">{{dataFileTHeads[9]}}</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-tablerows>
+      <ng-template pTemplate="body" let-tablerow>
         <tr>
-          <td>{{tablerows.split(',')[0]}}</td>
-          <td>{{tablerows.split(',')[2]}}</td>
-          <td>{{tablerows.split(',')[8]}}</td>
-          <td>{{tablerows.split(',')[9]}}</td>
+          <td>{{tablerow.split(',')[0]}}</td>
+          <td>{{tablerow.split(',')[2]}}</td>
+          <td>{{tablerow.split(',')[8]}}</td>
+          <td>{{tablerow.split(',')[9]}}</td>
         </tr>
       </ng-template>
     </p-table>

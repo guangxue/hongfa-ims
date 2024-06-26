@@ -3,7 +3,7 @@ import { DropdownModule } from "primeng/dropdown";
 import { FormsModule } from "@angular/forms";
 import { NgForOf, NgIf } from "@angular/common";
 import { TableModule } from "primeng/table";
-import { Button } from "primeng/button";
+import { Button, ButtonDirective } from "primeng/button";
 
 @Component({
   selector: 'import-data',
@@ -14,7 +14,8 @@ import { Button } from "primeng/button";
     NgIf,
     TableModule,
     NgForOf,
-    Button
+    Button,
+    ButtonDirective
   ],
   templateUrl: './import-data.component.html',
   styleUrl: './import-data.component.css'
@@ -26,35 +27,39 @@ export class ImportDataComponent {
     'Purchase Order', 'Sales Order', 'Inventory', 'Product'
   ];
   dataImported: boolean = false;
-  parsedDataFile: string[] = [];
-  tablerows: string[] = [];
+  dataFileRows: string[] = [];
+  dataFileTHeads: string[] = [];
   first:number = 0;
-  rows: number = 10;
+  rows: number = 20;
 
-  next() { this.first + this.rows }
-  prev() { this.first - this.rows }
+  next() { this.first += this.rows }
+  prev() { this.first -= this.rows }
   reset() { this.first = 0 }
 
   isFirstPage():boolean {
-    return this.parsedDataFile ? this.first === 0 : true;
+    return this.dataFileRows ? this.first === 0 : true;
   }
-  isLastPage() {}
+  isLastPage():boolean {
+    return this.dataFileRows ? this.first === this.dataFileRows.length - this.rows : true;
+  }
 
   onFileChange(e: Event) {
     const target:HTMLInputElement = <HTMLInputElement>e.currentTarget;
     const inputfile = target.files?.item(0) as Blob;
     const reader = new FileReader();
     reader.readAsText(inputfile)
-    reader.onload = (e) => {
-      const data = reader.result as string;
-      this.parsedDataFile = data.split('\r\n');
+    reader.onload = () => {
+      const dataRead = reader.result as string;
+      const datalines: string[] = dataRead.split('\r\n');
+      this.dataFileRows = datalines.slice(1);
+      this.dataFileTHeads = datalines[0].split(',');
     }
   }
-  onNextButtonClicked() {
-    if(this.parsedDataFile.length > 0) {
+
+  showTableButtonClicked() {
+    if(this.dataFileRows.length > 0) {
+      console.log("total lines are ", this.dataFileRows.length-1)
       this.dataImported = true;
-      this.tablerows = this.parsedDataFile.slice(1)
-      console.log(this.parsedDataFile.slice(1))
     } else {
       this.dataImported = false;
     }
