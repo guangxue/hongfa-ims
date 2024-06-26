@@ -10,12 +10,17 @@ import { SettingsComponent } from "./settings/settings.component";
 import { InventoryComponent } from "./inventory/inventory.component";
 import { ProductComponent } from "./product/product.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
+import { ImportDataComponent } from "./import-data/import-data.component";
 
 export const routes: Routes = [
   {
     path: '',
     component: HomePageComponent,
     pathMatch: "full",
+  },
+  {
+    path: 'import-data',
+    component: ImportDataComponent,
   },
   {
     path: 'inventory',

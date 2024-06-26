@@ -15,22 +15,22 @@ export class RouterLinkService {
         {
           icon: PrimeIcons.FILE_IMPORT,
           label: "Import Data",
-          routerLink: 'import'
+          routerLink: 'import-data'
         },
         {
           icon: PrimeIcons.FILE_EXPORT,
           label: 'Export Data',
-          routerLink: 'export'
+          routerLink: 'export-data'
         },
         {
           icon: PrimeIcons.DATABASE,
           label: 'Backup Data',
-          routerLink: 'backups'
+          routerLink: 'backup-data'
         },
         {
           icon: PrimeIcons.UNDO,
           label: 'Restore Data',
-          routerLink: 'restore'
+          routerLink: 'restore-data'
         },
       ]
     },
