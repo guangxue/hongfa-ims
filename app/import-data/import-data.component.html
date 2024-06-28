@@ -11,18 +11,26 @@
       />
     </div>
     <div class="form-control">
-      <label for="file-location">File Location:</label>
-      <input type="file"
-             id="file-location"
-             name="datafile"
+      <label for="file-location">File Location</label>
+      <input type="file" id="file-location" name="file"
              (change)="onFileChange($event)"
-      >
+      />
+    </div>
+    <div class="form-control">
+      <label>File Data</label>
+      <div *ngIf="targetFile.found">
+        <p>File name: {{targetFile.name}}</p>
+        <p>Total lines: {{targetFile.totalRows}}</p>
+      </div>
+      <div *ngIf="targetFile.err">
+        <p-messages [(value)]="targetFile.errMsg" styleClass="file-err-msg" />
+      </div>
     </div>
     <div class="form-control">
       <button pButton (click)="showTableButtonClicked()">Show Data Table</button>
     </div>
   </div>
-  <div *ngIf="dataImported">
+  <div *ngIf="targetFile.showDataTable">
     <div class="mb-3">
       <p-button
         type="button"
@@ -42,7 +50,7 @@
         [disabled]="isLastPage()"
         styleClass="p-button-text" />
     </div>
-    <p-table [value]="dataFileRows"
+    <p-table [value]="targetFile.dataFileRows"
              [breakpoint]="'960px'"
              [paginator]="true"
              [rows]="20"
@@ -52,10 +60,10 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th style="width:1%">{{dataFileTHeads[0]}}</th>
-          <th style="width:1%">{{dataFileTHeads[2]}}</th>
-          <th style="width:1%">{{dataFileTHeads[8]}}</th>
-          <th style="width:1%">{{dataFileTHeads[9]}}</th>
+          <th style="width:1%">{{targetFile.dataFileTHeads[0]}}</th>
+          <th style="width:1%">{{targetFile.dataFileTHeads[2]}}</th>
+          <th style="width:1%">{{targetFile.dataFileTHeads[8]}}</th>
+          <th style="width:1%">{{targetFile.dataFileTHeads[9]}}</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-tablerow>

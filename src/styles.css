@@ -83,3 +83,7 @@ html {
   border: 1px solid #6366F1;
 }
 
+.file-err-msg .p-message .p-message-wrapper {
+  padding: 0.35rem 0.55rem;
+}
+
