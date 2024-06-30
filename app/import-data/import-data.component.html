@@ -1,7 +1,7 @@
 <section>
   <h1>Import Data - Product</h1>
   <div class="form-group">
-    <form #importForm="ngForm" (ngSubmit)="importFormSubmitted(importForm)">
+    <form #importForm="ngForm" >
       <div class="form-control">
         <label for="data-type">Data Type</label>
         <p-dropdown
@@ -57,6 +57,7 @@
           styleClass="p-button-text" />
           <button
             *ngIf="targetFile.totalRows"
+            (click)="importFormSubmitted(importForm)"
             pButton
             severity="info"
             class="import-btn"
@@ -86,7 +87,6 @@
             <td>{{tablerow.split(',')[8]}}</td>
             <td>{{tablerow.split(',')[9]}}</td>
           </tr>
-
         </ng-template>
       </p-table>
       </div>
