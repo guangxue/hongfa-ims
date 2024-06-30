@@ -2,7 +2,7 @@ import { Component, inject, isDevMode } from '@angular/core';
 import { NgIf, NgOptimizedImage } from "@angular/common";
 import { RouterOutlet } from "@angular/router";
 import { MenubarModule } from "primeng/menubar";
-import { RouterLinkService } from "./router-link.service";
+import { RouterLinkService } from "./service/router-link.service";
 import { MenuItem } from "primeng/api";
 
 @Component({

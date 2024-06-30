@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DropdownModule } from "primeng/dropdown";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, NgForm } from "@angular/forms";
 import { NgForOf, NgIf } from "@angular/common";
 import { TableModule } from "primeng/table";
 import { Button, ButtonDirective } from "primeng/button";
-import { TargetFileData } from "../target-file-data";
+import { TargetFileData } from "../interface/target-file-data";
 import { MessagesModule } from "primeng/messages";
+import { DataTableService } from "../service/data-table.service";
+import { TooltipModule } from 'primeng/tooltip';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
 @Component({
   selector: 'import-data',
@@ -19,15 +22,16 @@ import { MessagesModule } from "primeng/messages";
     Button,
     ButtonDirective,
     MessagesModule,
+    TooltipModule,
+    ConfirmPopupModule,
   ],
   templateUrl: './import-data.component.html',
   styleUrl: './import-data.component.css'
 })
 
-
 export class ImportDataComponent {
-  targetFile: TargetFileData = {
-    name: '',
+  dataTable = inject(DataTableService);
+  targetFile: TargetFileData = { name: '',
     totalRows: 0,
     found: false,
     err: false,
@@ -38,29 +42,25 @@ export class ImportDataComponent {
   };
   selectedDataType: string = "Sales Order";
   dataTypeOptions: string[] = ['Purchase Order', 'Sales Order', 'Inventory', 'Product'];
-  dataImported: boolean = false;
-  first:number = 0;
-  rows: number = 20;
 
-  next() { this.first += this.rows }
-  prev() { this.first -= this.rows }
-  reset() { this.first = 0 }
-  isFirstPage():boolean {
-    return this.targetFile.dataFileRows ? this.first === 0 : true;
+  constructor() {
+    this.dataTable.rows = 10;
   }
-  isLastPage():boolean {
-    return this.targetFile.dataFileRows ? this.first === this.targetFile.dataFileRows.length - this.rows : true;
-  }
+
   onFileChange(e: Event) {
-    const target = <HTMLInputElement>e.currentTarget;
-    console.log(target);
+    // reset all data when input file changed
+    this.targetFile.showDataTable = false;
+    this.targetFile.errMsg = [];
+
+    const target: HTMLInputElement = <HTMLInputElement>e.currentTarget;
     if(!("files" in target)) { return; }
 
+    // found input file
     const inputfile: any = target.files?.item(0);
     const fsuffix: string = inputfile.name.split(".")[1];
-    console.log(fsuffix);
-
     this.targetFile.name = inputfile.name;
+
+    // file is not accpeted if file extension is not CSV format.
     if(fsuffix.toLowerCase() !== 'csv') {
       this.targetFile.found = false;
       this.targetFile.err = true;
@@ -80,11 +80,11 @@ export class ImportDataComponent {
     }
   }
 
-  showTableButtonClicked() {
-    if(this.targetFile.dataFileRows.length > 0) {
-      this.targetFile.showDataTable = true;
-    } else {
-      this.targetFile.showDataTable = false;
-    }
+  toggleDataTable():void {
+    this.targetFile.showDataTable = !this.targetFile.showDataTable;
+  }
+
+  importFormSubmitted(form: NgForm) {
+    console.log("submitted value: ", form.value)
   }
 }

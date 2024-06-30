@@ -87,3 +87,7 @@ html {
   padding: 0.35rem 0.55rem;
 }
 
+.p-message .p-icon {
+  width: 1rem;
+  height: 1rem;
+}

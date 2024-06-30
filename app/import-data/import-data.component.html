@@ -1,79 +1,96 @@
 <section>
   <h1>Import Data - Product</h1>
   <div class="form-group">
-    <div class="form-control">
-      <label for="data-type">Data Type</label>
-      <p-dropdown
-        id="data-type"
-        [options]="dataTypeOptions"
-        [(ngModel)]="selectedDataType"
-        name="importDataType"
-      />
-    </div>
-    <div class="form-control">
-      <label for="file-location">File Location</label>
-      <input type="file" id="file-location" name="file"
-             (change)="onFileChange($event)"
-      />
-    </div>
-    <div class="form-control">
-      <label>File Data</label>
-      <div *ngIf="targetFile.found">
-        <p>File name: {{targetFile.name}}</p>
-        <p>Total lines: {{targetFile.totalRows}}</p>
+    <form #importForm="ngForm" (ngSubmit)="importFormSubmitted(importForm)">
+      <div class="form-control">
+        <label for="data-type">Data Type</label>
+        <p-dropdown
+          id="data-type"
+          [options]="dataTypeOptions"
+          [(ngModel)]="selectedDataType"
+          name="importDataType"
+        />
       </div>
-      <div *ngIf="targetFile.err">
-        <p-messages [(value)]="targetFile.errMsg" styleClass="file-err-msg" />
+      <div class="form-control">
+        <label for="file-location">File Location</label>
+        <input type="file" id="file-location" name="file"
+               (change)="onFileChange($event)"
+        />
       </div>
-    </div>
-    <div class="form-control">
-      <button pButton (click)="showTableButtonClicked()">Show Data Table</button>
-    </div>
+      <div class="form-control">
+        <label>File Data</label>
+        <div *ngIf="targetFile.found">
+          <p>File name: {{targetFile.name}}</p>
+          <p>Total lines: {{targetFile.totalRows}}</p>
+        </div>
+        <div *ngIf="targetFile.err">
+          <p-messages class="err-msg" [(value)]="targetFile.errMsg" styleClass="file-err-msg" />
+        </div>
+      </div>
+      <div class="form-control">
+        <button
+          pButton
+          severity="secondary"
+          class="dt-info-btn"
+          (click)="toggleDataTable()">
+          Show Data Table
+        </button>
+      </div>
+      <div *ngIf="targetFile.showDataTable">
+        <div class="dt-btns">
+          <p-button
+            type="button"
+            icon="pi pi-chevron-left"
+            (click)="dataTable.prev()"
+            [disabled]="dataTable.isFirstPage(targetFile.totalRows)"
+            styleClass="p-button-text" />
+          <p-button
+            type="button"
+            icon="pi pi-refresh"
+            (click)="dataTable.reset()"
+            styleClass="p-button-text" />
+          <p-button
+          type="button"
+          icon="pi pi-chevron-right"
+          (click)="dataTable.next()"
+          [disabled]="dataTable.isLastPage(targetFile.totalRows)"
+          styleClass="p-button-text" />
+          <button
+            *ngIf="targetFile.totalRows"
+            pButton
+            severity="info"
+            class="import-btn"
+            pTooltip="Confirm to proceed">
+            Import
+          </button>
+        </div>
+        <p-table [value]="targetFile.dataFileRows"
+               [breakpoint]="'960px'"
+               [paginator]="true"
+               [rows]="dataTable.rows"
+               [first]="dataTable.first"
+               responsiveLayout="stack"
+        styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width:1%">{{targetFile.dataFileTHeads[0]}}</th>
+            <th style="width:1%">{{targetFile.dataFileTHeads[2]}}</th>
+            <th style="width:1%">{{targetFile.dataFileTHeads[8]}}</th>
+            <th style="width:1%">{{targetFile.dataFileTHeads[9]}}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-tablerow>
+          <tr>
+            <td>{{tablerow.split(',')[0]}}</td>
+            <td>{{tablerow.split(',')[2]}}</td>
+            <td>{{tablerow.split(',')[8]}}</td>
+            <td>{{tablerow.split(',')[9]}}</td>
+          </tr>
+
+        </ng-template>
+      </p-table>
+      </div>
+    </form>
   </div>
-  <div *ngIf="targetFile.showDataTable">
-    <div class="mb-3">
-      <p-button
-        type="button"
-        icon="pi pi-chevron-left"
-        (click)="prev()"
-        [disabled]="isFirstPage()"
-        styleClass="p-button-text" />
-      <p-button
-        type="button"
-        icon="pi pi-refresh"
-        (click)="reset()"
-        styleClass="p-button-text" />
-      <p-button
-        type="button"
-        icon="pi pi-chevron-right"
-        (click)="next()"
-        [disabled]="isLastPage()"
-        styleClass="p-button-text" />
-    </div>
-    <p-table [value]="targetFile.dataFileRows"
-             [breakpoint]="'960px'"
-             [paginator]="true"
-             [rows]="20"
-             [first]="first"
-             responsiveLayout="stack"
-      styleClass="p-datatable-striped"
-    >
-      <ng-template pTemplate="header">
-        <tr>
-          <th style="width:1%">{{targetFile.dataFileTHeads[0]}}</th>
-          <th style="width:1%">{{targetFile.dataFileTHeads[2]}}</th>
-          <th style="width:1%">{{targetFile.dataFileTHeads[8]}}</th>
-          <th style="width:1%">{{targetFile.dataFileTHeads[9]}}</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-tablerow>
-        <tr>
-          <td>{{tablerow.split(',')[0]}}</td>
-          <td>{{tablerow.split(',')[2]}}</td>
-          <td>{{tablerow.split(',')[8]}}</td>
-          <td>{{tablerow.split(',')[9]}}</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
+
 </section>

@@ -1,7 +1,7 @@
 import { AfterContentInit, Component, inject, Input, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule } from "@angular/forms";
 import { NgClass, NgTemplateOutlet } from "@angular/common";
-import { ItemCodeListService } from "../item-code-list.service";
+import { ItemCodeListService } from "../service/item-code-list.service";
 import { InputTextModule } from "primeng/inputtext";
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from "primeng/autocomplete";
 import { TreeSelectModule } from 'primeng/treeselect';

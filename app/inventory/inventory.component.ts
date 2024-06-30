@@ -5,7 +5,7 @@ import { ButtonModule } from "primeng/button";
 import { PrimeTemplate } from "primeng/api";
 import { ActivatedRoute, RouterLink, RouterOutlet } from "@angular/router";
 import { TableModule } from "primeng/table";
-import { DatabaseBirchItems } from "../database-birch-items";
+import { DatabaseBirchItems } from "../interface/database-birch-items";
 import { SplitterModule } from "primeng/splitter";
 import { ProductComponent } from "../product/product.component";
 

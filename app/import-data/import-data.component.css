@@ -35,3 +35,22 @@ input[type="file"]::file-selector-button:hover {
 input[type="file"]::file-selector-button:active {
   background-color: #e5e7eb;
 }
+
+.dt-info-btn {
+  color: #475569;
+  background: #f1f5f9;
+  border: 1px solid #f1f5f9;
+}
+.dt-info-btn:hover {
+  background-color: #e2e8f0;
+  color: #334155;
+  border-color: #e2e8f0;
+}
+
+.dt-btns {
+  display: flex;
+  margin-bottom: 1rem;
+}
+.import-btn {
+  margin-left: auto;
+}
