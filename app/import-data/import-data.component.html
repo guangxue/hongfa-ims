@@ -13,16 +13,11 @@
       </div>
       <div class="form-control">
         <label for="file-location">File Location</label>
-        <input type="file" id="file-location" name="file"
-               (change)="onFileChange($event)"
-        />
+        <input type="file" id="file-location" name="file" (change)="onFileChange($event)" />
       </div>
       <div class="form-control">
-        <label>File Data</label>
-        <div *ngIf="targetFile.found">
-          <p>File name: {{targetFile.name}}</p>
-          <p>Total lines: {{targetFile.totalRows}}</p>
-        </div>
+        <label>File Name</label>
+        <div *ngIf="targetFile.found">{{targetFile.name}}</div>
         <div *ngIf="targetFile.err">
           <p-messages class="err-msg" [(value)]="targetFile.errMsg" styleClass="file-err-msg" />
         </div>
@@ -65,7 +60,7 @@
             Import
           </button>
         </div>
-        <p-table [value]="targetFile.dataFileRows"
+        <p-table #dt2 [value]="targetFile.dataRows"
                [breakpoint]="'960px'"
                [paginator]="true"
                [rows]="dataTable.rows"
@@ -74,10 +69,10 @@
         styleClass="p-datatable-striped">
         <ng-template pTemplate="header">
           <tr>
-            <th style="width:1%">{{targetFile.dataFileTHeads[0]}}</th>
-            <th style="width:1%">{{targetFile.dataFileTHeads[2]}}</th>
-            <th style="width:1%">{{targetFile.dataFileTHeads[8]}}</th>
-            <th style="width:1%">{{targetFile.dataFileTHeads[9]}}</th>
+            <th style="width:1%">{{targetFile.dataHeader[0]}}</th>
+            <th style="width:1%">{{targetFile.dataHeader[2]}}</th>
+            <th style="width:1%">{{targetFile.dataHeader[8]}}</th>
+            <th style="width:1%">{{targetFile.dataHeader[9]}}</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-tablerow>
@@ -87,6 +82,12 @@
             <td>{{tablerow.split(',')[8]}}</td>
             <td>{{tablerow.split(',')[9]}}</td>
           </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <input type="hidden" [(ngModel)]="targetFile.data" name="data" />
+        </ng-template>
+        <ng-template pTemplate="summary">
+          Total lines: <span>{{targetFile.totalRows}}</span>
         </ng-template>
       </p-table>
       </div>

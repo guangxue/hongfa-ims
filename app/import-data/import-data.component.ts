@@ -9,6 +9,8 @@ import { MessagesModule } from "primeng/messages";
 import { DataTableService } from "../service/data-table.service";
 import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { IconFieldModule } from "primeng/iconfield";
+import { InputIconModule } from "primeng/inputicon";
 
 @Component({
   selector: 'import-data',
@@ -24,6 +26,8 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
     MessagesModule,
     TooltipModule,
     ConfirmPopupModule,
+    IconFieldModule,
+    InputIconModule,
   ],
   templateUrl: './import-data.component.html',
   styleUrl: './import-data.component.css'
@@ -37,14 +41,15 @@ export class ImportDataComponent {
     err: false,
     errMsg: [],
     showDataTable: false,
-    dataFileRows: [],
-    dataFileTHeads: [],
+    data: [],
+    dataRows: [],
+    dataHeader: [],
   };
   selectedDataType: string = "Sales Order";
   dataTypeOptions: string[] = ['Purchase Order', 'Sales Order', 'Inventory', 'Product'];
 
   constructor() {
-    this.dataTable.rows = 10;
+    this.dataTable.rows = 6;
   }
 
   onFileChange(e: Event) {
@@ -72,11 +77,12 @@ export class ImportDataComponent {
     reader.readAsText(inputfile)
     reader.onload = () => {
       const dataRead = reader.result as string;
-      const datalines: string[] = dataRead.split('\r\n');
-      this.targetFile.dataFileRows = datalines.slice(1);
-      this.targetFile.totalRows = this.targetFile.dataFileRows.length-1;
+      const datalines: string[] = dataRead.split('\r\n').filter(x => x !== '');
+      this.targetFile.data = datalines;
+      this.targetFile.dataRows = datalines.slice(1);
+      this.targetFile.dataHeader = datalines[0].split(',');
+      this.targetFile.totalRows = datalines.length-1;
       this.targetFile.found = true;
-      this.targetFile.dataFileTHeads = datalines[0].split(',');
     }
   }
 
@@ -87,4 +93,6 @@ export class ImportDataComponent {
   importFormSubmitted(form: NgForm) {
     console.log("submitted value: ", form.value)
   }
+
+  protected readonly HTMLInputElement = HTMLInputElement;
 }
