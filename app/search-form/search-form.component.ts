@@ -60,11 +60,17 @@ export class SearchFormComponent implements AfterContentInit {
     {label: 'INV3', data: 'INV3'},
     {label: 'PO5', data: 'PO5'},
   ];
-  productStatus: SelectItem[] = [
+  status: SelectItem[] = [
     {label: 'Active', value: 'active'},
     {label: 'Inactive', value: 'inactive'},
     {label: 'Show All', value: 'showAll'},
   ]
+
+  sales = {
+    orderNum: '',
+    status: '',
+    customer: '',
+  }
 
   constructor() {
     this.productItemCodeList = this.productService.getItemCodeArrayList();
@@ -88,6 +94,7 @@ export class SearchFormComponent implements AfterContentInit {
 
   whenSubmitted(searchForm: NgForm) {
     this.loading = true;
+    console.log(searchForm.value)
 
     setTimeout(() => {
       this.loading = false
