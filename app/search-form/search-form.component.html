@@ -68,6 +68,18 @@
 </ng-template>
 
 <ng-template #purchaseSeach>
-  <h2>purchase order search form</h2>
+  <div class="form-control">
+    <label for="porderno">Order #</label>
+    <input id="porderno" pInputText type="text" />
+  </div>
+  <div class="form-control">
+    <label for="porder-status">Status</label>
+    <p-selectButton
+      [(ngModel)]="sales.status"
+      [options]="status"
+      id="porder-status"
+      styleClass="product-status-selbtns"
+    />
+  </div>
 </ng-template>
 
