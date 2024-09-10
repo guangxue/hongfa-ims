@@ -65,35 +65,11 @@ export class RouterLinkService {
       label: 'Sales',
       icon: PrimeIcons.BOOK,
       routerLink: 'sales',
-      items: [
-        {
-          icon: PrimeIcons.LIST,
-          label: 'Sales Order List',
-          routerLink: 'sales'
-        },
-        {
-          icon: PrimeIcons.PLUS,
-          label: 'New Sales Order',
-          routerLink: 'sales/new'
-        }
-      ]
     },
     {
-      label: 'Purchasing',
+      label: 'Purchases',
       icon: PrimeIcons.RECEIPT,
       routerLink: 'purchases',
-      items: [
-        {
-          icon: PrimeIcons.LIST,
-          label: 'Purchase Order List',
-          routerLink: 'purchases'
-        },
-        {
-          icon: PrimeIcons.PLUS,
-          label: 'New Purchase Order',
-          routerLink: 'purchases/new'
-        },
-      ]
     },
     {
       label: 'Settings',
