@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { NgIf } from "@angular/common";
 import { SearchFormComponent } from "../search-form/search-form.component";
 import { ButtonModule } from "primeng/button";
@@ -10,7 +10,7 @@ import { SplitterModule } from "primeng/splitter";
 import { ProductComponent } from "../product/product.component";
 
 @Component({
-  selector: 'inventory',
+  selector: 'stock',
   standalone: true,
   imports: [
     SearchFormComponent,
@@ -23,10 +23,10 @@ import { ProductComponent } from "../product/product.component";
     ProductComponent,
     NgIf,
   ],
-  templateUrl: './inventory.component.html',
-  styleUrl: './inventory.component.css'
+  templateUrl: './stock.component.html',
+  styleUrl: './stock.component.css'
 })
-export class InventoryComponent implements OnInit {
+export class StockComponent implements OnInit {
 
   route: ActivatedRoute = inject(ActivatedRoute);
   searchItemCode: string = '';

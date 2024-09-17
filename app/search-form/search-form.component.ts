@@ -85,7 +85,7 @@ export class SearchFormComponent implements AfterContentInit {
 
   ngAfterContentInit() {
     Promise.resolve(null).then(() => {
-      this.tmplRefs.set('inventory', this.productSearchForm);
+      this.tmplRefs.set('stock', this.productSearchForm);
       this.tmplRefs.set('sales', this.salesOrderSearchForm);
       this.tmplRefs.set('purchases', this.purchaseOrderSeachForm);
       this.tmplRefName = this.tmplRefs.get(this.RefName) || null

@@ -5,12 +5,13 @@ import { PurchasesComponent } from './purchases/purchases.component';
 import { CustomersComponent } from './customers/customers.component';
 import { VendorsComponent } from './vendors/vendors.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { MessagesComponent } from "./messages/messages.component";
 import { SettingsComponent } from "./settings/settings.component";
-import { InventoryComponent } from "./inventory/inventory.component";
-import { ProductComponent } from "./product/product.component";
+import { StockComponent } from "./stock/stock.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { ImportDataComponent } from "./import-data/import-data.component";
+import {PurchasesOrderComponent} from "./purchases-order/purchases-order.component";
+import {StockItemComponent} from "./stock-item/stock-item.component";
+import {StockBlankComponent} from "./stock-blank/stock-blank.component";
 
 export const routes: Routes = [
   {
@@ -23,13 +24,23 @@ export const routes: Routes = [
     component: ImportDataComponent,
   },
   {
-    path: 'inventory',
-    component: InventoryComponent,
+    path: 'stock',
+    component: StockComponent,
+    children: [
+      {
+        path: '',
+        component: StockBlankComponent,
+      },
+      {
+        path: 'item/:code',
+        component: StockItemComponent,
+      }
+    ]
   },
-  {
-    path: 'inventory/:itemcode',
-    component: ProductComponent,
-  },
+  // {
+  //   path: 'stock/:itemcode',
+  //   component: ProductComponent,
+  // },
   {
     path: 'sales',
     component: SalesComponent,
@@ -37,6 +48,12 @@ export const routes: Routes = [
   {
     path: 'purchases',
     component: PurchasesComponent,
+    children: [
+      {
+        path: 'order',
+        component: PurchasesOrderComponent,
+      }
+    ]
   },
   {
     path: 'settings',
@@ -53,10 +70,6 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-  },
-  {
-    path: 'messages',
-    component: MessagesComponent,
   },
   {
     path: "**",

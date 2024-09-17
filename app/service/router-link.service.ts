@@ -37,7 +37,7 @@ export class RouterLinkService {
     {
       label: 'Inventory',
       icon: PrimeIcons.WAREHOUSE,
-      routerLink: 'inventory',
+      routerLink: 'stock',
       items: [
         {
           icon: PrimeIcons.CHECK_SQUARE,

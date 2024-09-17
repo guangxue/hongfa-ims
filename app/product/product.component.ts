@@ -7,24 +7,30 @@ import { InputTextModule } from "primeng/inputtext";
 import { PaginatorModule } from "primeng/paginator";
 import { FieldsetModule } from "primeng/fieldset";
 import { NgForm } from "@angular/forms";
+import {SearchFormComponent} from "../search-form/search-form.component";
+import {SplitterModule} from "primeng/splitter";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'product',
   standalone: true,
-  imports: [
-    ButtonModule,
-    TableModule,
-    ToolbarModule,
-    TabViewModule,
-    InputTextModule,
-    PaginatorModule,
-    FieldsetModule,
-  ],
+    imports: [
+        ButtonModule,
+        TableModule,
+        ToolbarModule,
+        TabViewModule,
+        InputTextModule,
+        PaginatorModule,
+        FieldsetModule,
+        SearchFormComponent,
+        SplitterModule,
+    ],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'
 })
-export class ProductComponent implements OnChanges {
-  @Input() ItemCode!: string;
+export class ProductComponent {
+  //@Input() ItemCode!: string;
+  itemCode: string | null = null;
 
   productInfo = {
     itemcode: '',
@@ -39,17 +45,15 @@ export class ProductComponent implements OnChanges {
     reorderQty: '',
   };
 
-  constructor() {
+  constructor(private route: ActivatedRoute) {
+    this.route.paramMap.subscribe(pm => {
+      this.itemCode = pm.get('code')
+    } )
   }
 
   productInfoFormSubmitted(form: NgForm) {
     console.log(form.value)
   }
 
-  ngOnChanges() {
-    this.productInfo.itemcode = this.ItemCode;
-    this.productInfo.category = 'PC3';
-
-  }
 
 }
