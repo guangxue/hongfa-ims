@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NgIf } from "@angular/common";
 import { SearchFormComponent } from "../search-form/search-form.component";
 import { ButtonModule } from "primeng/button";
@@ -26,10 +26,9 @@ import { ProductComponent } from "../product/product.component";
   templateUrl: './stock.component.html',
   styleUrl: './stock.component.css'
 })
-export class StockComponent implements OnInit {
+export class StockComponent {
 
   route: ActivatedRoute = inject(ActivatedRoute);
-  searchItemCode: string = '';
   DBirchItems: DatabaseBirchItems[] = [
     {
       itemcode: '013810-284BEIGE',
@@ -69,9 +68,4 @@ export class StockComponent implements OnInit {
     },
   ]
 
-  ngOnInit(): void {
-    this.route.queryParams.subscribe(qs => {
-      this.searchItemCode = qs['search'];
-    })
-  }
 }

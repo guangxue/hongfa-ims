@@ -1,42 +1,48 @@
-   <div class="inventory-sidebar">
-     <search-form [RefName]="'stock'"/>
-     <p-table
-       [paginator]="true"
-       [rowsPerPageOptions]="[99, 250, 500]"
-       [rows]="99"
-       [showCurrentPageReport]="true"
-       [tableStyle]="{'min-width': '49rem'}"
-       [value]="DBirchItems"
-       class="product-sidetable"
-     >
-       <ng-template pTemplate="header">
-         <tr>
-           <th style="width: 12%">Item Code</th>
-           <th style="width: 10%">Qty on Shelf</th>
-           <th style="width: 10%">Tagged Box #</th>
-           <th style="width: 12%">Qty for Tagged</th>
-           <th style="width: 10%">Loose Box #</th>
-           <th style="width: 11%">Qty for Loose</th>
-           <th style="width: 10%">Tags left</th>
-         </tr>
-       </ng-template>
-       <ng-template let-birchItem pTemplate="body">
-         <tr>
-           <td><a routerLink="/stock/item/{{birchItem.itemcode}}">{{ birchItem.itemcode }}</a></td>
-           <td>{{ birchItem.qtyShelf }}</td>
-           <td>{{ birchItem.taggedBoxNum }}</td>
-           <td>{{ birchItem.qtyTagged }}</td>
-           <td>{{ birchItem.looseBoxNum }}</td>
-           <td>{{ birchItem.qtyLoose }}</td>
-           <td>{{ birchItem.tagsLeft }}</td>
-         </tr>
-       </ng-template>
-       <ng-template pTemplate="paginatorleft">
-         <p-button icon="pi pi-plus" styleClass="p-button-text" type="button"/>
-       </ng-template>
-       <ng-template pTemplate="paginatorright">
-         <p-button icon="pi pi-cloud" styleClass="p-button-text" type="button"/>
-       </ng-template>
-     </p-table>
-   </div>
-   <router-outlet></router-outlet>
+  <p-splitter>
+    <ng-template pTemplate>
+      <div class="inventory-sidebar">
+        <search-form [RefName]="'stock'"/>
+        <p-table
+          [paginator]="true"
+          [rowsPerPageOptions]="[99, 250, 500]"
+          [rows]="99"
+          [showCurrentPageReport]="true"
+          [tableStyle]="{'min-width': '49rem'}"
+          [value]="DBirchItems"
+          class="product-sidetable"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 12%">Item Code</th>
+              <th style="width: 10%">Qty on Shelf</th>
+              <th style="width: 10%">Tagged Box #</th>
+              <th style="width: 12%">Qty for Tagged</th>
+              <th style="width: 10%">Loose Box #</th>
+              <th style="width: 11%">Qty for Loose</th>
+              <th style="width: 10%">Tags left</th>
+            </tr>
+          </ng-template>
+          <ng-template let-birchItem pTemplate="body">
+            <tr>
+              <td><a routerLink="/stock/item/{{birchItem.itemcode}}">{{ birchItem.itemcode }}</a></td>
+              <td>{{ birchItem.qtyShelf }}</td>
+              <td>{{ birchItem.taggedBoxNum }}</td>
+              <td>{{ birchItem.qtyTagged }}</td>
+              <td>{{ birchItem.looseBoxNum }}</td>
+              <td>{{ birchItem.qtyLoose }}</td>
+              <td>{{ birchItem.tagsLeft }}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="paginatorleft">
+            <p-button icon="pi pi-plus" styleClass="p-button-text" type="button"/>
+          </ng-template>
+          <ng-template pTemplate="paginatorright">
+            <p-button icon="pi pi-cloud" styleClass="p-button-text" type="button"/>
+          </ng-template>
+        </p-table>
+      </div>
+    </ng-template>
+    <ng-template pTemplate >
+      <router-outlet></router-outlet>
+    </ng-template>
+  </p-splitter>
