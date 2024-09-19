@@ -6,7 +6,7 @@ import { TableModule } from "primeng/table";
 import { Button, ButtonDirective } from "primeng/button";
 import { TargetFileData } from "../interface/target-file-data";
 import { MessagesModule } from "primeng/messages";
-import { DataTableService } from "../service/data-table.service";
+import { DataTableService } from "../services/data-table.service";
 import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { IconFieldModule } from "primeng/iconfield";

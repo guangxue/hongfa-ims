@@ -11,7 +11,6 @@ import { PageNotFoundComponent } from "./page-not-found/page-not-found.component
 import { ImportDataComponent } from "./import-data/import-data.component";
 import { PurchasesOrderComponent } from "./purchases-order/purchases-order.component";
 import { StockItemComponent } from "./stock-item/stock-item.component";
-import { StockBlankComponent } from "./stock-blank/stock-blank.component";
 
 export const routes: Routes = [
   {
@@ -33,10 +32,6 @@ export const routes: Routes = [
       }
     ]
   },
-  // {
-  //   path: 'stock/:itemcode',
-  //   component: ProductComponent,
-  // },
   {
     path: 'sales',
     component: SalesComponent,
