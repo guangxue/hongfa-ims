@@ -11,6 +11,7 @@ import { PageNotFoundComponent } from "./page-not-found/page-not-found.component
 import { ImportDataComponent } from "./import-data/import-data.component";
 import { PurchasesOrderComponent } from "./purchases-order/purchases-order.component";
 import { StockItemComponent } from "./stock-item/stock-item.component";
+import {StockSiderbarComponent} from "./stock-siderbar/stock-siderbar.component";
 
 export const routes: Routes = [
   {
@@ -25,12 +26,10 @@ export const routes: Routes = [
   {
     path: 'stock',
     component: StockComponent,
-    children: [
-      {
-        path: 'item/:code',
-        component: StockItemComponent,
-      }
-    ]
+  },
+  {
+    path: 'stock/item/:code',
+    component: StockItemComponent,
   },
   {
     path: 'sales',

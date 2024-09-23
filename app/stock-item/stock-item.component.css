@@ -19,3 +19,22 @@ nav {
 nav button {
   margin-left: 1rem;
 }
+.inventory-container {
+  width: 100%;
+}
+
+.inventory-sidebar {
+  width: 100%;
+}
+
+.inventory-product-info {
+  width: 100%;
+}
+
+#item-link:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+#item-code {
+  opacity: 1;
+}

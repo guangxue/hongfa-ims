@@ -10,7 +10,6 @@ export class RouterItemService {
 
   routerState = new BehaviorSubject<boolean>(false);
 
-
   updateRouterState(state: boolean) {
     this.routerState.next(state);
   }

@@ -1,14 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import { NgIf } from "@angular/common";
+import {Component } from '@angular/core';
+import {AsyncPipe, NgClass, NgIf, NgTemplateOutlet} from "@angular/common";
 import { SearchFormComponent } from "../search-form/search-form.component";
 import { ButtonModule } from "primeng/button";
 import { PrimeTemplate } from "primeng/api";
-import { RouterLink, RouterOutlet, Router } from "@angular/router";
+import {
+  RouterLink,
+  RouterOutlet,
+  Router,
+} from "@angular/router";
 import { TableModule } from "primeng/table";
 import { DatabaseBirchItems } from "../interface/database-birch-items";
 import { SplitterModule } from "primeng/splitter";
 import { ProductComponent } from "../product/product.component";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 
 @Component({
   selector: 'stock',
@@ -23,14 +27,16 @@ import {BehaviorSubject} from "rxjs";
     SplitterModule,
     ProductComponent,
     NgIf,
+    NgTemplateOutlet,
+    AsyncPipe,
+    NgClass
   ],
   templateUrl: './stock.component.html',
   styleUrl: './stock.component.css'
 })
-export class StockComponent implements OnInit {
 
-  routerItemSubject = new BehaviorSubject<boolean>(false);
-  routerState = this.routerItemSubject.asObservable();
+export class StockComponent {
+
   DBirchItems: DatabaseBirchItems[] = [
     {
       itemcode: '013810-284BEIGE',
@@ -69,18 +75,16 @@ export class StockComponent implements OnInit {
       tagsLeft: '300'
     },
   ]
+  routerState = new BehaviorSubject<boolean>(false);
+  routerItemActivated: boolean = false;
+  cname: string = "hide";
 
-  constructor(private router: Router) {
+  constructor(private router: Router){
+
   }
 
-  linkClicked(itemcode: string) {
-    this.routerItemSubject.next(true)
-    this.router.navigate(['stock/item/'+itemcode]);
+  activeRouterItem(itemcode: string) {
+
   }
 
-  ngOnInit(): void {
-    this.routerItemSubject.subscribe(state=>{
-      console.log("Inital state: ", state)
-    })
-  }
 }

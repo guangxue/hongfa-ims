@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StockBlankComponent } from './stock-blank.component';
+import { StockSiderbarComponent } from './stock-siderbar.component';
 
-describe('InventoryBlankComponent', () => {
-  let component: StockBlankComponent;
-  let fixture: ComponentFixture<StockBlankComponent>;
+describe('StockSiderbarComponent', () => {
+  let component: StockSiderbarComponent;
+  let fixture: ComponentFixture<StockSiderbarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StockBlankComponent]
+      imports: [StockSiderbarComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(StockBlankComponent);
+    fixture = TestBed.createComponent(StockSiderbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
