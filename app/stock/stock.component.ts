@@ -1,4 +1,4 @@
-import {Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {AsyncPipe, NgClass, NgIf, NgTemplateOutlet} from "@angular/common";
 import { SearchFormComponent } from "../search-form/search-form.component";
 import { ButtonModule } from "primeng/button";
@@ -12,7 +12,8 @@ import { TableModule } from "primeng/table";
 import { DatabaseBirchItems } from "../interface/database-birch-items";
 import { SplitterModule } from "primeng/splitter";
 import { ProductComponent } from "../product/product.component";
-import {BehaviorSubject, Observable, Subject} from "rxjs";
+import { DbtableListComponent} from "../dbtable-list/dbtable-list.component";
+import {StockService} from "../services/stock.service";
 
 @Component({
   selector: 'stock',
@@ -29,7 +30,8 @@ import {BehaviorSubject, Observable, Subject} from "rxjs";
     NgIf,
     NgTemplateOutlet,
     AsyncPipe,
-    NgClass
+    NgClass,
+    DbtableListComponent
   ],
   templateUrl: './stock.component.html',
   styleUrl: './stock.component.css'
@@ -37,53 +39,14 @@ import {BehaviorSubject, Observable, Subject} from "rxjs";
 
 export class StockComponent {
 
-  DBirchItems: DatabaseBirchItems[] = [
-    {
-      itemcode: '013810-284BEIGE',
-      qtyShelf: '100',
-      taggedBoxNum: '3',
-      qtyTagged: '300',
-      looseBoxNum: '8',
-      qtyLoose: '300',
-      tagsLeft: '300'
-    },
-    {
-      itemcode: '013810-294MUSTAN',
-      qtyShelf: '100',
-      taggedBoxNum: '3',
-      qtyTagged: '300',
-      looseBoxNum: '8',
-      qtyLoose: '300',
-      tagsLeft: '300'
-    },
-    {
-      itemcode: '013810-310BLACK',
-      qtyShelf: '100',
-      taggedBoxNum: '3',
-      qtyTagged: '300',
-      looseBoxNum: '8',
-      qtyLoose: '300',
-      tagsLeft: '300'
-    },
-    {
-      itemcode: '013810-318DRKBLU',
-      qtyShelf: '100',
-      taggedBoxNum: '3',
-      qtyTagged: '300',
-      looseBoxNum: '8',
-      qtyLoose: '300',
-      tagsLeft: '300'
-    },
-  ]
-  routerState = new BehaviorSubject<boolean>(false);
-  routerItemActivated: boolean = false;
-  cname: string = "hide";
+  private stockService: StockService = inject(StockService);
 
-  constructor(private router: Router){
+  tableHeaders: string[] = [];
+  tableData: DatabaseBirchItems[] = [];
 
-  }
-
-  activeRouterItem(itemcode: string) {
+  constructor(){
+    this.tableHeaders = this.stockService.tableHeaders();
+    this.tableData = this.stockService.tableData();
 
   }
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { Button } from "primeng/button";
 import { FieldsetModule } from "primeng/fieldset";
 import { FormsModule, NgForm } from "@angular/forms";
@@ -10,6 +10,8 @@ import { SplitterModule } from "primeng/splitter";
 import { SearchFormComponent } from "../search-form/search-form.component";
 import { TableModule } from "primeng/table";
 import { DatabaseBirchItems } from "../interface/database-birch-items";
+import {DbtableListComponent} from "../dbtable-list/dbtable-list.component";
+import {StockService} from "../services/stock.service";
 
 @Component({
   selector: 'stock-product',
@@ -23,7 +25,8 @@ import { DatabaseBirchItems } from "../interface/database-birch-items";
     SplitterModule,
     RouterLink,
     SearchFormComponent,
-    TableModule
+    TableModule,
+    DbtableListComponent
   ],
   templateUrl: './stock-item.component.html',
   styleUrl: './stock-item.component.css'
@@ -43,50 +46,19 @@ export class StockItemComponent {
     reorderPoint: '',
     reorderQty: '',
   };
-  DBirchItems: DatabaseBirchItems[] = [
-    {
-      itemcode: '013810-284BEIGE',
-      qtyShelf: '100',
-      taggedBoxNum: '3',
-      qtyTagged: '300',
-      looseBoxNum: '8',
-      qtyLoose: '300',
-      tagsLeft: '300'
-    },
-    {
-      itemcode: '013810-294MUSTAN',
-      qtyShelf: '100',
-      taggedBoxNum: '3',
-      qtyTagged: '300',
-      looseBoxNum: '8',
-      qtyLoose: '300',
-      tagsLeft: '300'
-    },
-    {
-      itemcode: '013810-310BLACK',
-      qtyShelf: '100',
-      taggedBoxNum: '3',
-      qtyTagged: '300',
-      looseBoxNum: '8',
-      qtyLoose: '300',
-      tagsLeft: '300'
-    },
-    {
-      itemcode: '013810-318DRKBLU',
-      qtyShelf: '100',
-      taggedBoxNum: '3',
-      qtyTagged: '300',
-      looseBoxNum: '8',
-      qtyLoose: '300',
-      tagsLeft: '300'
-    },
-  ]
+  stockService: StockService = inject(StockService);
+  tableHeaders: string[] = [];
+  tableData: DatabaseBirchItems[] = [];
+
 
   constructor(private route: ActivatedRoute, private routerItemService: RouterItemService) {
+
     this.route.paramMap.subscribe(pm => {
       this.itemCode = pm.get('code')
     });
 
+    this.tableHeaders = this.stockService.tableHeaders();
+    this.tableData = this.stockService.tableData();
   }
 
   productInfoFormSubmitted(form: NgForm) {

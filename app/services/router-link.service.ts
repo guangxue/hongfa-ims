@@ -92,7 +92,7 @@ export class RouterLinkService {
       label: 'Dashboard',
       icon: PrimeIcons.CHART_LINE,
       routerLink: 'dashboard',
-    }
+    },
   ]
 
   constructor() {

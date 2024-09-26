@@ -11,7 +11,7 @@ import { PageNotFoundComponent } from "./page-not-found/page-not-found.component
 import { ImportDataComponent } from "./import-data/import-data.component";
 import { PurchasesOrderComponent } from "./purchases-order/purchases-order.component";
 import { StockItemComponent } from "./stock-item/stock-item.component";
-import {StockSiderbarComponent} from "./stock-siderbar/stock-siderbar.component";
+import { DbtableListComponent } from "./dbtable-list/dbtable-list.component";
 
 export const routes: Routes = [
   {
@@ -62,7 +62,11 @@ export const routes: Routes = [
     component: DashboardComponent,
   },
   {
+    path: 'test',
+    component: DbtableListComponent,
+  },
+  {
     path: "**",
     component: PageNotFoundComponent,
-  }
+  },
 ];
