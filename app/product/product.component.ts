@@ -12,8 +12,7 @@ import {SplitterModule} from "primeng/splitter";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
-  selector: 'product',
-  standalone: true,
+    selector: 'product',
     imports: [
         ButtonModule,
         TableModule,
@@ -25,8 +24,8 @@ import {ActivatedRoute} from "@angular/router";
         SearchFormComponent,
         SplitterModule,
     ],
-  templateUrl: './product.component.html',
-  styleUrl: './product.component.css'
+    templateUrl: './product.component.html',
+    styleUrl: './product.component.css'
 })
 export class ProductComponent {
   //@Input() ItemCode!: string;

@@ -7,17 +7,16 @@ import {DatabaseBirchItems} from "../interface/database-birch-items";
 import {KeyValuePipe} from "@angular/common";
 
 @Component({
-  selector: 'dbtable-list',
-  standalone: true,
-  imports: [
-    Button,
-    PrimeTemplate,
-    RouterLink,
-    TableModule,
-    KeyValuePipe
-  ],
-  templateUrl: './dbtable-list.component.html',
-  styleUrl: './dbtable-list.component.css'
+    selector: 'dbtable-list',
+    imports: [
+        Button,
+        PrimeTemplate,
+        RouterLink,
+        TableModule,
+        KeyValuePipe
+    ],
+    templateUrl: './dbtable-list.component.html',
+    styleUrl: './dbtable-list.component.css'
 })
 export class DbtableListComponent {
   @Input() tableData: DatabaseBirchItems[] = [];

@@ -14,22 +14,21 @@ import {DbtableListComponent} from "../dbtable-list/dbtable-list.component";
 import {StockService} from "../services/stock.service";
 
 @Component({
-  selector: 'stock-product',
-  standalone: true,
-  imports: [
-    Button,
-    FieldsetModule,
-    FormsModule,
-    InputTextModule,
-    TabViewModule,
-    SplitterModule,
-    RouterLink,
-    SearchFormComponent,
-    TableModule,
-    DbtableListComponent
-  ],
-  templateUrl: './stock-item.component.html',
-  styleUrl: './stock-item.component.css'
+    selector: 'stock-product',
+    imports: [
+        Button,
+        FieldsetModule,
+        FormsModule,
+        InputTextModule,
+        TabViewModule,
+        SplitterModule,
+        RouterLink,
+        SearchFormComponent,
+        TableModule,
+        DbtableListComponent
+    ],
+    templateUrl: './stock-item.component.html',
+    styleUrl: './stock-item.component.css'
 })
 export class StockItemComponent {
 

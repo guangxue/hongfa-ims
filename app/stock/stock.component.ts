@@ -16,25 +16,24 @@ import { DbtableListComponent} from "../dbtable-list/dbtable-list.component";
 import {StockService} from "../services/stock.service";
 
 @Component({
-  selector: 'stock',
-  standalone: true,
-  imports: [
-    SearchFormComponent,
-    ButtonModule,
-    PrimeTemplate,
-    RouterLink,
-    TableModule,
-    RouterOutlet,
-    SplitterModule,
-    ProductComponent,
-    NgIf,
-    NgTemplateOutlet,
-    AsyncPipe,
-    NgClass,
-    DbtableListComponent
-  ],
-  templateUrl: './stock.component.html',
-  styleUrl: './stock.component.css'
+    selector: 'stock',
+    imports: [
+        SearchFormComponent,
+        ButtonModule,
+        PrimeTemplate,
+        RouterLink,
+        TableModule,
+        RouterOutlet,
+        SplitterModule,
+        ProductComponent,
+        NgIf,
+        NgTemplateOutlet,
+        AsyncPipe,
+        NgClass,
+        DbtableListComponent
+    ],
+    templateUrl: './stock.component.html',
+    styleUrl: './stock.component.css'
 })
 
 export class StockComponent {

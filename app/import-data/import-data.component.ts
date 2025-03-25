@@ -13,24 +13,23 @@ import { IconFieldModule } from "primeng/iconfield";
 import { InputIconModule } from "primeng/inputicon";
 
 @Component({
-  selector: 'import-data',
-  standalone: true,
-  imports: [
-    DropdownModule,
-    FormsModule,
-    NgIf,
-    TableModule,
-    NgForOf,
-    Button,
-    ButtonDirective,
-    MessagesModule,
-    TooltipModule,
-    ConfirmPopupModule,
-    IconFieldModule,
-    InputIconModule,
-  ],
-  templateUrl: './import-data.component.html',
-  styleUrl: './import-data.component.css'
+    selector: 'import-data',
+    imports: [
+        DropdownModule,
+        FormsModule,
+        NgIf,
+        TableModule,
+        NgForOf,
+        Button,
+        ButtonDirective,
+        MessagesModule,
+        TooltipModule,
+        ConfirmPopupModule,
+        IconFieldModule,
+        InputIconModule,
+    ],
+    templateUrl: './import-data.component.html',
+    styleUrl: './import-data.component.css'
 })
 
 export class ImportDataComponent {

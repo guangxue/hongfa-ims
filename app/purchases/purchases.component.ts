@@ -6,16 +6,15 @@ import {PanelModule} from "primeng/panel";
 import {RouterOutlet} from "@angular/router";
 
 @Component({
-  selector: 'purchases',
-  standalone: true,
-  imports: [
-    SplitterModule,
-    SearchFormComponent,
-    TabViewModule,
-    RouterOutlet,
-  ],
-  templateUrl: './purchases.component.html',
-  styleUrl: './purchases.component.css'
+    selector: 'purchases',
+    imports: [
+        SplitterModule,
+        SearchFormComponent,
+        TabViewModule,
+        RouterOutlet,
+    ],
+    templateUrl: './purchases.component.html',
+    styleUrl: './purchases.component.css'
 })
 export class PurchasesComponent {
 

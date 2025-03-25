@@ -10,21 +10,20 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
-  selector: 'search-form',
-  standalone: true,
-  imports: [
-    FormsModule,
-    NgTemplateOutlet,
-    InputTextModule,
-    TreeSelectModule,
-    AutoCompleteModule,
-    ReactiveFormsModule,
-    SelectButtonModule,
-    ButtonModule,
-    NgClass,
-  ],
-  templateUrl: './search-form.component.html',
-  styleUrl: './search-form.component.css'
+    selector: 'search-form',
+    imports: [
+        FormsModule,
+        NgTemplateOutlet,
+        InputTextModule,
+        TreeSelectModule,
+        AutoCompleteModule,
+        ReactiveFormsModule,
+        SelectButtonModule,
+        ButtonModule,
+        NgClass,
+    ],
+    templateUrl: './search-form.component.html',
+    styleUrl: './search-form.component.css'
 })
 export class SearchFormComponent implements AfterContentInit {
   tmplRefName!: TemplateRef<any> | null;
