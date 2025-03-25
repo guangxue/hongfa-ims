@@ -1,6 +1,6 @@
 import { AfterContentInit, Component, inject, Input, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule } from "@angular/forms";
-import { NgClass, NgTemplateOutlet } from "@angular/common";
+import { NgTemplateOutlet } from "@angular/common";
 import { ItemCodeListService } from "../services/item-code-list.service";
 import { InputTextModule } from "primeng/inputtext";
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from "primeng/autocomplete";
@@ -20,7 +20,6 @@ import { ButtonModule } from 'primeng/button';
         ReactiveFormsModule,
         SelectButtonModule,
         ButtonModule,
-        NgClass,
     ],
     templateUrl: './search-form.component.html',
     styleUrl: './search-form.component.css'

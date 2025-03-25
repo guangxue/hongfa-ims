@@ -1,4 +1,4 @@
-import { Message } from "primeng/api";
+import {Message} from "primeng/message";
 
 export interface TargetFileData {
   /**

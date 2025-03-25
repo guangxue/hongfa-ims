@@ -27,8 +27,6 @@
               }
             ],
             "styles": [
-              "node_modules/primeng/resources/themes/lara-light-indigo/theme.css",
-              "node_modules/primeng/resources/primeng.min.css",
               "src/styles.css"
             ],
             "scripts": [],
@@ -43,8 +41,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "2MB",
+                  "maximumError": "5MB"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -55,9 +53,10 @@
               "outputHashing": "all"
             },
             "development": {
-              "optimization": false,
+              "optimization": true,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": false,
+              "buildOptimizer": true
             }
           },
           "defaultConfiguration": "production"

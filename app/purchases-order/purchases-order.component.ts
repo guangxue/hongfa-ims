@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {TabViewModule} from "primeng/tabview";
-import {RouterOutlet} from "@angular/router";
 import {SearchFormComponent} from "../search-form/search-form.component";
 import {SplitterModule} from "primeng/splitter";
 
@@ -8,7 +7,6 @@ import {SplitterModule} from "primeng/splitter";
     selector: 'purchases-order',
     imports: [
         TabViewModule,
-        RouterOutlet,
         SearchFormComponent,
         SplitterModule
     ],

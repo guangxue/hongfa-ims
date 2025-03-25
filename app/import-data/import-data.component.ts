@@ -19,7 +19,6 @@ import { InputIconModule } from "primeng/inputicon";
         FormsModule,
         NgIf,
         TableModule,
-        NgForOf,
         Button,
         ButtonDirective,
         MessagesModule,
@@ -68,7 +67,7 @@ export class ImportDataComponent {
     if(fsuffix.toLowerCase() !== 'csv') {
       this.targetFile.found = false;
       this.targetFile.err = true;
-      this.targetFile.errMsg = [{severity: "error", detail: "Invalid CSV format."}];
+      // this.targetFile.errMsg = [{severity: "error", detail: "Invalid CSV format."}];
       return;
     }
 

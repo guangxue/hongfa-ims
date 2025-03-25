@@ -1,6 +1,6 @@
 {
   "name": "hongfa-ims",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -21,6 +21,7 @@
     "@angular/platform-server": "^19.2.3",
     "@angular/router": "^19.2.3",
     "@angular/ssr": "^19.2.4",
+    "@primeng/themes": "^19.0.10",
     "express": ">=4.18.2",
     "primeicons": "^7.0.0",
     "primeng": "^19.0.10",

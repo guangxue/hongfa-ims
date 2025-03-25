@@ -6,24 +6,23 @@ import { TabViewModule } from "primeng/tabview";
 import { InputTextModule } from "primeng/inputtext";
 import { PaginatorModule } from "primeng/paginator";
 import { FieldsetModule } from "primeng/fieldset";
-import { NgForm } from "@angular/forms";
-import {SearchFormComponent} from "../search-form/search-form.component";
+import {FormsModule, NgForm} from "@angular/forms";
 import {SplitterModule} from "primeng/splitter";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
     selector: 'product',
-    imports: [
-        ButtonModule,
-        TableModule,
-        ToolbarModule,
-        TabViewModule,
-        InputTextModule,
-        PaginatorModule,
-        FieldsetModule,
-        SearchFormComponent,
-        SplitterModule,
-    ],
+  imports: [
+    ButtonModule,
+    TableModule,
+    ToolbarModule,
+    TabViewModule,
+    InputTextModule,
+    PaginatorModule,
+    FieldsetModule,
+    SplitterModule,
+    FormsModule,
+  ],
     templateUrl: './product.component.html',
     styleUrl: './product.component.css'
 })

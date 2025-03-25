@@ -4,7 +4,7 @@ import { FieldsetModule } from "primeng/fieldset";
 import { FormsModule, NgForm } from "@angular/forms";
 import { InputTextModule } from "primeng/inputtext";
 import { TabViewModule } from "primeng/tabview";
-import { ActivatedRoute, RouterLink } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { RouterItemService } from "../services/router-item.service";
 import { SplitterModule } from "primeng/splitter";
 import { SearchFormComponent } from "../search-form/search-form.component";
@@ -22,7 +22,6 @@ import {StockService} from "../services/stock.service";
         InputTextModule,
         TabViewModule,
         SplitterModule,
-        RouterLink,
         SearchFormComponent,
         TableModule,
         DbtableListComponent
