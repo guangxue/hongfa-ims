@@ -55,8 +55,7 @@
             "development": {
               "optimization": true,
               "extractLicenses": false,
-              "sourceMap": false,
-              "buildOptimizer": true
+              "sourceMap": false
             }
           },
           "defaultConfiguration": "production"

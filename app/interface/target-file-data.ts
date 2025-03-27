@@ -23,7 +23,7 @@ export interface TargetFileData {
   /**
    * The error message that shows for primeNG message component
    */
-  errMsg: Message[],
+  errMsg: string,
 
   /**
    * Whether shows data table on page or not.

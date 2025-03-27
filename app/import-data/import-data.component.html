@@ -1,97 +1,91 @@
-<section>
-  <h1>Import Data - Product</h1>
-  <div class="form-group">
-    <form #importForm="ngForm" >
-      <div class="form-control">
-        <label for="data-type">Data Type</label>
-        <p-dropdown
-          id="data-type"
-          [options]="dataTypeOptions"
-          [(ngModel)]="selectedDataType"
-          name="importDataType"
-        />
-      </div>
-      <div class="form-control">
-        <label for="file-location">File Location</label>
-        <input type="file" id="file-location" name="file" (change)="onFileChange($event)" />
-      </div>
-      <div class="form-control">
-        <label>File Name</label>
-        <div *ngIf="targetFile.found">{{targetFile.name}}</div>
-<!--        <div *ngIf="targetFile.err">-->
-<!--          <p-messages class="err-msg" [(value)]="targetFile.errMsg" styleClass="file-err-msg" />-->
-<!--        </div>-->
-      </div>
-      <div class="form-control">
-        <button
-          pButton
-          severity="secondary"
-          class="dt-info-btn"
-          (click)="toggleDataTable()">
-          Show Data Table
-        </button>
-      </div>
-      <div *ngIf="targetFile.showDataTable">
-        <div class="dt-btns">
-          <p-button
-            type="button"
-            icon="pi pi-chevron-left"
-            (click)="dataTable.prev()"
-            [disabled]="dataTable.isFirstPage(targetFile.totalRows)"
-            styleClass="p-button-text" />
-          <p-button
-            type="button"
-            icon="pi pi-refresh"
-            (click)="dataTable.reset()"
-            styleClass="p-button-text" />
-          <p-button
-          type="button"
-          icon="pi pi-chevron-right"
-          (click)="dataTable.next()"
-          [disabled]="dataTable.isLastPage(targetFile.totalRows)"
-          styleClass="p-button-text" />
-          <button
-            *ngIf="targetFile.totalRows"
-            (click)="importFormSubmitted(importForm)"
-            pButton
-            severity="info"
-            class="import-btn"
-            pTooltip="Confirm to proceed">
-            Import
-          </button>
+<div class="import-data-page">
+  <section class="page-heading">
+    <h1>Import Data</h1>
+  </section>
+  <section class="page-form-section">
+    <div class="form-group">
+      <form #importForm="ngForm" >
+        <div class="form-control">
+          <label for="data-type">Data Type</label>
+          <p-dropdown
+            id="data-type"
+            [options]="dataTypeOptions"
+            [(ngModel)]="selectedDataType"
+            name="importDataType"
+          />
         </div>
-        <p-table [value]="targetFile.dataRows"
-               [breakpoint]="'960px'"
-               [paginator]="true"
-               [rows]="dataTable.rows"
-               [first]="dataTable.first"
-               responsiveLayout="stack"
-        styleClass="p-datatable-striped">
-        <ng-template pTemplate="header">
-          <tr>
-            <th style="width:1%">{{targetFile.dataHeader[0]}}</th>
-            <th style="width:1%">{{targetFile.dataHeader[2]}}</th>
-            <th style="width:1%">{{targetFile.dataHeader[8]}}</th>
-            <th style="width:1%">{{targetFile.dataHeader[9]}}</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-tablerow>
-          <tr>
-            <td>{{tablerow.split(',')[0]}}</td>
-            <td>{{tablerow.split(',')[2]}}</td>
-            <td>{{tablerow.split(',')[8]}}</td>
-            <td>{{tablerow.split(',')[9]}}</td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="footer">
-          <input type="hidden" [(ngModel)]="targetFile.data" name="data" />
-        </ng-template>
-        <ng-template pTemplate="summary">
-          Total lines: <span>{{targetFile.totalRows}}</span>
-        </ng-template>
-      </p-table>
-      </div>
-    </form>
-  </div>
-
-</section>
+        <div class="form-control">
+          <label for="file-location">File Location</label>
+          <input type="file" id="file-location" name="file" (change)="onFileChange($event)" />
+        </div>
+        <div class="form-control">
+          <label>File Name</label>
+          <div *ngIf="targetFile.found">{{targetFile.name}}</div>
+          <div *ngIf="targetFile.err">
+            <p-message severity="error" variant="simple">{{targetFile.errMsg}}</p-message>
+          </div>
+        </div>
+        <div *ngIf="targetFile.showDataTable">
+          <div class="dt-btns">
+            <p-button
+              type="button"
+              icon="pi pi-chevron-left"
+              (click)="dataTable.prev()"
+              [disabled]="dataTable.isFirstPage(targetFile.totalRows)"
+              styleClass="p-button-text" />
+            <p-button
+              type="button"
+              icon="pi pi-refresh"
+              (click)="dataTable.reset()"
+              styleClass="p-button-text" />
+            <p-button
+              type="button"
+              icon="pi pi-chevron-right"
+              (click)="dataTable.next()"
+              [disabled]="dataTable.isLastPage(targetFile.totalRows)"
+              styleClass="p-button-text" />
+            <button
+              *ngIf="targetFile.totalRows"
+              (click)="importFormSubmitted(importForm)"
+              pButton
+              severity="info"
+              class="import-btn"
+              pTooltip="Confirm to proceed">
+              Import
+            </button>
+          </div>
+          <p-table [value]="targetFile.dataRows"
+                   [breakpoint]="'960px'"
+                   [paginator]="true"
+                   [rows]="dataTable.rows"
+                   [first]="dataTable.first"
+                   responsiveLayout="stack"
+                   styleClass="p-datatable-striped">
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width:1%">{{targetFile.dataHeader[0]}}</th>
+                <th style="width:1%">{{targetFile.dataHeader[2]}}</th>
+                <th style="width:1%">{{targetFile.dataHeader[8]}}</th>
+                <th style="width:1%">{{targetFile.dataHeader[9]}}</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-tablerow>
+              <tr>
+                <td>{{tablerow.split(',')[0]}}</td>
+                <td>{{tablerow.split(',')[2]}}</td>
+                <td>{{tablerow.split(',')[8]}}</td>
+                <td>{{tablerow.split(',')[9]}}</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="footer">
+              <input type="hidden" [(ngModel)]="targetFile.data" name="data" />
+            </ng-template>
+            <ng-template pTemplate="summary">
+              Total lines: <span>{{targetFile.totalRows}}</span>
+            </ng-template>
+          </p-table>
+        </div>
+      </form>
+    </div>
+  </section>
+</div>

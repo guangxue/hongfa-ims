@@ -1,11 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 @import "primeicons/primeicons.css";
 
-html {
+body {
+  font-family:"Noto Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
   font-size: 0.86rem;
 }
 
 /* customise primeNG styles */
+.p-menubar.p-component {
+  border: none;
+  border-top: 1px solid  var(--p-menubar-border-color);;
+  border-bottom: 1px solid  var(--p-menubar-border-color);;
+  border-radius: 0;
+}
 .product-status-selbtns {
   width: 19.2rem;
 }

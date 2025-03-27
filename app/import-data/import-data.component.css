@@ -1,6 +1,12 @@
-h1 {
-  margin-bottom: 3rem;
+.page-heading {
+  margin-top: 1.8rem;
+  margin-bottom: 2.3rem;
+  padding: 0 2.5rem;
 }
+.page-form-section {
+  padding: 0 2.5rem;
+}
+
 .form-control {
   display: flex;
   gap: 2rem;

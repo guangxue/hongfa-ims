@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { DropdownModule } from "primeng/dropdown";
 import { FormsModule, NgForm } from "@angular/forms";
-import { NgForOf, NgIf } from "@angular/common";
+import { NgIf } from "@angular/common";
 import { TableModule } from "primeng/table";
 import { Button, ButtonDirective } from "primeng/button";
 import { TargetFileData } from "../interface/target-file-data";
-import { MessagesModule } from "primeng/messages";
+import { Message } from "primeng/message";
 import { DataTableService } from "../services/data-table.service";
 import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
@@ -14,19 +14,19 @@ import { InputIconModule } from "primeng/inputicon";
 
 @Component({
     selector: 'import-data',
-    imports: [
-        DropdownModule,
-        FormsModule,
-        NgIf,
-        TableModule,
-        Button,
-        ButtonDirective,
-        MessagesModule,
-        TooltipModule,
-        ConfirmPopupModule,
-        IconFieldModule,
-        InputIconModule,
-    ],
+  imports: [
+    DropdownModule,
+    FormsModule,
+    NgIf,
+    TableModule,
+    Button,
+    ButtonDirective,
+    TooltipModule,
+    ConfirmPopupModule,
+    IconFieldModule,
+    InputIconModule,
+    Message,
+  ],
     templateUrl: './import-data.component.html',
     styleUrl: './import-data.component.css'
 })
@@ -37,7 +37,7 @@ export class ImportDataComponent {
     totalRows: 0,
     found: false,
     err: false,
-    errMsg: [],
+    errMsg: "",
     showDataTable: false,
     data: [],
     dataRows: [],
@@ -49,11 +49,23 @@ export class ImportDataComponent {
   constructor() {
     this.dataTable.rows = 6;
   }
+  readCSVFile(inputfile:any) {
+    const reader = new FileReader();
+    reader.readAsText(inputfile)
+    reader.onload = () => {
+      const dataRead = reader.result as string;
+      const dataLines: string[] = dataRead.split('\r\n').filter(x => x !== '');
+      this.targetFile.data = dataLines;
+      this.targetFile.dataRows = dataLines.slice(1);
+      this.targetFile.dataHeader = dataLines[0].split(',');
+      this.targetFile.totalRows = dataLines.length-1;
+      this.targetFile.found = true;
+    }
+  }
 
   onFileChange(e: Event) {
     // reset all data when input file changed
     this.targetFile.showDataTable = false;
-    this.targetFile.errMsg = [];
 
     const target: HTMLInputElement = <HTMLInputElement>e.currentTarget;
     if(!("files" in target)) { return; }
@@ -63,29 +75,22 @@ export class ImportDataComponent {
     const fsuffix: string = inputfile.name.split(".")[1];
     this.targetFile.name = inputfile.name;
 
-    // file is not accpeted if file extension is not CSV format.
+    // Check if CSV file.
     if(fsuffix.toLowerCase() !== 'csv') {
       this.targetFile.found = false;
       this.targetFile.err = true;
-      // this.targetFile.errMsg = [{severity: "error", detail: "Invalid CSV format."}];
+      this.targetFile.errMsg = "[Error] CSV file only";
+      this.targetFile.dataRows = [];
+      this.targetFile.totalRows = 0;
+      return;
+    } else {
+      this.targetFile.showDataTable = true;
+      this.targetFile.found = true;
+      this.targetFile.err = false;
+      this.targetFile.errMsg = "";
+      this.readCSVFile(inputfile);
       return;
     }
-
-    const reader = new FileReader();
-    reader.readAsText(inputfile)
-    reader.onload = () => {
-      const dataRead = reader.result as string;
-      const datalines: string[] = dataRead.split('\r\n').filter(x => x !== '');
-      this.targetFile.data = datalines;
-      this.targetFile.dataRows = datalines.slice(1);
-      this.targetFile.dataHeader = datalines[0].split(',');
-      this.targetFile.totalRows = datalines.length-1;
-      this.targetFile.found = true;
-    }
-  }
-
-  toggleDataTable():void {
-    this.targetFile.showDataTable = !this.targetFile.showDataTable;
   }
 
   importFormSubmitted(form: NgForm) {

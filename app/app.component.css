@@ -1,6 +1,12 @@
 header {
   display: flex;
+  flex-direction: column;
   gap: 1em;
+}
+header .logo {
+  display: flex;
+  flex-direction: row;
+  gap: 2em;
 }
 
 header img {
