@@ -6,27 +6,54 @@
     <div class="form-group">
       <form #importForm="ngForm" >
         <div class="form-control">
-          <label for="data-type">Data Type</label>
-          <p-dropdown
-            id="data-type"
-            [options]="dataTypeOptions"
-            [(ngModel)]="selectedDataType"
-            name="importDataType"
-          />
+          <div>
+            <label for="data-type">Data Type</label>
+          </div>
+          <div>
+            <p-dropdown
+              id="data-type"
+              [options]="dataTypeOptions"
+              [(ngModel)]="selectedDataType"
+              name="importDataType"
+            />
+          </div>
         </div>
         <div class="form-control">
-          <label for="file-location">File Location</label>
-          <input type="file" id="file-location" name="file" (change)="onFileChange($event)" />
+          <div>
+            <label for="file-location">File Location</label>
+          </div>
+          <div>
+            <input type="file" id="file-location" name="file" (change)="onFileChange($event)" />
+          </div>
         </div>
-        <div class="form-control">
-          <label>File Name</label>
-          <div *ngIf="targetFile.found">{{targetFile.name}}</div>
-          <div *ngIf="targetFile.err">
-            <p-message severity="error" variant="simple">{{targetFile.errMsg}}</p-message>
+        <div *ngIf="fileChanged">
+          <div *ngIf="targetFile.found" class="form-control">
+            <div>
+              <label>File Name</label>
+            </div>
+            <div>{{targetFile.name}}</div>
+          </div>
+          <div class="form-control" *ngIf="targetFile.err">
+            <div>
+              <label style="color: #dc2626;font-weight: bold;">File Error:</label>
+            </div>
+            <div >
+              <p-message severity="error" variant="simple">{{targetFile.errMsg}}</p-message>
+            </div>
+
           </div>
         </div>
         <div *ngIf="targetFile.showDataTable">
           <div class="dt-btns">
+            <button
+              *ngIf="targetFile.totalRows"
+              (click)="importFormSubmitted(importForm)"
+              pButton
+              severity="info"
+              class="import-btn"
+              pTooltip="Confirm to proceed">
+              Import
+            </button>
             <p-button
               type="button"
               icon="pi pi-chevron-left"
@@ -44,15 +71,7 @@
               (click)="dataTable.next()"
               [disabled]="dataTable.isLastPage(targetFile.totalRows)"
               styleClass="p-button-text" />
-            <button
-              *ngIf="targetFile.totalRows"
-              (click)="importFormSubmitted(importForm)"
-              pButton
-              severity="info"
-              class="import-btn"
-              pTooltip="Confirm to proceed">
-              Import
-            </button>
+
           </div>
           <p-table [value]="targetFile.dataRows"
                    [breakpoint]="'960px'"

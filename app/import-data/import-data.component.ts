@@ -33,6 +33,7 @@ import { InputIconModule } from "primeng/inputicon";
 
 export class ImportDataComponent {
   dataTable = inject(DataTableService);
+  fileChanged: boolean = false;
   targetFile: TargetFileData = { name: '',
     totalRows: 0,
     found: false,
@@ -64,8 +65,10 @@ export class ImportDataComponent {
   }
 
   onFileChange(e: Event) {
+    this.fileChanged = true;
     // reset all data when input file changed
     this.targetFile.showDataTable = false;
+
 
     const target: HTMLInputElement = <HTMLInputElement>e.currentTarget;
     if(!("files" in target)) { return; }
@@ -79,7 +82,7 @@ export class ImportDataComponent {
     if(fsuffix.toLowerCase() !== 'csv') {
       this.targetFile.found = false;
       this.targetFile.err = true;
-      this.targetFile.errMsg = "[Error] CSV file only";
+      this.targetFile.errMsg = `"${this.targetFile.name}" is not a CSV file`;
       this.targetFile.dataRows = [];
       this.targetFile.totalRows = 0;
       return;

@@ -19,7 +19,7 @@ import { MenuItem } from "primeng/api";
 export class AppComponent {
   itemService: RouterLinkService = inject(RouterLinkService);
   items: MenuItem[] = []
-  protected readonly isDevMode: boolean = isDevMode();
+  protected readonly isDevMode: boolean = true;
 
   constructor() {
     this.items = this.itemService.getRouterLinks();

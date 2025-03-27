@@ -9,8 +9,8 @@
 
 .form-control {
   display: flex;
-  gap: 2rem;
-  align-items: center;
+  gap: 3rem;
+  align-items: baseline;
   margin-bottom: 2rem;
 }
 
@@ -57,6 +57,6 @@ input[type="file"]::file-selector-button:active {
   display: flex;
   margin-bottom: 1rem;
 }
-.import-btn {
-  margin-left: auto;
-}
+/*.import-btn {*/
+/*  margin-left: auto;*/
+/*}*/
