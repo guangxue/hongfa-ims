@@ -30,7 +30,6 @@ export class StockComponent {
   constructor(){
     this.tableHeaders = this.stockService.tableHeaders();
     this.tableData = this.stockService.tableData();
-
   }
 
 }
