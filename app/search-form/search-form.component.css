@@ -22,9 +22,9 @@
   }
 }
 
-.form-control {
+.search-form {
   display: grid;
-  grid-template-columns: 8rem 1fr;
-  margin: 1rem 0;
+  grid-template-columns: 1fr 18rem;
+  justify-items: flex-start;
+  gap: 1.3rem;
 }
-

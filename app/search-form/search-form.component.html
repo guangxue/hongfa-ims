@@ -1,20 +1,25 @@
-<form #searchForm="ngForm" (ngSubmit)="whenSubmitted(searchForm)">
-  t <ng-container *ngTemplateOutlet="tmplRefName"></ng-container>
-  <div class="form-control">
-    <label for="subtn"></label>
-    <p-button
-      [style]="{'width': '100%', 'font-size': '13px'}"
-      id="subtn"
-      label="Refresh"
-      type="submit"
-    />
+<form class="search-form" #searchForm="ngForm" (ngSubmit)="whenSubmitted(searchForm)">
+  <ng-container *ngTemplateOutlet="tmplRefName"></ng-container>
+  <div class="form-submit-button">
+    <div>
+      <label for="submit-button"></label>
+    </div>
+    <div>
+      <p-button
+        [style]="{'width': '100%', 'font-size': '13px'}"
+        id="submit-button"
+        label="Refresh"
+        type="submit"
+      />
+    </div>
   </div>
 </form>
 
-
 <ng-template #productSearch>
-  <div class="form-control">
+  <div>
     <label for="item-code">Item Code</label>
+  </div>
+  <div>
     <p-autoComplete
       (completeMethod)="filterSuggestions($event, 'products')"
       [(ngModel)]="products.itemCode"
@@ -23,20 +28,26 @@
       required
     />
   </div>
-  <div class="form-control">
+  <div>
     <label for="description">Description</label>
+  </div>
+  <div>
     <input [(ngModel)]="products.description" id="description" pInputText type="text">
   </div>
-  <div class="form-control">
+  <div>
     <label for="category">Category</label>
+  </div>
+  <div>
     <p-treeSelect
       [(ngModel)]="products.category"
       [options]="productCategoryOptions"
       id="category"
     />
   </div>
-  <div class="form-control">
+  <div>
     <label for="status">Status</label>
+  </div>
+  <div>
     <p-selectButton
       [(ngModel)]="products.status"
       [options]="status"
@@ -47,16 +58,22 @@
 </ng-template>
 
 <ng-template #saleSearch>
-  <div class="form-control">
+  <div>
     <label for="order-number">Order #</label>
+  </div>
+  <div>
     <input id="order-number" pInputText type="text" />
   </div>
-  <div class="form-control">
+  <div>
     <label for="order-customer">Customer</label>
+  </div>
+  <div>
     <input type="text" id="order-customer" pInputText>
   </div>
-  <div class="form-control">
+  <div>
     <label for="order-status">Status</label>
+  </div>
+  <div>
     <p-selectButton
       [(ngModel)]="sales.status"
       [options]="status"
@@ -67,12 +84,16 @@
 </ng-template>
 
 <ng-template #purchaseSeach>
-  <div class="form-control">
+  <div>
     <label for="porderno">Order #</label>
+  </div>
+  <div>
     <input id="porderno" pInputText type="text" />
   </div>
-  <div class="form-control">
+  <div>
     <label for="porder-status">Status</label>
+  </div>
+  <div>
     <p-selectButton
       [(ngModel)]="sales.status"
       [options]="status"

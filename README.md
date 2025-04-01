@@ -1,6 +1,6 @@
 # Inventory Management System for Hongfa International
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 19.2.4.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 19.2.5.
 
 ## Development server
 
