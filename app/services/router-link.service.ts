@@ -10,7 +10,6 @@ export class RouterLinkService {
     {
       label: 'Home',
       icon: PrimeIcons.HOME,
-      routerLink: '/',
       items: [
         {
           icon: PrimeIcons.FILE_IMPORT,
@@ -73,7 +72,6 @@ export class RouterLinkService {
     {
       label: 'Settings',
       icon: PrimeIcons.COG,
-      routerLink: 'settings',
       items: [
         {
           icon: PrimeIcons.TH_LARGE,

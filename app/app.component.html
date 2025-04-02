@@ -4,12 +4,14 @@
     <h1>Hongfa Inventory Management System</h1>
   </div>
   <div>
+    <!--  Navbar -->
     <p-menubar [model]="items"/>
   </div>
 </header>
 
-<router-outlet></router-outlet>
-
+<main>
+  <router-outlet></router-outlet>
+</main>
 
 <footer *ngIf="isDevMode else isProdMode"></footer>
 <ng-template #isProdMode>

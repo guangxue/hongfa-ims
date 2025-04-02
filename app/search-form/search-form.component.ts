@@ -5,22 +5,21 @@ import { ItemCodeListService } from "../services/item-code-list.service";
 import { InputTextModule } from "primeng/inputtext";
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from "primeng/autocomplete";
 import { TreeSelectModule } from 'primeng/treeselect';
-import { SelectItem, TreeNode } from "primeng/api";
-import { SelectButtonModule } from 'primeng/selectbutton';
 import { ButtonModule } from 'primeng/button';
+import {Select} from "primeng/select";
 
 @Component({
     selector: 'search-form',
-    imports: [
-        FormsModule,
-        NgTemplateOutlet,
-        InputTextModule,
-        TreeSelectModule,
-        AutoCompleteModule,
-        ReactiveFormsModule,
-        SelectButtonModule,
-        ButtonModule,
-    ],
+  imports: [
+    FormsModule,
+    NgTemplateOutlet,
+    InputTextModule,
+    TreeSelectModule,
+    AutoCompleteModule,
+    ReactiveFormsModule,
+    ButtonModule,
+    Select,
+  ],
     templateUrl: './search-form.component.html',
     styleUrl: './search-form.component.css'
 })
@@ -53,15 +52,15 @@ export class SearchFormComponent implements AfterContentInit {
   }
   productItemCodeList: string[] = [];
   productItemCodeSuggestions: string[] = [];
-  productCategoryOptions: TreeNode[] = [
-    {label: 'PC3', data: 'PC3'},
-    {label: 'INV3', data: 'INV3'},
-    {label: 'PO5', data: 'PO5'},
+  productCategoryOptions = [
+    {name: 'PC3', code: 'PC3'},
+    {name: 'INV3', code: 'INV3'},
+    {name: 'PO5', code: 'PO5'},
   ];
-  status: SelectItem[] = [
-    {label: 'Active', value: 'active'},
-    {label: 'Inactive', value: 'inactive'},
-    {label: 'Show All', value: 'showAll'},
+  statusOptions = [
+    {name: 'Active', code: 'active'},
+    {name: 'Inactive', code: 'inactive'},
+    {name: 'Show All', code: 'all'},
   ]
 
   sales = {
