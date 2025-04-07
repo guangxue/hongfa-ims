@@ -1,0 +1,24 @@
+<div class="database-table">
+  <p-table [columns]="tableHeaders" [value]="products" >
+
+    <ng-template #header let-headers>
+      <tr>
+        <th *ngFor="let header of headers">
+          {{ header }}
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-zipper >
+      <tr>
+        <td>{{ zipper.itemcode }}</td>
+        <td>{{ zipper.qtyShelf }}</td>
+        <td>
+          <p-select [id]="zipper.id" [options]="zipper.taggedBoxNum" [(ngModel)]="zipper.selectedTBox" optionLabel="name" optionValue="val" />
+        </td>
+        <td>{{ zipper.qtyTagged[zipper.selectedTBox] }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+

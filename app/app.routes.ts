@@ -12,6 +12,7 @@ import { ImportDataComponent } from "./import-data/import-data.component";
 import { PurchasesOrderComponent } from "./purchases-order/purchases-order.component";
 import { StockItemComponent } from "./stock-item/stock-item.component";
 import { DbtableListComponent } from "./dbtable-list/dbtable-list.component";
+import {DataTableComponent} from "./data-table/data-table.component";
 
 export const routes: Routes = [
   {
@@ -62,8 +63,8 @@ export const routes: Routes = [
     component: DashboardComponent,
   },
   {
-    path: 'test',
-    component: DbtableListComponent,
+    path: 'messages',
+    component: DataTableComponent,
   },
   {
     path: "**",
