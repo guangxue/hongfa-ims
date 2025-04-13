@@ -11,8 +11,8 @@ import { PageNotFoundComponent } from "./page-not-found/page-not-found.component
 import { ImportDataComponent } from "./import-data/import-data.component";
 import { PurchasesOrderComponent } from "./purchases-order/purchases-order.component";
 import { StockItemComponent } from "./stock-item/stock-item.component";
-import { DbtableListComponent } from "./dbtable-list/dbtable-list.component";
-import {DataTableComponent} from "./data-table/data-table.component";
+import {InventoryTableComponent} from "./inventory-table/inventory-table.component";
+import {InventoryComponent} from "./inventory/inventory.component";
 
 export const routes: Routes = [
   {
@@ -23,6 +23,14 @@ export const routes: Routes = [
   {
     path: 'import-data',
     component: ImportDataComponent,
+  },
+  {
+    path: 'inventory',
+    component: InventoryComponent,
+  },
+  {
+    path: 'inventory/:item_name',
+    component: StockItemComponent,
   },
   {
     path: 'stock',
@@ -64,7 +72,8 @@ export const routes: Routes = [
   },
   {
     path: 'messages',
-    component: DataTableComponent,
+    component: InventoryTableComponent,
+
   },
   {
     path: "**",

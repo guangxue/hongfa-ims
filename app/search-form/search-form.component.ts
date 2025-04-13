@@ -6,7 +6,7 @@ import { InputTextModule } from "primeng/inputtext";
 import { AutoCompleteCompleteEvent, AutoCompleteModule } from "primeng/autocomplete";
 import { TreeSelectModule } from 'primeng/treeselect';
 import { ButtonModule } from 'primeng/button';
-import {Select} from "primeng/select";
+import { Select } from "primeng/select";
 
 @Component({
     selector: 'search-form',
@@ -36,8 +36,8 @@ export class SearchFormComponent implements AfterContentInit {
   @ViewChild('saleSearch')
   salesOrderSearchForm!: TemplateRef<any>;
 
-  @ViewChild('purchaseSeach')
-  purchaseOrderSeachForm!: TemplateRef<any>;
+  @ViewChild('purchaseSearch')
+  purchaseOrderSearchForm!: TemplateRef<any>;
 
   loading: boolean = false;
 
@@ -82,9 +82,9 @@ export class SearchFormComponent implements AfterContentInit {
 
   ngAfterContentInit() {
     Promise.resolve(null).then(() => {
-      this.tmplRefs.set('stock', this.productSearchForm);
+      this.tmplRefs.set('inventory', this.productSearchForm);
       this.tmplRefs.set('sales', this.salesOrderSearchForm);
-      this.tmplRefs.set('purchases', this.purchaseOrderSeachForm);
+      this.tmplRefs.set('purchases', this.purchaseOrderSearchForm);
       this.tmplRefName = this.tmplRefs.get(this.RefName) || null
     })
   }

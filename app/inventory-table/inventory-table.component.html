@@ -1,0 +1,22 @@
+<div class="inventory-table">
+  <p-table [value]="products">
+    <ng-template #header>
+      <tr>
+        <th>Item Name</th>
+        <th>Total Zippers (Shelf)</th>
+        <th>Total Zippers (Tagged)</th>
+        <th>Total Zippers (Loose)</th>
+        <th>Total Tags</th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-product>
+      <tr>
+        <td><a routerLink="/inventory/{{product.item_name}}">{{product.item_name}}</a></td>
+        <td>{{product.qty_shelf}}</td>
+        <td>{{product.qty_tagged}}</td>
+        <td>{{product.qty_loose}}</td>
+        <td>{{product.tags_left}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
