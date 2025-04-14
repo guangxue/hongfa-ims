@@ -13,6 +13,7 @@ import { PurchasesOrderComponent } from "./purchases-order/purchases-order.compo
 import { StockItemComponent } from "./stock-item/stock-item.component";
 import {InventoryTableComponent} from "./inventory-table/inventory-table.component";
 import {InventoryComponent} from "./inventory/inventory.component";
+import {InventoryItemComponent} from "./inventory-item/inventory-item.component";
 
 export const routes: Routes = [
   {
@@ -30,14 +31,14 @@ export const routes: Routes = [
   },
   {
     path: 'inventory/:item_name',
-    component: StockItemComponent,
+    component: InventoryItemComponent,
   },
   {
     path: 'stock',
     component: StockComponent,
   },
   {
-    path: 'stock/item/:code',
+    path: 'stock/:code',
     component: StockItemComponent,
   },
   {

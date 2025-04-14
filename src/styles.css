@@ -40,6 +40,7 @@ body {
 
 .p-splitter.p-component.p-splitter-horizontal {
   width: 100%;
+  border: none;
 }
 
 .p-splitter {
