@@ -6,14 +6,12 @@ import { CustomersComponent } from './customers/customers.component';
 import { VendorsComponent } from './vendors/vendors.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SettingsComponent } from "./settings/settings.component";
-import { StockComponent } from "./stock/stock.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { ImportDataComponent } from "./import-data/import-data.component";
 import { PurchasesOrderComponent } from "./purchases-order/purchases-order.component";
-import { StockItemComponent } from "./stock-item/stock-item.component";
-import {InventoryTableComponent} from "./inventory-table/inventory-table.component";
-import {InventoryComponent} from "./inventory/inventory.component";
-import {InventoryItemComponent} from "./inventory-item/inventory-item.component";
+import { InventoryTableComponent } from "./inventory-table/inventory-table.component";
+import { InventoryComponent } from "./inventory/inventory.component";
+import { InventoryItemComponent } from "./inventory-item/inventory-item.component";
 
 export const routes: Routes = [
   {
@@ -32,14 +30,6 @@ export const routes: Routes = [
   {
     path: 'inventory/:item_name',
     component: InventoryItemComponent,
-  },
-  {
-    path: 'stock',
-    component: StockComponent,
-  },
-  {
-    path: 'stock/:code',
-    component: StockItemComponent,
   },
   {
     path: 'sales',
