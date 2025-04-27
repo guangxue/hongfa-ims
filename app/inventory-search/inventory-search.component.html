@@ -1,0 +1,67 @@
+<form #searchForm="ngForm" (ngSubmit)="whenSubmitted($event, searchForm)">
+  <div class="search-form" >
+    <div>
+      <label for="item-name">Item Name</label>
+    </div>
+    <div>
+      <p-autoComplete
+        (completeMethod)="filterSuggestions($event, 'itemSearch')"
+        [(ngModel)]="searchItem.itemName"
+        [suggestions]="itemNameSuggestions"
+        id="item-name"
+        required
+        [style]="{width: '180px'}"
+      />
+    </div>
+    <div>
+      <label for="description">Description</label>
+    </div>
+    <div>
+      <input
+        [(ngModel)]="searchItem.description"
+        id="description"
+        pInputText
+        type="text"
+        [style]="{width: '180px'}"
+      >
+    </div>
+    <div>
+      <label for="category">Category</label>
+    </div>
+    <div>
+      <p-select id="category"
+                [options]="itemCategoryOptions"
+                [(ngModel)]="searchItem.category"
+                optionLabel="name"
+                placeholder="Choose category"
+                [style]="{width: '180px'}"
+      />
+    </div>
+    <div>
+      <label for="status">Status</label>
+    </div>
+    <div>
+      <p-select id="status"
+                [options]="itemStatusOptions"
+                [(ngModel)]="searchItem.status"
+                optionLabel="name"
+                placeholder="Default: Active"
+                [style]="{width: '180px'}"
+      />
+    </div>
+    <div class="form-submit-button">
+      <div>
+        <label for="submit-button"></label>
+      </div>
+      <div>
+        <p-button
+          [style]="{'width': '100%', 'font-size': '13px'}"
+          id="submit-button"
+          label="Refresh"
+          type="submit"
+        />
+      </div>
+    </div>
+  </div>
+  <inventory-table [searchItem]="searchItem" />
+</form>

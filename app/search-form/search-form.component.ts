@@ -1,15 +1,28 @@
-import { AfterContentInit, Component, inject, Input, TemplateRef, ViewChild } from '@angular/core';
-import { FormsModule, NgForm, ReactiveFormsModule } from "@angular/forms";
-import { NgTemplateOutlet } from "@angular/common";
-import { ItemCodeListService } from "../services/item-code-list.service";
-import { InputTextModule } from "primeng/inputtext";
-import { AutoCompleteCompleteEvent, AutoCompleteModule } from "primeng/autocomplete";
+import {
+  AfterContentInit,
+  Component,
+  effect,
+  inject,
+  Input,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
+import { NgTemplateOutlet } from '@angular/common';
+import { ItemCodeListService } from '../services/item-code-list.service';
+import { InputTextModule } from 'primeng/inputtext';
+import {
+  AutoCompleteCompleteEvent,
+  AutoCompleteModule,
+} from 'primeng/autocomplete';
 import { TreeSelectModule } from 'primeng/treeselect';
 import { ButtonModule } from 'primeng/button';
-import { Select } from "primeng/select";
+import { Select } from 'primeng/select';
+import { SearchItem } from '../interface/search-item';
+import { BirchService } from '../services/birch.service';
 
 @Component({
-    selector: 'search-form',
+  selector: 'search-form',
   imports: [
     FormsModule,
     NgTemplateOutlet,
@@ -20,18 +33,18 @@ import { Select } from "primeng/select";
     ButtonModule,
     Select,
   ],
-    templateUrl: './search-form.component.html',
-    styleUrl: './search-form.component.css'
+  templateUrl: './search-form.component.html',
+  styleUrl: './search-form.component.css',
 })
 export class SearchFormComponent implements AfterContentInit {
   tmplRefName!: TemplateRef<any> | null;
   tmplRefs: Map<string, TemplateRef<any>> = new Map<string, TemplateRef<any>>();
 
   @Input()
-  RefName: string = "";
+  RefName: string = '';
 
-  @ViewChild('productSearch')
-  productSearchForm!: TemplateRef<any>;
+  @ViewChild('itemSearch')
+  itemSearchForm!: TemplateRef<any>;
 
   @ViewChild('saleSearch')
   salesOrderSearchForm!: TemplateRef<any>;
@@ -43,62 +56,62 @@ export class SearchFormComponent implements AfterContentInit {
 
   /** Product Search Form **/
   productService: ItemCodeListService = inject(ItemCodeListService);
-
-  products = {
-    itemCode: '',
+  birchService: BirchService = inject(BirchService);
+  searchItem: SearchItem = {
+    itemName: '',
     description: '',
     category: '',
     status: 'active',
-  }
+  };
   productItemCodeList: string[] = [];
   productItemCodeSuggestions: string[] = [];
   productCategoryOptions = [
-    {name: 'PC3', code: 'PC3'},
-    {name: 'INV3', code: 'INV3'},
-    {name: 'PO5', code: 'PO5'},
+    { name: 'PC3', code: 'PC3' },
+    { name: 'INV3', code: 'INV3' },
+    { name: 'PO5', code: 'PO5' },
   ];
   statusOptions = [
-    {name: 'Active', code: 'active'},
-    {name: 'Inactive', code: 'inactive'},
-    {name: 'Show All', code: 'all'},
-  ]
+    { name: 'Active', code: 'active' },
+    { name: 'Inactive', code: 'inactive' },
+    { name: 'Show All', code: 'all' },
+  ];
 
   sales = {
     orderNum: '',
     status: '',
     customer: '',
-  }
+  };
 
-  constructor() {
-    this.productItemCodeList = this.productService.getItemCodeArrayList();
+  constructor(private itemService: ItemCodeListService) {
+    this.productItemCodeList = this.itemService.getItemCodeArrayList();
   }
 
   filterSuggestions($event: AutoCompleteCompleteEvent, formName: string) {
     let query = $event.query;
-    if (formName == 'products') {
-      this.productItemCodeSuggestions = this.productItemCodeList.filter(code => code.includes(query));
+    if (formName == 'itemSearch') {
+      this.productItemCodeSuggestions = this.productItemCodeList.filter(
+        (code) => code.includes(query),
+      );
+    } else {
+      this.productItemCodeSuggestions = [];
     }
   }
 
   ngAfterContentInit() {
     Promise.resolve(null).then(() => {
-      this.tmplRefs.set('inventory', this.productSearchForm);
+      this.tmplRefs.set('inventory', this.itemSearchForm);
       this.tmplRefs.set('sales', this.salesOrderSearchForm);
       this.tmplRefs.set('purchases', this.purchaseOrderSearchForm);
-      this.tmplRefName = this.tmplRefs.get(this.RefName) || null
-    })
+      this.tmplRefName = this.tmplRefs.get(this.RefName) || null;
+    });
   }
 
-  whenSubmitted(searchForm: NgForm) {
+  whenSubmitted(event: Event, searchForm: NgForm) {
+    event.preventDefault();
     this.loading = true;
-    console.log(searchForm.value)
 
     setTimeout(() => {
-      this.loading = false
+      this.loading = false;
     }, 2000);
-    console.log(this.products);
   }
-
 }
-
-

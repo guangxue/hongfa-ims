@@ -1,0 +1,30 @@
+@media (max-width: 500px) {
+  .search-form {
+    width: 100%;
+  }
+}
+
+@media (501px <= width <= 600px) {
+  .search-form {
+    width: 66%;
+  }
+}
+
+@media ( 600px <= width <= 1024px) {
+  .search-form {
+    width: 40%;
+  }
+}
+
+@media ( width > 1024px) {
+  .search-form {
+    width: 30%;
+  }
+}
+
+.search-form {
+  display: grid;
+  grid-template-columns: 1fr 18rem;
+  justify-items: flex-start;
+  gap: 1.3rem;
+}

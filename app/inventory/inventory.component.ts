@@ -1,16 +1,10 @@
 import { Component } from '@angular/core';
-import {SearchFormComponent} from "../search-form/search-form.component";
-import {InventoryTableComponent} from "../inventory-table/inventory-table.component";
+import { InventorySearchComponent } from '../inventory-search/inventory-search.component';
 
 @Component({
   selector: 'inventory',
-  imports: [
-    SearchFormComponent,
-    InventoryTableComponent
-  ],
+  imports: [InventorySearchComponent],
   templateUrl: './inventory.component.html',
-  styleUrl: './inventory.component.css'
+  styleUrl: './inventory.component.css',
 })
-export class InventoryComponent {
-
-}
+export class InventoryComponent {}

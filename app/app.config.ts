@@ -5,17 +5,19 @@ import { provideClientHydration } from '@angular/platform-browser';
 import {provideAnimationsAsync} from "@angular/platform-browser/animations/async";
 import { providePrimeNG } from "primeng/config";
 import Aura from "@primeng/themes/aura";
+import {provideHttpClient, withFetch} from "@angular/common/http";
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideAnimationsAsync(),
-    providePrimeNG({
+   providePrimeNG({
       theme: {
         preset: Aura
       }
     }),
+    provideAnimationsAsync(),
     provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(routes),
+    provideHttpClient(withFetch()),
     provideClientHydration(),
   ]
 };

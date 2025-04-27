@@ -1,5 +1,5 @@
 <h1>Search</h1>
-<form class="search-form" #searchForm="ngForm" (ngSubmit)="whenSubmitted(searchForm)">
+<form class="search-form" #searchForm="ngForm" (ngSubmit)="whenSubmitted($event, searchForm)">
   <ng-container *ngTemplateOutlet="tmplRefName"></ng-container>
   <div class="form-submit-button">
     <div>
@@ -16,16 +16,16 @@
   </div>
 </form>
 
-<ng-template #productSearch>
+<ng-template #itemSearch>
   <div>
-    <label for="item-code">Item Code</label>
+    <label for="item-name">Item Name</label>
   </div>
   <div>
     <p-autoComplete
-      (completeMethod)="filterSuggestions($event, 'products')"
-      [(ngModel)]="products.itemCode"
+      (completeMethod)="filterSuggestions($event, 'itemSearch')"
+      [(ngModel)]="searchItem.itemName"
       [suggestions]="productItemCodeSuggestions"
-      id="item-code"
+      id="item-name"
       required
       [style]="{width: '180px'}"
     />
@@ -35,7 +35,7 @@
   </div>
   <div>
     <input
-      [(ngModel)]="products.description"
+      [(ngModel)]="searchItem.description"
       id="description"
       pInputText
       type="text"
@@ -48,7 +48,7 @@
   <div>
     <p-select id="category"
               [options]="productCategoryOptions"
-              [(ngModel)]="products.category"
+              [(ngModel)]="searchItem.category"
               optionLabel="name"
               placeholder="Choose category"
               [style]="{width: '180px'}"
@@ -60,7 +60,7 @@
   <div>
     <p-select id="status"
               [options]="statusOptions"
-              [(ngModel)]="products.status"
+              [(ngModel)]="searchItem.status"
               optionLabel="name"
               placeholder="Default: Active"
               [style]="{width: '180px'}"
@@ -91,7 +91,7 @@
   </div>
 </ng-template>
 
-<ng-template #purchaseSeach>
+<ng-template #purchaseSearch>
   <div>
     <label for="porderno">Order #</label>
   </div>

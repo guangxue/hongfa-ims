@@ -1,5 +1,10 @@
 <div class="inventory-table">
-  <p-table [value]="products">
+  <p-table [value]="items"
+           [paginator]="true"
+           [rowsPerPageOptions]="[50, 150, 500]"
+           [rows]="50"
+           [globalFilterFields]="['items']"
+  >
     <ng-template #header>
       <tr>
         <th>Item Name</th>
@@ -9,13 +14,13 @@
         <th>Total Tags Left</th>
       </tr>
     </ng-template>
-    <ng-template #body let-product>
+    <ng-template #body let-item>
       <tr>
-        <td><a routerLink="/inventory/{{product.item_name}}">{{product.item_name}}</a></td>
-        <td>{{product.qty_shelf}}</td>
-        <td>{{product.qty_tagged}}</td>
-        <td>{{product.qty_loose}}</td>
-        <td>{{product.tags_left}}</td>
+        <td><a routerLink="/inventory/{{item.item_name}}">{{item.item_name}}</a></td>
+        <td>{{item.qty_shelf}}</td>
+        <td>{{item.qty_tagged}}</td>
+        <td>{{item.qty_loose}}</td>
+        <td>{{item.tags_left}}</td>
       </tr>
     </ng-template>
   </p-table>
