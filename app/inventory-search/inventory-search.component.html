@@ -6,6 +6,7 @@
     <div>
       <p-autoComplete
         (completeMethod)="filterSuggestions($event, 'itemSearch')"
+        [suggestions]="itemNameSuggestions"
         id="item-name"
         name="itemName"
         [(ngModel)]="searchItem.itemName"
@@ -66,5 +67,5 @@
       </div>
     </div>
   </div>
-  <inventory-table [item]="searchItem" />
+  <inventory-table [inputSearchItem]="searchItem" />
 </form>

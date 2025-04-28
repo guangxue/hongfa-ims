@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AutoComplete, AutoCompleteCompleteEvent } from 'primeng/autocomplete';
 import { FormsModule, NgForm } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
@@ -22,13 +22,13 @@ import { InventoryTableComponent } from '../inventory-table/inventory-table.comp
   styleUrl: './inventory-search.component.css',
 })
 export class InventorySearchComponent {
-
+  birchService: BirchService = inject(BirchService);
   searchItem: SearchItem = {
     itemName: '',
     description: '',
     category: '',
     status: '',
-  }
+  };
   itemStatusOptions = [
     { name: 'Active', code: 'active' },
     { name: 'Inactive', code: 'inactive' },
@@ -39,28 +39,26 @@ export class InventorySearchComponent {
     { name: 'INV3', code: 'INV3' },
     { name: 'PO5', code: 'PO5' },
   ];
-
   itemNameSuggestions: string[] = [];
   itemNameList: string[] = [];
-  formVal:string = '';
 
   constructor() {
-    
+    this.birchService.getItemNameList().subscribe((data) => {
+      this.itemNameList = data.map((item: any) => item.item_name);
+    });
   }
   filterSuggestions($event: AutoCompleteCompleteEvent, formName: string) {
     let query = $event.query;
     if (formName == 'itemSearch') {
-      this.itemNameSuggestions = this.itemNameList.filter((code) =>
-        code.includes(query),
+      this.itemNameSuggestions = this.itemNameList.filter((name: string) =>
+        name.includes(query),
       );
     } else {
       this.itemNameSuggestions = [];
     }
   }
- 
+
   formSubmission(form: NgForm) {
-    console.log("[InventorySearchComponent]")
-    console.log("(form submitted) with values:")
-    console.log(form.value)
+    this.searchItem = form.value;
   }
 }

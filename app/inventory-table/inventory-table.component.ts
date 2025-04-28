@@ -20,27 +20,45 @@ import { SearchItem } from '../interface/search-item';
 })
 export class InventoryTableComponent implements OnInit, OnChanges {
   private birchService = inject(BirchService);
+  itemsCopy: Array<any> = [];
   items: Array<any> = [];
   // Receiving value from a parent
-  @Input() item: SearchItem = {
+  @Input() inputSearchItem: SearchItem = {
     itemName: '',
     description: '',
     category: '',
     status: '',
   };
 
-  constructor() {
+  constructor() {}
+
+  ngOnInit(): void {
+    this.birchService.getBirchItems().subscribe((data) => {
+      this.itemsCopy = data;
+      this.items = data;
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("[InventoryTableComponent] detected changes")
-    if(changes['itemName']) {
-      console.log(changes['itemName'].currentValue)
+    /**
+     * `changes['inputSearchItem'].currentValue` is an object as the sample below:
+     * {itemName: '', description: '', category: '', status: ''}
+     */
+    if (
+      changes['inputSearchItem'] &&
+      changes['inputSearchItem'].currentValue.itemName != ''
+    ) {
+      /**
+       * SET `this.items` to update the inventory table
+       * CHECK if the item.item_name contains the `inputSearchItem.itemName`
+       */
+      this.items = this.itemsCopy.filter((item) => {
+        return item.item_name
+          .toLowerCase()
+          .includes(
+            changes['inputSearchItem'].currentValue.itemName.toLowerCase(),
+          );
+      });
     }
   }
-
-  ngOnInit(): void {
-    this.birchService.getBirchItems().subscribe((data) => (this.items = data));
-  }
-  
 }

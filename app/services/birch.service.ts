@@ -11,8 +11,8 @@ export class BirchService {
 
   constructor() {}
 
-  getItemNameList(): [] {
-    return [];
+  getItemNameList(): Observable<any> {
+    return this.http.get<JSON>(`${this.birchApiUrl}/items/item-name`, {});
   }
   getBirchItems(): Observable<any> {
     return this.http.get<JSON>(`${this.birchApiUrl}/items`, {});
