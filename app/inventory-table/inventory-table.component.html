@@ -1,10 +1,8 @@
 <div class="inventory-table">
   <p-table [value]="items"
-           [paginator]="true"
-           [rowsPerPageOptions]="[50, 150, 500]"
-           [rows]="50"
-           [globalFilterFields]="['items']"
-  >
+    [paginator]="true"
+    [rowsPerPageOptions]="[50, 150, 500]"
+    [rows]="50">
     <ng-template #header>
       <tr>
         <th>Item Name</th>

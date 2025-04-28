@@ -1,4 +1,4 @@
-<form #searchForm="ngForm" (ngSubmit)="whenSubmitted($event, searchForm)">
+<form #inventorySearch="ngForm" (ngSubmit)="formSubmission(inventorySearch)" >
   <div class="search-form" >
     <div>
       <label for="item-name">Item Name</label>
@@ -6,9 +6,9 @@
     <div>
       <p-autoComplete
         (completeMethod)="filterSuggestions($event, 'itemSearch')"
-        [(ngModel)]="searchItem.itemName"
-        [suggestions]="itemNameSuggestions"
         id="item-name"
+        name="itemName"
+        [(ngModel)]="searchItem.itemName"
         required
         [style]="{width: '180px'}"
       />
@@ -18,8 +18,9 @@
     </div>
     <div>
       <input
-        [(ngModel)]="searchItem.description"
         id="description"
+        name="description"
+        [(ngModel)]="searchItem.description"
         pInputText
         type="text"
         [style]="{width: '180px'}"
@@ -30,11 +31,12 @@
     </div>
     <div>
       <p-select id="category"
-                [options]="itemCategoryOptions"
-                [(ngModel)]="searchItem.category"
-                optionLabel="name"
-                placeholder="Choose category"
-                [style]="{width: '180px'}"
+        name="category"
+        [(ngModel)]="searchItem.category"
+        [options]="itemCategoryOptions"
+        optionLabel="name"
+        placeholder="Choose category"
+        [style]="{width: '180px'}"
       />
     </div>
     <div>
@@ -42,11 +44,12 @@
     </div>
     <div>
       <p-select id="status"
-                [options]="itemStatusOptions"
-                [(ngModel)]="searchItem.status"
-                optionLabel="name"
-                placeholder="Default: Active"
-                [style]="{width: '180px'}"
+        name="status"
+        [options]="itemStatusOptions"
+        [(ngModel)]="searchItem.status"
+        optionLabel="name"
+        placeholder="Default: Active"
+        [style]="{width: '180px'}"
       />
     </div>
     <div class="form-submit-button">
@@ -63,5 +66,5 @@
       </div>
     </div>
   </div>
-  <inventory-table [searchItem]="searchItem" />
+  <inventory-table [item]="searchItem" />
 </form>
