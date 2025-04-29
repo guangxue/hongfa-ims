@@ -56,6 +56,12 @@ export class ImportDataComponent {
     reader.onload = () => {
       const dataRead = reader.result as string;
       const dataLines: string[] = dataRead.split('\r\n').filter(x => x !== '');
+      /**
+       * Sample data read from CSV file
+       * Array[0]: "Line,Type,Part Num,Rev,Description,Qty Option,Our Quantity,UOM,Supplier Quantity,UOM,Unit Price,Document Extended Cost,Customer"
+       * Array[1]: "1,PUR-STK,011253,,BAG SUIT PREMIUM 60 X 98CM BLACK,Our,100,EA,100,EA,2.1,210,Birch Creative"
+       * Array[...]
+       */
       this.targetFile.data = dataLines;
       this.targetFile.dataRows = dataLines.slice(1);
       this.targetFile.dataHeader = dataLines[0].split(',');
@@ -69,7 +75,9 @@ export class ImportDataComponent {
     // reset all data when input file changed
     this.targetFile.showDataTable = false;
 
-
+    /**
+     * Get the target file
+     */
     const target: HTMLInputElement = <HTMLInputElement>e.currentTarget;
     if(!("files" in target)) { return; }
 
