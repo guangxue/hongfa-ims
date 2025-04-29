@@ -36,7 +36,7 @@
         [(ngModel)]="searchItem.category"
         [options]="itemCategoryOptions"
         optionLabel="name"
-        placeholder="Choose category"
+        optionValue="code"
         [style]="{width: '180px'}"
       />
     </div>
@@ -49,7 +49,7 @@
         [options]="itemStatusOptions"
         [(ngModel)]="searchItem.status"
         optionLabel="name"
-        placeholder="Default: Active"
+        optionValue="code"
         [style]="{width: '180px'}"
       />
     </div>
@@ -61,11 +61,11 @@
         <p-button
           [style]="{'width': '100%', 'font-size': '13px'}"
           id="submit-button"
-          label="Refresh"
+          label="Search"
           type="submit"
         />
       </div>
     </div>
   </div>
-  <inventory-table [inputSearchItem]="searchItem" />
+  <inventory-search-table [inputSearchItem]="searchItem" />
 </form>

@@ -1,6 +1,5 @@
 import {
   Component,
-  effect,
   inject,
   Input,
   OnChanges,
@@ -13,12 +12,12 @@ import { BirchService } from '../services/birch.service';
 import { SearchItem } from '../interface/search-item';
 
 @Component({
-  selector: 'inventory-table',
+  selector: 'inventory-search-table',
   imports: [TableModule, RouterLink],
-  templateUrl: './inventory-table.component.html',
-  styleUrl: './inventory-table.component.css',
+  templateUrl: './inventory-search-table.component.html',
+  styleUrl: './inventory-search-table.component.css'
 })
-export class InventoryTableComponent implements OnInit, OnChanges {
+export class InventorySearchTableComponent implements OnInit, OnChanges {
   private birchService = inject(BirchService);
   itemsCopy: Array<any> = [];
   items: Array<any> = [];
@@ -52,6 +51,7 @@ export class InventoryTableComponent implements OnInit, OnChanges {
        * SET `this.items` to update the inventory table
        * CHECK if the item.item_name contains the `inputSearchItem.itemName`
        */
+      console.log("Recevied changes:", changes['inputSearchItem'].currentValue)
       this.items = this.itemsCopy.filter((item) => {
         return item.item_name
           .toLowerCase()

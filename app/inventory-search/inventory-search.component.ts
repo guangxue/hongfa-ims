@@ -6,7 +6,7 @@ import { Select } from 'primeng/select';
 import { Button } from 'primeng/button';
 import { SearchItem } from '../interface/search-item';
 import { BirchService } from '../services/birch.service';
-import { InventoryTableComponent } from '../inventory-table/inventory-table.component';
+import { InventorySearchTableComponent } from "../inventory-search-table/inventory-search-table.component";
 
 @Component({
   selector: 'inventory-search',
@@ -16,8 +16,8 @@ import { InventoryTableComponent } from '../inventory-table/inventory-table.comp
     InputText,
     Select,
     Button,
-    InventoryTableComponent,
-  ],
+    InventorySearchTableComponent
+],
   templateUrl: './inventory-search.component.html',
   styleUrl: './inventory-search.component.css',
 })
@@ -27,7 +27,7 @@ export class InventorySearchComponent {
     itemName: '',
     description: '',
     category: '',
-    status: '',
+    status: 'active',
   };
   itemStatusOptions = [
     { name: 'Active', code: 'active' },

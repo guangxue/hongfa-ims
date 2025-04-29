@@ -1,8 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {Splitter} from "primeng/splitter";
 import {PrimeTemplate} from "primeng/api";
-import {SearchFormComponent} from "../search-form/search-form.component";
-import {InventoryTableComponent} from "../inventory-table/inventory-table.component";
 import {Button} from "primeng/button";
 import {Fieldset} from "primeng/fieldset";
 import {FormsModule, NgForm, ReactiveFormsModule} from "@angular/forms";
@@ -12,14 +10,13 @@ import {DatabaseBirchItems} from "../interface/database-birch-items";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {RouterItemService} from "../services/router-item.service";
 import {Tab, TabList, TabPanel, TabPanels, Tabs} from "primeng/tabs";
+import { InventorySearchComponent } from "../inventory-search/inventory-search.component";
 
 @Component({
   selector: 'inventory-item',
   imports: [
     Splitter,
     PrimeTemplate,
-    SearchFormComponent,
-    InventoryTableComponent,
     Button,
     FormsModule,
     ReactiveFormsModule,
@@ -31,7 +28,8 @@ import {Tab, TabList, TabPanel, TabPanels, Tabs} from "primeng/tabs";
     RouterLink,
     Fieldset,
     InputText,
-  ],
+    InventorySearchComponent
+],
   templateUrl: './inventory-item.component.html',
   styleUrl: './inventory-item.component.css'
 })
