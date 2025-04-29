@@ -1,7 +1,5 @@
 <div class="import-data-page">
-  <section class="page-heading">
-    <h1>Import Data</h1>
-  </section>
+  <h1>Import Data</h1>
   <section class="page-form-section">
     <div class="form-group">
       <form #importForm="ngForm" >
@@ -10,7 +8,7 @@
             <label for="data-type">Data Type</label>
           </div>
           <div>
-            <p-dropdown
+            <p-select
               id="data-type"
               [options]="dataTypeOptions"
               [(ngModel)]="selectedDataType"
@@ -54,30 +52,12 @@
               pTooltip="Confirm to proceed">
               Import
             </button>
-            <p-button
-              type="button"
-              icon="pi pi-chevron-left"
-              (click)="dataTable.prev()"
-              [disabled]="dataTable.isFirstPage(targetFile.totalRows)"
-              styleClass="p-button-text" />
-            <p-button
-              type="button"
-              icon="pi pi-refresh"
-              (click)="dataTable.reset()"
-              styleClass="p-button-text" />
-            <p-button
-              type="button"
-              icon="pi pi-chevron-right"
-              (click)="dataTable.next()"
-              [disabled]="dataTable.isLastPage(targetFile.totalRows)"
-              styleClass="p-button-text" />
-
           </div>
           <p-table [value]="targetFile.dataRows"
                    [breakpoint]="'960px'"
                    [paginator]="true"
-                   [rows]="dataTable.rows"
-                   [first]="dataTable.first"
+                   [rows]="50"
+                   [rowsPerPageOptions]="[100, 200, 300]"
                    responsiveLayout="stack"
                    styleClass="p-datatable-striped">
             <ng-template pTemplate="header">
@@ -96,10 +76,10 @@
                 <td>{{tablerow.split(',')[9]}}</td>
               </tr>
             </ng-template>
-            <ng-template pTemplate="footer">
-              <input type="hidden" [(ngModel)]="targetFile.data" name="data" />
-            </ng-template>
-            <ng-template pTemplate="summary">
+<!--            <ng-template pTemplate="footer">-->
+<!--              <input type="hidden" [(ngModel)]="targetFile.data" name="data" />-->
+<!--            </ng-template>-->
+            <ng-template #paginatorleft>
               Total lines: <span>{{targetFile.totalRows}}</span>
             </ng-template>
           </p-table>
