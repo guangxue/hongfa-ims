@@ -2,12 +2,10 @@
 @import "primeicons/primeicons.css";
 
 body {
-  font-family:"Roboto", sans-serif;
+  font-family:"Helvetica", sans-serif;
   font-optical-sizing: auto;
   font-weight: normal;
   font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
   font-size: 0.86rem;
 }
 

@@ -1,14 +1,12 @@
-import {Component, inject} from '@angular/core';
+import {Component} from '@angular/core';
 import {Splitter} from "primeng/splitter";
 import {PrimeTemplate} from "primeng/api";
 import {Button} from "primeng/button";
 import {Fieldset} from "primeng/fieldset";
 import {FormsModule, NgForm, ReactiveFormsModule} from "@angular/forms";
 import {InputText} from "primeng/inputtext";
-import {StockService} from "../services/stock.service";
 import {DatabaseBirchItems} from "../interface/database-birch-items";
 import {ActivatedRoute, RouterLink} from "@angular/router";
-import {RouterItemService} from "../services/router-item.service";
 import {Tab, TabList, TabPanel, TabPanels, Tabs} from "primeng/tabs";
 import { InventorySearchComponent } from "../inventory-search/inventory-search.component";
 
@@ -50,17 +48,14 @@ export class InventoryItemComponent {
     qtyTagged: 0,
     qtyLoose: 0,
   };
-  stockService: StockService = inject(StockService);
   tableHeaders: string[] = [];
   tableData: DatabaseBirchItems[] = [];
 
-  constructor(private route: ActivatedRoute, private routerItemService: RouterItemService) {
+  constructor(private route: ActivatedRoute) {
     this.route.paramMap.subscribe(pm => {
       this.itemCode = pm.get('item_name')
     });
 
-    this.tableHeaders = this.stockService.tableHeaders();
-    this.tableData = this.stockService.tableData();
   }
 
   productInfoFormSubmitted(form: NgForm) {
