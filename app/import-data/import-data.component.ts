@@ -1,16 +1,16 @@
-import { Component, inject } from '@angular/core';
-import { DropdownModule } from 'primeng/dropdown';
-import { FormsModule, NgForm } from '@angular/forms';
-import { NgIf } from '@angular/common';
-import { TableModule } from 'primeng/table';
-import { ButtonDirective } from 'primeng/button';
-import { TargetFileData } from '../interface/target-file-data';
-import { Message } from 'primeng/message';
-import { TooltipModule } from 'primeng/tooltip';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { Select } from 'primeng/select';
+import {Component} from '@angular/core';
+import {DropdownModule} from 'primeng/dropdown';
+import {FormsModule, NgForm} from '@angular/forms';
+import {NgIf} from '@angular/common';
+import {TableModule} from 'primeng/table';
+import {ButtonDirective} from 'primeng/button';
+import {TargetFileData} from '../interface/target-file-data';
+import {Message} from 'primeng/message';
+import {TooltipModule} from 'primeng/tooltip';
+import {ConfirmPopupModule} from 'primeng/confirmpopup';
+import {IconFieldModule} from 'primeng/iconfield';
+import {InputIconModule} from 'primeng/inputicon';
+import {Select} from 'primeng/select';
 
 @Component({
   selector: 'import-data',
@@ -41,7 +41,8 @@ export class ImportDataComponent {
     showDataTable: false,
     data: [],
     dataRows: [],
-    dataHeader: [],
+    dataObject: [],
+    dataHeader: []
   };
   selectedDataType: string = 'Sales Order';
   dataTypeOptions: string[] = [
@@ -52,6 +53,7 @@ export class ImportDataComponent {
   ];
 
   constructor() {}
+
   readCSVFile(inputfile: any) {
     const reader = new FileReader();
     reader.readAsText(inputfile);
@@ -74,40 +76,64 @@ export class ImportDataComponent {
     };
   }
 
+  async getFileLines(inputfile: any) {
+    const blob = new Blob([inputfile], { type: 'text/csv' });
+    const rawContent =  await blob.text()
+    return rawContent.split('\r\n').filter((x) => x !== '');
+  }
   onFileChange(e: Event) {
     this.fileChanged = true;
     // reset all data when input file changed
     this.targetFile.showDataTable = false;
 
     /**
-     * Get the target file
+     * Check if files in the event target object
      */
     const target: HTMLInputElement = <HTMLInputElement>e.currentTarget;
     if (!('files' in target)) {
       return;
     }
 
-    // found input file
+    // Get target file from FileList array
     const inputfile: any = target.files?.item(0);
-    const fsuffix: string = inputfile.name.split('.')[1];
+    const extension: string = inputfile.name.split('.')[1];
     this.targetFile.name = inputfile.name;
 
     // Check if CSV file.
-    if (fsuffix.toLowerCase() !== 'csv') {
+    if (extension.toLowerCase() !== 'csv') {
       this.targetFile.found = false;
       this.targetFile.err = true;
       this.targetFile.errMsg = `"${this.targetFile.name}" is not a CSV file`;
       this.targetFile.dataRows = [];
       this.targetFile.totalRows = 0;
       return;
-    } else {
-      this.targetFile.showDataTable = true;
-      this.targetFile.found = true;
-      this.targetFile.err = false;
-      this.targetFile.errMsg = '';
-      this.readCSVFile(inputfile);
-      return;
     }
+
+    this.targetFile.showDataTable = true;
+    this.targetFile.found = true;
+    this.targetFile.err = false;
+    this.targetFile.errMsg = '';
+    this.getFileLines(inputfile).then(lines=>{
+
+      this.targetFile.totalRows = lines.length-1
+      lines.slice(1).forEach(line => {
+        let lineObj = {
+          line: '',
+          itemName: '',
+          description: '',
+          unit: '',
+          qty: '',
+        }
+        lineObj.line = line.split(',')[0]
+        lineObj.itemName = line.split(',')[2]
+        lineObj.description = line.split(',')[4]
+        lineObj.unit = line.split(',')[7]
+        lineObj.qty = line.split(',')[8]
+        this.targetFile.dataObject.push(lineObj);
+      })
+    });
+    console.log("Databojc")
+    console.log(this.targetFile.dataObject)
   }
 
   importFormSubmitted(form: NgForm) {

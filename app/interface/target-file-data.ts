@@ -44,4 +44,16 @@ export interface TargetFileData {
    * The header of the target file.
    */
   dataHeader: string[]
+
+  /**
+   * The object format of the target file.
+   * with some preset keys
+   */
+  dataObject: {
+    line: string,
+    itemName: string,
+    description: string,
+    unit: string
+    qty: string
+  }[]
 }

@@ -53,8 +53,7 @@
               Import
             </button>
           </div>
-          <p-table [value]="targetFile.dataRows"
-                   [breakpoint]="'960px'"
+          <p-table [value]="targetFile.dataObject"
                    [paginator]="true"
                    [rows]="50"
                    [rowsPerPageOptions]="[100, 200, 300]"
@@ -62,18 +61,16 @@
                    styleClass="p-datatable-striped">
             <ng-template pTemplate="header">
               <tr>
-                <th style="width:1%">{{targetFile.dataHeader[0]}}</th>
-                <th style="width:1%">{{targetFile.dataHeader[2]}}</th>
-                <th style="width:1%">{{targetFile.dataHeader[8]}}</th>
-                <th style="width:1%">{{targetFile.dataHeader[9]}}</th>
+                <th>Item Name</th>
+                <th>Description</th>
+                <th>Quantity</th>
               </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-tablerow>
+            <ng-template pTemplate="body" let-order>
               <tr>
-                <td>{{tablerow.split(',')[0]}}</td>
-                <td>{{tablerow.split(',')[2]}}</td>
-                <td>{{tablerow.split(',')[8]}}</td>
-                <td>{{tablerow.split(',')[9]}}</td>
+                <td>{{order.itemName}}</td>
+                <td>{{order.description}}</td>
+                <td>{{order.qty}} {{order.unit}}</td>
               </tr>
             </ng-template>
 <!--            <ng-template pTemplate="footer">-->
