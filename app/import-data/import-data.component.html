@@ -1,50 +1,33 @@
 <div class="import-data-page">
   <h1>Import Data</h1>
   <section class="page-form-section">
-    <div class="form-group">
+    <div>
       <form #importForm="ngForm" >
-        <div class="form-control">
-          <div>
-            <label for="data-type">Data Type</label>
-          </div>
-          <div>
-            <p-select
-              id="data-type"
-              [options]="dataTypeOptions"
-              [(ngModel)]="selectedDataType"
-              name="importDataType"
-            />
-          </div>
-        </div>
-        <div class="form-control">
-          <div>
-            <label for="file-location">File Location</label>
-          </div>
-          <div>
-            <input type="file" id="file-location" name="file" (change)="onFileChange($event)" />
-          </div>
-        </div>
-        <div *ngIf="fileChanged">
-          <div *ngIf="targetFile.found" class="form-control">
-            <div>
-              <label>File Name</label>
-            </div>
+        <div class="form-group">
+          <label for="data-type">Data Type</label>
+          <p-select
+            id="data-type"
+            [options]="dataTypeOptions"
+            [(ngModel)]="selectedDataType"
+            name="importDataType"
+          />
+          <label for="file-location">File Location</label>
+          <input type="file" id="file-location" name="file" (change)="onFileChange($event)" />
+          @if (targetFile.found) {
+            <label>File Name</label>
             <div>{{targetFile.name}}</div>
-          </div>
-          <div class="form-control" *ngIf="targetFile.err">
-            <div>
-              <label style="color: #dc2626;font-weight: bold;">File Error:</label>
-            </div>
-            <div >
-              <p-message severity="error" variant="simple">{{targetFile.errMsg}}</p-message>
-            </div>
-
-          </div>
+            <label for="orderno">Order #</label>
+            <input pInputText type="text" id="orderno" name="orderno" [(ngModel)]="importData.orderno" />
+          }
+          @if (targetFile.err) {
+            <label style="color: #dc2626;font-weight: bold;">File Error:</label>
+            <p-message severity="error" variant="simple">{{targetFile.errMsg}}</p-message>
+          }
         </div>
-        <div *ngIf="targetFile.showDataTable">
+
+        @if(targetFile.showTable){
           <div class="dt-btns">
             <button
-              *ngIf="targetFile.totalRows"
               (click)="importFormSubmitted(importForm)"
               pButton
               severity="info"
@@ -53,11 +36,10 @@
               Import
             </button>
           </div>
-          <p-table [value]="targetFile.dataObject"
+          <p-table [value]="targetFile.linesObject"
                    [paginator]="true"
-                   [rows]="50"
-                   [rowsPerPageOptions]="[100, 200, 300]"
-                   responsiveLayout="stack"
+                   [rows]="100"
+                   [rowsPerPageOptions]="[150, 200, 250]"
                    styleClass="p-datatable-striped">
             <ng-template pTemplate="header">
               <tr>
@@ -68,19 +50,16 @@
             </ng-template>
             <ng-template pTemplate="body" let-order>
               <tr>
-                <td>{{order.itemName}}</td>
+                <td>{{order.item}}</td>
                 <td>{{order.description}}</td>
                 <td>{{order.qty}} {{order.unit}}</td>
               </tr>
             </ng-template>
-<!--            <ng-template pTemplate="footer">-->
-<!--              <input type="hidden" [(ngModel)]="targetFile.data" name="data" />-->
-<!--            </ng-template>-->
             <ng-template #paginatorleft>
-              Total lines: <span>{{targetFile.totalRows}}</span>
+              <b>Total lines: {{targetFile.linesObject.length}}</b>
             </ng-template>
           </p-table>
-        </div>
+        }
       </form>
     </div>
   </section>
