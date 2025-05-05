@@ -12,6 +12,7 @@ import { PurchasesOrderComponent } from './purchases-order/purchases-order.compo
 import { InventoryComponent } from './inventory/inventory.component';
 import { InventoryItemComponent } from './inventory-item/inventory-item.component';
 import { InventorySearchComponent } from './inventory-search/inventory-search.component';
+import { SalesSearchComponent } from './sales-search/sales-search.component';
 
 export const routes: Routes = [
   {
@@ -33,7 +34,7 @@ export const routes: Routes = [
   },
   {
     path: 'sales',
-    component: SalesComponent,
+    component: SalesSearchComponent,
   },
   {
     path: 'purchases',

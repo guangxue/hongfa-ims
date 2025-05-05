@@ -1,0 +1,12 @@
+<h1>Sales Order List</h1>
+<form #salesSearchForm="ngForm">
+  <div class="form-group">
+    <label for="orderno">Order #</label>
+    <input pInputText type="text" id="orderno" name="orderno" />
+    <label for="date">Order Date</label>
+    <p-date-picker id="date" name="date" showIcon="true" iconDisplay="input" />
+    <label for="status">Status</label>
+    <p-select id="status" name="status"  />
+  </div>
+  <sales-search-table />
+</form>
