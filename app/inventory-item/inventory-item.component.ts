@@ -52,8 +52,8 @@ export class InventoryItemComponent {
   tableData: DatabaseBirchItems[] = [];
 
   constructor(private route: ActivatedRoute) {
-    this.route.paramMap.subscribe(pm => {
-      this.itemCode = pm.get('item_name')
+    this.route.paramMap.subscribe(url => {
+      this.itemCode = url.get('item_name')
     });
 
   }

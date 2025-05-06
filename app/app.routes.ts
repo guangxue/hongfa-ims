@@ -13,6 +13,7 @@ import { InventoryComponent } from './inventory/inventory.component';
 import { InventoryItemComponent } from './inventory-item/inventory-item.component';
 import { InventorySearchComponent } from './inventory-search/inventory-search.component';
 import { SalesSearchComponent } from './sales-search/sales-search.component';
+import {SalesOrderComponent} from "./sales-order/sales-order.component";
 
 export const routes: Routes = [
   {
@@ -29,12 +30,16 @@ export const routes: Routes = [
     component: InventoryComponent,
   },
   {
-    path: 'inventory/:item_name',
+    path: 'inventory-item/:item_name',
     component: InventoryItemComponent,
   },
   {
     path: 'sales',
     component: SalesSearchComponent,
+  },
+  {
+    path: 'sales-order/:order_number',
+    component: SalesOrderComponent,
   },
   {
     path: 'purchases',

@@ -9,7 +9,7 @@
    </ng-template>
    <ng-template #body let-order>
       <tr>
-        <td>{{order.no}}</td>
+        <td><a routerLink="/sales-order/{{order.no}}">{{order.no}}</a></td>
         <td>{{order.date}}</td>
         <td>{{order.status}}</td>
       </tr>
