@@ -1,16 +1,16 @@
-import { Component } from '@angular/core';
-import { DropdownModule } from 'primeng/dropdown';
-import { FormsModule, NgForm } from '@angular/forms';
-import { TableModule } from 'primeng/table';
-import { ButtonDirective } from 'primeng/button';
-import { ImportFileInfo } from '../interface/import-file-info';
-import { Message } from 'primeng/message';
-import { TooltipModule } from 'primeng/tooltip';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { Select } from 'primeng/select';
-import { InputText } from 'primeng/inputtext';
+import {Component} from '@angular/core';
+import {DropdownModule} from 'primeng/dropdown';
+import {FormsModule, NgForm} from '@angular/forms';
+import {TableModule} from 'primeng/table';
+import {ButtonDirective} from 'primeng/button';
+import {ImportFileInfo} from '../interface/import-file-info';
+import {Message} from 'primeng/message';
+import {TooltipModule} from 'primeng/tooltip';
+import {ConfirmPopupModule} from 'primeng/confirmpopup';
+import {IconFieldModule} from 'primeng/iconfield';
+import {InputIconModule} from 'primeng/inputicon';
+import {Select} from 'primeng/select';
+import {InputText} from 'primeng/inputtext';
 
 @Component({
   selector: 'import-data',
@@ -47,29 +47,36 @@ export class ImportDataComponent {
 
   constructor() {}
 
-  removeStringQuotes(str: string) {
-    if (str.startsWith('"') && str.endsWith('"')) {
-      return str.slice(1, -1);
-    }
-    return str;
-  }
   async getLines(inputfile: any) {
     const blob = new Blob([inputfile], { type: 'text/csv' });
-    const rawContent = await blob.text();
-    return rawContent.split('\n');
+    let content = await blob.text()
+    // Remove empty lines in case of causing `c.description` undefined.
+    let lines = content.split('\n').filter(line => line.length > 0);
+    let contentLines = []
+    for (let line of lines) {
+      contentLines.push(line.split(','))
+    }
+    // Remove table header
+    return contentLines.slice(1);
   }
 
-  async createLines(inputfile: any) {
-    const lines = await this.getLines(inputfile);
+  async normalizeLines(lines: string[][]) {
+    const POS: {line: number, item: number, desc: number, qty: number, unit: number}= {
+      line: 0,
+      item: 2,
+      desc: 4,
+      qty:  6,
+      unit:  7,
+    }
     const collectLines: {
       line: string;
       item: string;
       description: string;
       qty: string;
       unit: string;
-    }[] = [];
+    }[] = []
 
-    lines.slice(1).forEach((l) => {
+    lines.forEach(l=> {
       let line = {
         line: '',
         item: '',
@@ -77,19 +84,25 @@ export class ImportDataComponent {
         qty: '',
         unit: '',
       };
-      let readyline = l.split(',');
-      line.line = readyline[0];
-      line.item = readyline[2];
-      line.description = this.removeStringQuotes(readyline[4]).replace(
-        '""',
-        '"',
-      );
-      line.qty = readyline[6];
-      line.unit = readyline[7];
+
+      line.line = l[POS.line];
+      line.item = l[POS.item];
+      if (l[POS.desc].startsWith('"') && l[POS.desc].endsWith('"')) {
+        line.description = l[POS.desc].replace('""', '"').slice(1, -1);
+      }else {
+        line.description = l[POS.desc];
+      }
+      line.qty = l[POS.qty];
+      line.unit = l[POS.unit];
       collectLines.push(line);
-    });
+    })
     return collectLines;
   }
+  async createLinesObject(inputfile: any) {
+    const contentLines = await this.getLines(inputfile);
+    return await this.normalizeLines(contentLines)
+  }
+
   async onFileChange(e: Event) {
     // reset all data when input file changed
     this.targetFile.showTable = false;
@@ -119,7 +132,7 @@ export class ImportDataComponent {
     this.targetFile.found = true;
     this.targetFile.err = false;
     this.targetFile.errMsg = '';
-    this.targetFile.linesObject = await this.createLines(inputfile);
+    this.targetFile.linesObject = await this.createLinesObject(inputfile);
   }
 
   importFormSubmitted(form: NgForm) {
