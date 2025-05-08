@@ -1,18 +1,18 @@
-import {Component, Inject, PLATFORM_ID} from '@angular/core';
-import {DropdownModule} from 'primeng/dropdown';
-import {FormsModule, NgForm} from '@angular/forms';
-import {TableModule} from 'primeng/table';
-import {ButtonDirective} from 'primeng/button';
-import {ImportFileInfo} from '../interface/import-file-info';
-import {Message} from 'primeng/message';
-import {TooltipModule} from 'primeng/tooltip';
-import {ConfirmPopupModule} from 'primeng/confirmpopup';
-import {IconFieldModule} from 'primeng/iconfield';
-import {InputIconModule} from 'primeng/inputicon';
-import {Select} from 'primeng/select';
-import {InputText} from 'primeng/inputtext';
-import {Router} from "@angular/router";
-import {isPlatformBrowser} from "@angular/common";
+import { Component } from '@angular/core';
+import { DropdownModule } from 'primeng/dropdown';
+import { FormsModule } from '@angular/forms';
+import { TableModule } from 'primeng/table';
+import { ButtonDirective } from 'primeng/button';
+import { ImportFileInfo } from '../interface/import-file-info';
+import { Message } from 'primeng/message';
+import { TooltipModule } from 'primeng/tooltip';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { Select } from 'primeng/select';
+import { InputText } from 'primeng/inputtext';
+import { Router } from '@angular/router';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
   selector: 'import-data',
@@ -45,47 +45,54 @@ export class ImportDataComponent {
   selectedDataType: string = 'Sales Order';
   dataTypeOptions: string[] = ['Sales Order', 'Purchase Order', 'Inventory'];
   importData: {
-    orderNumber: string
-    orderData: any[]
+    orderNumber: string;
+    orderData: any[];
   } = {
     orderNumber: '',
-    orderData: []
+    orderData: [],
   };
 
-  constructor(private router: Router, @Inject(PLATFORM_ID) private platformId: object) {
-
-  }
+  constructor(
+    private router: Router,
+    private localStorage: LocalStorageService,
+  ) {}
 
   async getLines(inputfile: any) {
     const blob = new Blob([inputfile], { type: 'text/csv' });
-    let content = await blob.text()
+    let content = await blob.text();
     // Remove empty lines in case of causing `c.description` undefined.
-    let lines = content.split('\n').filter(line => line.length > 0);
-    let contentLines = []
+    let lines = content.split('\n').filter((line) => line.length > 0);
+    let contentLines = [];
     for (let line of lines) {
-      contentLines.push(line.split(','))
+      contentLines.push(line.split(','));
     }
     // Remove table header
     return contentLines.slice(1);
   }
 
   async normalizeLines(lines: string[][]) {
-    const POS: {line: number, item: number, desc: number, qty: number, unit: number}= {
+    const POS: {
+      line: number;
+      item: number;
+      desc: number;
+      qty: number;
+      unit: number;
+    } = {
       line: 0,
       item: 2,
       desc: 4,
-      qty:  6,
-      unit:  7,
-    }
+      qty: 6,
+      unit: 7,
+    };
     const collectLines: {
       line: string;
       item: string;
       description: string;
       qty: string;
       unit: string;
-    }[] = []
+    }[] = [];
 
-    lines.forEach(l=> {
+    lines.forEach((l) => {
       let line = {
         line: '',
         item: '',
@@ -98,23 +105,24 @@ export class ImportDataComponent {
       line.item = l[POS.item];
       if (l[POS.desc].startsWith('"') && l[POS.desc].endsWith('"')) {
         line.description = l[POS.desc].replace('""', '"').slice(1, -1);
-      }else {
+      } else {
         line.description = l[POS.desc];
       }
       line.qty = l[POS.qty];
       line.unit = l[POS.unit];
       collectLines.push(line);
-    })
+    });
     return collectLines;
   }
+
   async createLinesObject(inputfile: any) {
     const contentLines = await this.getLines(inputfile);
-    return await this.normalizeLines(contentLines)
+    return await this.normalizeLines(contentLines);
   }
+
   createOrderNumber() {
-    console.log('createOrderNumber');
-    let birchOrderNumber = this.targetFile.name.split(' ')[1]
-    this.targetFile.orderNumber = `EB25-088-${birchOrderNumber}`
+    let birchOrderNumber = this.targetFile.name.split(' ')[1];
+    this.targetFile.orderNumber = `EB25-088-${birchOrderNumber}`;
   }
 
   async onFileChange(e: Event) {
@@ -150,14 +158,21 @@ export class ImportDataComponent {
     this.createOrderNumber();
   }
 
-  importFormSubmitted(form: NgForm) {
-
-    console.log("Import form");
-    this.importData.orderData = this.targetFile.linesObject
-    this.importData.orderNumber = this.targetFile.orderNumber
-    if(isPlatformBrowser(this.platformId)) {
-      localStorage.setItem('importData', JSON.stringify(this.importData));
-      this.router.navigate([`/sales-order/${this.importData.orderNumber}`]);
-    }
+  importFormSubmitted() {
+    this.importData.orderData = this.targetFile.linesObject;
+    this.importData.orderNumber = this.targetFile.orderNumber;
+    this.router
+      .navigate([`/sales-order/${this.importData.orderNumber}`])
+      .then((res) => {
+        if (res) {
+          this.localStorage.set('importData', JSON.stringify(this.importData));
+          return 'Navigated to sales-order';
+        } else {
+          return 'Failed to navigate to sales-order';
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }
