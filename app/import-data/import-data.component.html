@@ -14,10 +14,10 @@
           <label for="file-location">File Location</label>
           <input type="file" id="file-location" name="file" (change)="onFileChange($event)" />
           @if (targetFile.found) {
-            <label>File Name</label>
-            <div>{{targetFile.name}}</div>
+<!--            <label>File Name</label>-->
+<!--            <div>{{targetFile.name}}</div>-->
             <label for="orderno">Order #</label>
-            <input pInputText type="text" id="orderno" name="orderno" [(ngModel)]="importData.orderno" />
+            <input pInputText type="text" id="orderno" name="orderno" [(ngModel)]="targetFile.orderNumber" [value]="targetFile.orderNumber" />
           }
           @if (targetFile.err) {
             <label style="color: #dc2626;font-weight: bold;">File Error:</label>

@@ -1,16 +1,19 @@
 <div class="sales-order">
-  <p-splitter>
-   <ng-template pTemplate>
-     <div style="width: 100%">
-       <sales-search />
-     </div>
-   </ng-template>
-
-    <ng-template pTemplate>
-      <div>
-        order: {{order_number}}
-      </div>
-    </ng-template>
-
-  </p-splitter>
+  <div class="order-header">
+    <div>
+      <img src="hongfa-logo.png">
+    </div>
+    <div>
+      <pre>
+        Hongfa International Australia Pty Ltd
+        405 Victoria St, Brunwick, VIC, 3055
+        Email: ryan&#64;hongfa.com.au
+        Tel  : 0393802133
+      </pre>
+    </div>
+    <div>
+      <p>Order #: {{order_number}}</p>
+      <p>Date: 04/03/2025</p>
+    </div>
+  </div>
 </div>

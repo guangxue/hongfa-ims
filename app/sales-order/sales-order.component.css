@@ -1,0 +1,8 @@
+.order-header {
+  display: flex;
+  gap: 2rem;
+}
+
+.order-header div {
+  border: 1px solid black;
+}

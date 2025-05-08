@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Inject, PLATFORM_ID} from '@angular/core';
 import {DropdownModule} from 'primeng/dropdown';
 import {FormsModule, NgForm} from '@angular/forms';
 import {TableModule} from 'primeng/table';
@@ -11,6 +11,8 @@ import {IconFieldModule} from 'primeng/iconfield';
 import {InputIconModule} from 'primeng/inputicon';
 import {Select} from 'primeng/select';
 import {InputText} from 'primeng/inputtext';
+import {Router} from "@angular/router";
+import {isPlatformBrowser} from "@angular/common";
 
 @Component({
   selector: 'import-data',
@@ -33,6 +35,7 @@ import {InputText} from 'primeng/inputtext';
 export class ImportDataComponent {
   targetFile: ImportFileInfo = {
     name: '',
+    orderNumber: '',
     found: false,
     err: false,
     errMsg: '',
@@ -41,11 +44,17 @@ export class ImportDataComponent {
   };
   selectedDataType: string = 'Sales Order';
   dataTypeOptions: string[] = ['Sales Order', 'Purchase Order', 'Inventory'];
-  importData = {
-    orderno: '',
+  importData: {
+    orderNumber: string
+    orderData: any[]
+  } = {
+    orderNumber: '',
+    orderData: []
   };
 
-  constructor() {}
+  constructor(private router: Router, @Inject(PLATFORM_ID) private platformId: object) {
+
+  }
 
   async getLines(inputfile: any) {
     const blob = new Blob([inputfile], { type: 'text/csv' });
@@ -102,6 +111,11 @@ export class ImportDataComponent {
     const contentLines = await this.getLines(inputfile);
     return await this.normalizeLines(contentLines)
   }
+  createOrderNumber() {
+    console.log('createOrderNumber');
+    let birchOrderNumber = this.targetFile.name.split(' ')[1]
+    this.targetFile.orderNumber = `EB25-088-${birchOrderNumber}`
+  }
 
   async onFileChange(e: Event) {
     // reset all data when input file changed
@@ -118,7 +132,7 @@ export class ImportDataComponent {
     // Get target file from FileList array
     const inputfile: any = target.files?.item(0);
     const extension: string = inputfile.name.split('.')[1];
-    this.targetFile.name = inputfile.name;
+    this.targetFile.name = inputfile.name.split('.')[0];
 
     // Check if NOT CSV file and return.
     if (extension.toLowerCase() !== 'csv') {
@@ -133,9 +147,17 @@ export class ImportDataComponent {
     this.targetFile.err = false;
     this.targetFile.errMsg = '';
     this.targetFile.linesObject = await this.createLinesObject(inputfile);
+    this.createOrderNumber();
   }
 
   importFormSubmitted(form: NgForm) {
-    console.log('submitted value: ', form.value);
+
+    console.log("Import form");
+    this.importData.orderData = this.targetFile.linesObject
+    this.importData.orderNumber = this.targetFile.orderNumber
+    if(isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('importData', JSON.stringify(this.importData));
+      this.router.navigate([`/sales-order/${this.importData.orderNumber}`]);
+    }
   }
 }

@@ -3,6 +3,7 @@ export interface ImportFileInfo {
    * The name of target file
    */
   name: string;
+  orderNumber: string;
 
   /**
    * Found the target file that matches .csv format.
