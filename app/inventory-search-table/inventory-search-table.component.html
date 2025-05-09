@@ -1,5 +1,5 @@
 <div class="inventory-table">
-  <p-table [value]="items"
+  <p-table [value]="currentStock"
     [paginator]="true"
     [rowsPerPageOptions]="[100, 150, 200]"
     [rows]="50">
@@ -18,7 +18,7 @@
         <td>{{item.qty_shelf}}</td>
         <td>{{item.qty_tagged}}</td>
         <td>{{item.qty_loose}}</td>
-        <td>{{item.tags_left}}</td>
+        <td>{{item.qty_tags}}</td>
       </tr>
     </ng-template>
   </p-table>

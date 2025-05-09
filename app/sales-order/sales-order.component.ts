@@ -1,28 +1,36 @@
-import { Component } from '@angular/core';
+import {AfterContentInit, Component} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from '../services/local-storage.service';
+import {TableModule} from "primeng/table";
+import {NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'sales-order',
-  imports: [],
+  imports: [
+    TableModule,
+    NgOptimizedImage
+  ],
   templateUrl: './sales-order.component.html',
   styleUrl: './sales-order.component.css',
 })
-export class SalesOrderComponent {
-  protected order_number: string | null = null;
+export class SalesOrderComponent implements AfterContentInit {
+  protected orderNumber: string | null = null;
+  orderItems: any[] = [];
 
-  constructor(
-    private route: ActivatedRoute,
-    private localStorage: LocalStorageService,
-  ) {
-    this.route.paramMap.subscribe((url) => {
-      this.order_number = url.get('order_number');
-    });
+  constructor(private route: ActivatedRoute, private localStorage: LocalStorageService) {}
 
-    const data = this.localStorage.get('importData');
-    if (data) {
-      const parseData = JSON.parse(data);
-      console.log(parseData.orderData);
+  ngAfterContentInit(): void {
+    const imported_order = this.localStorage.get('sales-order');
+    if (imported_order) {
+      const orderInfo  = JSON.parse(imported_order);
+      this.orderNumber = orderInfo.orderNumber;
+      this.orderItems = orderInfo.orderItems;
+      console.log(orderInfo);
+    } else {
+      console.log("Get order info from database")
+      this.route.paramMap.subscribe((url) => {
+        this.orderNumber = url.get('order_number');
+      });
     }
   }
 }

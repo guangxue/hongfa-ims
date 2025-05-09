@@ -1,8 +1,47 @@
+.sales-order {
+  width: 850px;
+}
+h1 {
+  text-align: right;
+}
+.address > div {
+  margin: 3px;
+}
+.order-number-top {
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 8px;
+  gap: 1.5rem;
+}
 .order-header {
-  display: flex;
-  gap: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  align-items: flex-start;
 }
 
-.order-header div {
+.contacts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .5rem;
+  margin: 1rem 0;
+}
+
+.order-title {
   border: 1px solid black;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding: .3rem;
+}
+
+.sales-order-table {
+  margin-top: 1.8rem;
+}
+
+.p-datatable-thead {
+  background: #7a3131;
 }

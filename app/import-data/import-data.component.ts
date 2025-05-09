@@ -44,12 +44,12 @@ export class ImportDataComponent {
   };
   selectedDataType: string = 'Sales Order';
   dataTypeOptions: string[] = ['Sales Order', 'Purchase Order', 'Inventory'];
-  importData: {
+  imported: {
     orderNumber: string;
-    orderData: any[];
+    orderItems: any[];
   } = {
     orderNumber: '',
-    orderData: [],
+    orderItems: [],
   };
 
   constructor(
@@ -121,8 +121,8 @@ export class ImportDataComponent {
   }
 
   createOrderNumber() {
-    let birchOrderNumber = this.targetFile.name.split(' ')[1];
-    this.targetFile.orderNumber = `EB25-088-${birchOrderNumber}`;
+    let birchOrderNumber = this.targetFile.name.split(' ').slice(-1)
+    this.targetFile.orderNumber = `EB25-016-${birchOrderNumber}`;
   }
 
   async onFileChange(e: Event) {
@@ -158,14 +158,15 @@ export class ImportDataComponent {
     this.createOrderNumber();
   }
 
-  importFormSubmitted() {
-    this.importData.orderData = this.targetFile.linesObject;
-    this.importData.orderNumber = this.targetFile.orderNumber;
+  importFormSubmitted(event: Event) {
+    event.preventDefault();
+    this.imported.orderItems = this.targetFile.linesObject;
+    this.imported.orderNumber = this.targetFile.orderNumber;
     this.router
-      .navigate([`/sales-order/${this.importData.orderNumber}`])
+      .navigate([`/sales-order/${this.imported.orderNumber}`])
       .then((res) => {
         if (res) {
-          this.localStorage.set('importData', JSON.stringify(this.importData));
+          this.localStorage.set('sales-order', JSON.stringify(this.imported));
           return 'Navigated to sales-order';
         } else {
           return 'Failed to navigate to sales-order';

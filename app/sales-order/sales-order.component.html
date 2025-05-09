@@ -1,19 +1,52 @@
 <div class="sales-order">
+  <h1>Pick List</h1>
   <div class="order-header">
     <div>
-      <img src="hongfa-logo.png">
+      <img alt="hongfa logo" ngSrc="/hongfa-logo.png" height="58" width="195">
     </div>
-    <div>
-      <pre>
-        Hongfa International Australia Pty Ltd
-        405 Victoria St, Brunwick, VIC, 3055
-        Email: ryan&#64;hongfa.com.au
-        Tel  : 0393802133
-      </pre>
+    <div class="address">
+      <div>Hongfa International Australia Pty Ltd.</div>
+      <div>405 Victoria St, Brunswick VIC 3055</div>
+      <div>Email: ryan&#64;hongfa.com.au</div>
+      <div>Tel: 0393802133</div>
     </div>
-    <div>
-      <p>Order #: {{order_number}}</p>
-      <p>Date: 04/03/2025</p>
+    <div class="order-number-top">
+      <div>Order #:</div>
+      <div>{{orderNumber}}</div>
+      <div>Date: </div>
+      <div>04/03/2025</div>
     </div>
+  </div>
+  <div class="contacts">
+    <div><b>Customer</b></div>
+    <div>Birch Creative</div>
+    <div><b>Contact</b></div>
+    <div>Vikram / Ingrid</div>
+    <div><b>Dept</b></div>
+    <div>100</div>
+  </div>
+  <div class="order-title">
+    <div>PO Number</div>
+    <div>Sales Rep</div>
+    <div>{{orderNumber}}</div>
+    <div>Ryan</div>
+  </div>
+  <div class="sales-order-table">
+    <p-table [value]="orderItems" showGridlines>
+      <ng-template #header>
+        <tr>
+          <th>Item</th>
+          <th>Description</th>
+          <th>Quantity</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-order>
+        <tr>
+          <td>{{order.item}}</td>
+          <td>{{order.description}}</td>
+          <td>{{order.qty}} {{order.unit}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
 </div>

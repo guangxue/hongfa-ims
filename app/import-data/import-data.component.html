@@ -2,7 +2,7 @@
   <h1>Import Data</h1>
   <section class="page-form-section">
     <div>
-      <form method="get">
+      <form method="">
         <div class="form-group">
           <label for="data-type">Data Type</label>
           <p-select
@@ -28,7 +28,7 @@
         @if(targetFile.showTable){
           <div class="dt-btns">
             <button
-              (click)="importFormSubmitted()"
+              (click)="importFormSubmitted($event)"
               pButton
               severity="info"
               class="import-btn"

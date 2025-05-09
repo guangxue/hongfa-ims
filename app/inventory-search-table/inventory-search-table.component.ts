@@ -10,6 +10,7 @@ import { TableModule } from 'primeng/table';
 import { RouterLink } from '@angular/router';
 import { BirchService } from '../services/birch.service';
 import { SearchItem } from '../interface/search-item';
+import {LocalStorageService} from "../services/local-storage.service";
 
 @Component({
   selector: 'inventory-search-table',
@@ -17,10 +18,10 @@ import { SearchItem } from '../interface/search-item';
   templateUrl: './inventory-search-table.component.html',
   styleUrl: './inventory-search-table.component.css'
 })
-export class InventorySearchTableComponent implements OnInit, OnChanges {
-  private birchService = inject(BirchService);
-  itemsCopy: Array<any> = [];
-  items: Array<any> = [];
+export class InventorySearchTableComponent implements OnChanges {
+  localStorge = inject(LocalStorageService);
+  currentStock: any[] = [];
+  inventory: Array<any> = [];
   // Receiving value from a parent
   @Input() inputSearchItem: SearchItem = {
     itemName: '',
@@ -29,13 +30,12 @@ export class InventorySearchTableComponent implements OnInit, OnChanges {
     status: '',
   };
 
-  constructor() {}
-
-  ngOnInit(): void {
-    this.birchService.getBirchItems().subscribe((data) => {
-      this.itemsCopy = data;
-      this.items = data;
-    });
+  constructor() {
+    let i = this.localStorge.get('inventory');
+    if (i) {
+      this.inventory = JSON.parse(i);
+      this.currentStock = this.inventory;
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -51,14 +51,14 @@ export class InventorySearchTableComponent implements OnInit, OnChanges {
        * SET `this.items` to update the inventory table
        * CHECK if the item.item_name contains the `inputSearchItem.itemName`
        */
-      console.log("Recevied changes:", changes['inputSearchItem'].currentValue)
-      this.items = this.itemsCopy.filter((item) => {
+      let searchResult = this.inventory.filter((item) => {
         return item.item_name
           .toLowerCase()
           .includes(
             changes['inputSearchItem'].currentValue.itemName.toLowerCase(),
           );
       });
+      this.currentStock = searchResult.sort((a, b) => a.item_name.localeCompare(b.item_name));
     }
   }
 }
