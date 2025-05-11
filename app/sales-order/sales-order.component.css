@@ -1,5 +1,8 @@
 .sales-order {
-  width: 850px;
+  border: 1px solid #e5e7eb;
+  margin-top: 2rem;
+  width: 860px;
+  padding: 1.8rem;
 }
 h1 {
   text-align: right;

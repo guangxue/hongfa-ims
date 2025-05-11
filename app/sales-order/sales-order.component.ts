@@ -3,12 +3,22 @@ import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from '../services/local-storage.service';
 import {TableModule} from "primeng/table";
 import {NgOptimizedImage} from "@angular/common";
+import {Step, StepList, StepPanel, StepPanels, Stepper} from "primeng/stepper";
+import {InputText} from "primeng/inputtext";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'sales-order',
   imports: [
     TableModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    Stepper,
+    StepList,
+    Step,
+    StepPanels,
+    StepPanel,
+    InputText,
+    FormsModule,
   ],
   templateUrl: './sales-order.component.html',
   styleUrl: './sales-order.component.css',
@@ -25,12 +35,15 @@ export class SalesOrderComponent implements AfterContentInit {
       const orderInfo  = JSON.parse(imported_order);
       this.orderNumber = orderInfo.orderNumber;
       this.orderItems = orderInfo.orderItems;
-      console.log(orderInfo);
     } else {
       console.log("Get order info from database")
       this.route.paramMap.subscribe((url) => {
         this.orderNumber = url.get('order_number');
       });
     }
+  }
+
+  saveOrder() {
+    console.log("Save order to database")
   }
 }

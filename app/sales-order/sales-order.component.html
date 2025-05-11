@@ -1,52 +1,144 @@
 <div class="sales-order">
-  <h1>Pick List</h1>
-  <div class="order-header">
-    <div>
-      <img alt="hongfa logo" ngSrc="/hongfa-logo.png" height="58" width="195">
-    </div>
-    <div class="address">
-      <div>Hongfa International Australia Pty Ltd.</div>
-      <div>405 Victoria St, Brunswick VIC 3055</div>
-      <div>Email: ryan&#64;hongfa.com.au</div>
-      <div>Tel: 0393802133</div>
-    </div>
-    <div class="order-number-top">
-      <div>Order #:</div>
-      <div>{{orderNumber}}</div>
-      <div>Date: </div>
-      <div>04/03/2025</div>
-    </div>
-  </div>
-  <div class="contacts">
-    <div><b>Customer</b></div>
-    <div>Birch Creative</div>
-    <div><b>Contact</b></div>
-    <div>Vikram / Ingrid</div>
-    <div><b>Dept</b></div>
-    <div>100</div>
-  </div>
-  <div class="order-title">
-    <div>PO Number</div>
-    <div>Sales Rep</div>
-    <div>{{orderNumber}}</div>
-    <div>Ryan</div>
-  </div>
-  <div class="sales-order-table">
-    <p-table [value]="orderItems" showGridlines>
-      <ng-template #header>
-        <tr>
-          <th>Item</th>
-          <th>Description</th>
-          <th>Quantity</th>
-        </tr>
-      </ng-template>
-      <ng-template #body let-order>
-        <tr>
-          <td>{{order.item}}</td>
-          <td>{{order.description}}</td>
-          <td>{{order.qty}} {{order.unit}}</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
+  <p-stepper [value]="1">
+    <p-step-list>
+      <p-step [value]="1">Sales Order</p-step>
+      <p-step [value]="2" (click)="saveOrder()">Pick List</p-step>
+      <p-step [value]="3">Packing Slip</p-step>
+      <p-step [value]="4">Invoice</p-step>
+    </p-step-list>
+
+    <p-step-panels>
+      <p-step-panel [value]="1">
+        <ng-template #content >
+          <h1>Sales Order</h1>
+          <div class="order-header">
+            <div>
+              <img alt="hongfa logo" ngSrc="/hongfa-logo.png" height="58" width="195">
+            </div>
+            <div class="address">
+              <div>Hongfa International Australia Pty Ltd.</div>
+              <div>405 Victoria St, Brunswick VIC 3055</div>
+              <div>Email: ryan&#64;hongfa.com.au</div>
+              <div>Tel: 0393802133</div>
+            </div>
+            <div class="order-number-top">
+              <div>Order #:</div>
+              <div>{{orderNumber}}</div>
+              <div>Date: </div>
+              <div>04/03/2025</div>
+            </div>
+          </div>
+          <div class="contacts">
+            <div><b>Customer</b></div>
+            <div>Birch Creative</div>
+            <div><b>Contact</b></div>
+            <div>Vikram / Ingrid</div>
+            <div><b>Dept</b></div>
+            <div>100</div>
+          </div>
+          <div class="order-title">
+            <div>PO Number</div>
+            <div>Sales Rep</div>
+            <div>{{orderNumber}}</div>
+            <div>Ryan</div>
+          </div>
+          <div class="sales-order-table">
+            <p-table [value]="orderItems" showGridlines>
+              <ng-template #header>
+                <tr>
+                  <th>Item</th>
+                  <th>Description</th>
+                  <th>Quantity</th>
+                </tr>
+              </ng-template>
+              <ng-template #body let-order>
+                <tr>
+                  <td>{{order.item}}</td>
+                  <td>{{order.description}}</td>
+                  <td [pEditableColumn]="orderItems" >
+                    <p-cellEditor>=
+                      <ng-template #input>
+                        <input type="text" pInputText [(ngModel)]="order.qty">
+                      </ng-template>
+                      <ng-template #output>
+                        {{order.qty}} {{order.unit}}
+                      </ng-template>
+                    </p-cellEditor>
+                  </td>
+<!--                  <td>{{order.qty}} {{order.unit}}</td>-->
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </ng-template>
+      </p-step-panel>
+
+      <p-step-panel [value]="2">
+        <ng-template #content>
+          <h1>Pick List</h1>
+          <div class="order-header">
+            <div>
+              <img alt="hongfa logo" ngSrc="/hongfa-logo.png" height="58" width="195">
+            </div>
+            <div class="address">
+              <div>Hongfa International Australia Pty Ltd.</div>
+              <div>405 Victoria St, Brunswick VIC 3055</div>
+              <div>Email: ryan&#64;hongfa.com.au</div>
+              <div>Tel: 0393802133</div>
+            </div>
+            <div class="order-number-top">
+              <div>Order #:</div>
+              <div>{{orderNumber}}</div>
+              <div>Date: </div>
+              <div>04/03/2025</div>
+            </div>
+          </div>
+          <div class="contacts">
+            <div><b>Customer</b></div>
+            <div>Birch Creative</div>
+            <div><b>Contact</b></div>
+            <div>Vikram / Ingrid</div>
+            <div><b>Dept</b></div>
+            <div>100</div>
+          </div>
+          <div class="order-title">
+            <div>PO Number</div>
+            <div>Sales Rep</div>
+            <div>{{orderNumber}}</div>
+            <div>Ryan</div>
+          </div>
+          <div class="sales-order-table">
+            <p-table [value]="orderItems" showGridlines>
+              <ng-template #header>
+                <tr>
+                  <th>Item</th>
+                  <th>Description</th>
+                  <th>Quantity</th>
+                </tr>
+              </ng-template>
+              <ng-template #body let-order>
+                <tr>
+                  <td>{{order.item}}</td>
+                  <td>{{order.description}}</td>
+                  <td>{{order.qty}} {{order.unit}}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </ng-template>
+      </p-step-panel>
+
+      <p-step-panel [value]="3">
+        <ng-template #content>
+          <h1>Packing Slip</h1>
+        </ng-template>
+      </p-step-panel>
+
+      <p-step-panel [value]="4">
+        <ng-template #content>
+          <h1>Invoice</h1>
+        </ng-template>
+      </p-step-panel>
+    </p-step-panels>
+  </p-stepper>
 </div>
