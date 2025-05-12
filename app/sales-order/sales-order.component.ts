@@ -6,6 +6,7 @@ import {NgOptimizedImage} from "@angular/common";
 import {Step, StepList, StepPanel, StepPanels, Stepper} from "primeng/stepper";
 import {InputText} from "primeng/inputtext";
 import {FormsModule} from "@angular/forms";
+import {BirchService} from "../services/birch.service";
 
 @Component({
   selector: 'sales-order',
@@ -27,7 +28,11 @@ export class SalesOrderComponent implements AfterContentInit {
   protected orderNumber: string | null = null;
   orderItems: any[] = [];
 
-  constructor(private route: ActivatedRoute, private localstorage: LocalStorageService,) {
+  constructor(
+    private route: ActivatedRoute,
+    private localstorage: LocalStorageService,
+    private birchService: BirchService,)
+  {
     this.route.paramMap.subscribe(url => {
       this.orderNumber = url.get('orderNumber');
     })
@@ -65,6 +70,12 @@ export class SalesOrderComponent implements AfterContentInit {
 
   createPickList() {
     console.log("Creating Pick List: with data below");
-    console.log(this.orderItems);
+    let namesBody: any[] = []
+    this.orderItems.forEach(item=>{
+      namesBody.push(item.item)
+    })
+    this.birchService.getBirchItemCodesByNames(namesBody).subscribe(res=>{
+      console.log(res)
+    })
   }
 }

@@ -35,4 +35,6 @@ export interface ImportFileInfo {
     qty: string;
     unit: string;
   }[];
+
+  cols: number
 }

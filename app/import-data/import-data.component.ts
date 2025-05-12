@@ -41,6 +41,7 @@ export class ImportDataComponent {
     errMsg: '',
     showTable: false,
     linesObject: [],
+    cols: 0
   };
   selectedDataType: string = 'Sales Order';
   dataTypeOptions: string[] = ['Sales Order', 'Purchase Order', 'Inventory'];
@@ -60,6 +61,7 @@ export class ImportDataComponent {
       contentLines.push(line.split(','));
     }
     // Remove table header
+    this.targetFile.cols = contentLines[0].length;
     return contentLines.slice(1);
   }
 
@@ -74,8 +76,8 @@ export class ImportDataComponent {
       line: 0,
       item: 2,
       desc: 4,
-      qty: 5,
-      unit: 6,
+      qty: this.targetFile.cols-4,
+      unit: this.targetFile.cols-3,
     };
     const collectLines: {
       line: string;

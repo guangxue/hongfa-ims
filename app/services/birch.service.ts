@@ -17,4 +17,18 @@ export class BirchService {
   getBirchItems(): Observable<any> {
     return this.http.get<JSON>(`${this.birchApiUrl}/items`, {});
   }
+
+  /**
+   *
+   * @param namesBody
+   * An array of itemNames that send as post body
+   */
+  getBirchItemCodesByNames(namesBody: string[]): Observable<any> {
+    console.log("Making Post Request.....with data:", namesBody)
+    return this.http.post(`${this.birchApiUrl}/items/item-codes`, namesBody, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
 }
