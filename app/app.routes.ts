@@ -38,7 +38,7 @@ export const routes: Routes = [
     component: SalesSearchComponent,
   },
   {
-    path: 'sales-order/:order_number',
+    path: 'sales-order/:orderNumber',
     component: SalesOrderComponent,
   },
   {

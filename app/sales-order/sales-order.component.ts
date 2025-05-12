@@ -1,4 +1,4 @@
-import {AfterContentInit, Component} from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from '../services/local-storage.service';
 import {TableModule} from "primeng/table";
@@ -27,23 +27,44 @@ export class SalesOrderComponent implements AfterContentInit {
   protected orderNumber: string | null = null;
   orderItems: any[] = [];
 
-  constructor(private route: ActivatedRoute, private localStorage: LocalStorageService) {}
-
-  ngAfterContentInit(): void {
-    const imported_order = this.localStorage.get('sales-order');
-    if (imported_order) {
-      const orderInfo  = JSON.parse(imported_order);
-      this.orderNumber = orderInfo.orderNumber;
-      this.orderItems = orderInfo.orderItems;
-    } else {
-      console.log("Get order info from database")
-      this.route.paramMap.subscribe((url) => {
-        this.orderNumber = url.get('order_number');
-      });
+  constructor(private route: ActivatedRoute, private localstorage: LocalStorageService,) {
+    this.route.paramMap.subscribe(url => {
+      this.orderNumber = url.get('orderNumber');
+    })
+    let order = this.localstorage.get('sales-order')
+    if (order) {
+      let orderData = JSON.parse((order));
+      if(this.orderNumber == orderData.orderNumber) {
+        this.orderItems = orderData.orderItems;
+      }
     }
   }
 
-  saveOrder() {
-    console.log("Save order to database")
+  ngAfterContentInit(): void {
+    console.info('ngAfterContentInit() done');
+    if(this.orderItems.length == 0){
+      this.orderItems = [
+        {
+          item: '011253',
+          line: '1',
+          description: 'BAG SUIT PREMIUM 60 X 98CM BLACK',
+          qty: "100",
+          unit: "EA"
+        },
+        {
+          item: '011254',
+          line: '2',
+          description: 'BAG DRESS OR COAT PREMIUM 60 X 136CM BLACK',
+          qty: "100",
+          unit: "EA"
+        }
+      ]
+      console.error('No sales data:', this.orderNumber);
+    }
+  }
+
+  createPickList() {
+    console.log("Creating Pick List: with data below");
+    console.log(this.orderItems);
   }
 }

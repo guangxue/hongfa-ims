@@ -2,13 +2,14 @@
   <p-stepper [value]="1">
     <p-step-list>
       <p-step [value]="1">Sales Order</p-step>
-      <p-step [value]="2" (click)="saveOrder()">Pick List</p-step>
+      <p-step [value]="2" (click)="createPickList()">Pick List</p-step>
       <p-step [value]="3">Packing Slip</p-step>
       <p-step [value]="4">Invoice</p-step>
     </p-step-list>
 
     <p-step-panels>
       <p-step-panel [value]="1">
+
         <ng-template #content >
           <h1>Sales Order</h1>
           <div class="order-header">
