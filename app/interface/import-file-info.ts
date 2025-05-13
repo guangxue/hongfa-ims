@@ -24,6 +24,7 @@ export interface ImportFileInfo {
    */
   showTable: boolean;
 
+  header: string[];
   /**
    * The object format of the target file.
    * with some preset keys

@@ -41,10 +41,12 @@ export class ImportDataComponent {
     errMsg: '',
     showTable: false,
     linesObject: [],
+    header: [],
     cols: 0
   };
   selectedDataType: string = 'Sales Order';
   dataTypeOptions: string[] = ['Sales Order', 'Purchase Order', 'Inventory'];
+  tableOptions: any[] = [];
 
   constructor(
     private router: Router,
@@ -61,7 +63,8 @@ export class ImportDataComponent {
       contentLines.push(line.split(','));
     }
     // Remove table header
-    this.targetFile.cols = contentLines[0].length;
+    this.targetFile.header = contentLines[0]
+    this.targetFile.cols = contentLines[0].length
     return contentLines.slice(1);
   }
 
@@ -151,6 +154,10 @@ export class ImportDataComponent {
     this.targetFile.errMsg = '';
     this.targetFile.linesObject = await this.createLinesObject(inputfile);
     this.createOrderNumber();
+    this.targetFile.header.forEach((h, i) => {
+      this.tableOptions.push(h)
+    })
+    console.log(this.tableOptions)
   }
 
   importFormSubmitted(event: Event) {
