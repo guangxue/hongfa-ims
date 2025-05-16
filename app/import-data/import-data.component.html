@@ -2,7 +2,7 @@
   <h1>Import Data</h1>
   <section class="page-form-section">
     <div>
-      <form method="">
+      <form method="get">
         <div class="form-group">
           <label for="data-type">Data Type</label>
           <p-select
@@ -30,17 +30,21 @@
               pButton
               severity="info"
               class="import-btn"
-              pTooltip="Confirm to proceed">
+              >
               Import
             </button>
           </div>
-          <div class="form-group">
-            <label for="line-no">Line no.</label>
-            <p-select
-              id="line-no"
-              [options]="tableOptions"
-              [(ngModel)]="selectedDataType"
-            />
+          <div class="table-headers">
+            <label id="line">Line Number</label>
+            <p-select id="line" [options]="targetFile.header" [placeholder]="selectedHeaders.line" [(ngModel)]="selectedHeaders.line"/>
+            <label id="item">Item Name</label>
+            <p-select id="item" [options]="targetFile.header" [placeholder]="selectedHeaders.item" [(ngModel)]="selectedHeaders.item" />
+            <label id="desc">Description</label>
+            <p-select id="desc" [options]="targetFile.header" [placeholder]="selectedHeaders.desc" [(ngModel)]="selectedHeaders.desc" />
+            <label id="qty">Order Quantity</label>
+            <p-select id="qty" [options]="targetFile.header" [placeholder]="selectedHeaders.qty" [(ngModel)]="selectedHeaders.qty" />
+            <label id="unit">Unit</label>
+            <p-select id="unit" [options]="targetFile.header" [placeholder]="selectedHeaders.unit" [(ngModel)]="selectedHeaders.unit" />
           </div>
         }
       </form>

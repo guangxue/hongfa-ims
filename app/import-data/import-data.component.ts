@@ -1,32 +1,29 @@
-import { Component } from '@angular/core';
-import { DropdownModule } from 'primeng/dropdown';
-import { FormsModule } from '@angular/forms';
-import { TableModule } from 'primeng/table';
-import { ButtonDirective } from 'primeng/button';
-import { ImportFileInfo } from '../interface/import-file-info';
-import { Message } from 'primeng/message';
-import { TooltipModule } from 'primeng/tooltip';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { Select } from 'primeng/select';
-import { InputText } from 'primeng/inputtext';
-import { Router } from '@angular/router';
-import { LocalStorageService } from '../services/local-storage.service';
+import {Component} from '@angular/core';
+import {DropdownModule} from 'primeng/dropdown';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {TableModule} from 'primeng/table';
+import {ButtonDirective} from 'primeng/button';
+import {ImportFileInfo} from '../interface/import-file-info';
+import {Message} from 'primeng/message';
+import {ConfirmPopupModule} from 'primeng/confirmpopup';
+import {IconFieldModule} from 'primeng/iconfield';
+import {InputIconModule} from 'primeng/inputicon';
+import {SelectModule} from 'primeng/select';
+import {InputText} from 'primeng/inputtext';
 
 @Component({
   selector: 'import-data',
   imports: [
     DropdownModule,
     FormsModule,
+    ReactiveFormsModule,
     TableModule,
     ButtonDirective,
-    TooltipModule,
     ConfirmPopupModule,
     IconFieldModule,
     InputIconModule,
     Message,
-    Select,
+    SelectModule,
     InputText,
   ],
   templateUrl: './import-data.component.html',
@@ -42,22 +39,33 @@ export class ImportDataComponent {
     showTable: false,
     linesObject: [],
     header: [],
-    cols: 0
+    cols: 0,
+    selectedHeaders: {
+      line: 'Line',
+      item: 'Part Num,',
+      desc: 'Description',
+      qty: 'Supplier Quantity',
+      unit: 'UOW'
+    }
   };
   selectedDataType: string = 'Sales Order';
   dataTypeOptions: string[] = ['Sales Order', 'Purchase Order', 'Inventory'];
-  tableOptions: any[] = [];
+  selectedHeaders = {
+    line: 'Line',
+    item: 'Part Num,',
+    desc: 'Description',
+    qty: 'Supplier Quantity',
+    unit: 'UOW'
+  }
 
-  constructor(
-    private router: Router,
-    private localStorage: LocalStorageService,
-  ) {}
+  constructor() {}
+
 
   async getLines(inputfile: any) {
     const blob = new Blob([inputfile], { type: 'text/csv' });
     let content = await blob.text();
     // Remove empty lines in case of causing `c.description` undefined.
-    let lines = content.split('\n').filter((line) => line.length > 0);
+    let lines = content.split('\r\n').filter((line) => line.length > 0);
     let contentLines = [];
     for (let line of lines) {
       contentLines.push(line.split(','));
@@ -68,20 +76,25 @@ export class ImportDataComponent {
     return contentLines.slice(1);
   }
 
+  async createLinesObject(inputfile: any) {
+    const contentLines = await this.getLines(inputfile);
+    return await this.normalizeLines(contentLines);
+  }
+
+  async getHeaderPos() {
+
+    console.log(this.targetFile.header);
+    let line = this.targetFile.header.findIndex(h=>h=="Line");
+    let item = this.targetFile.header.findIndex(h=>h=="Part Num");
+    let desc = this.targetFile.header.findIndex(h=>h=="Description");
+    let qty = this.targetFile.header.findIndex(h=>(h=="Our Quantity" || h=='Supplier Quantity'));
+    let unit = this.targetFile.header.findIndex(h=>h=="UOM");
+    return {line, item, desc, qty, unit};
+  }
   async normalizeLines(lines: string[][]) {
-    const POS: {
-      line: number;
-      item: number;
-      desc: number;
-      qty: number;
-      unit: number;
-    } = {
-      line: 0,
-      item: 2,
-      desc: 4,
-      qty: this.targetFile.cols-4,
-      unit: this.targetFile.cols-3,
-    };
+    const hp = await this.getHeaderPos()
+
+    // Prepare line object for collection
     const collectLines: {
       line: string;
       item: string;
@@ -99,24 +112,21 @@ export class ImportDataComponent {
         unit: '',
       };
 
-      line.line = l[POS.line];
-      line.item = l[POS.item];
-      if (l[POS.desc].startsWith('"') && l[POS.desc].endsWith('"')) {
-        line.description = l[POS.desc].replace('""', '"').slice(1, -1);
+      line.line = l[hp.line];
+      line.item = l[hp.item];
+      if (l[hp.desc].startsWith('"') && l[hp.desc].endsWith('"')) {
+        line.description = l[hp.desc].replace('""', '"').slice(1, -1);
       } else {
-        line.description = l[POS.desc];
+        line.description = l[hp.desc];
       }
-      line.qty = l[POS.qty];
-      line.unit = l[POS.unit];
+      line.qty = l[hp.qty];
+      line.unit = l[hp.unit];
       collectLines.push(line);
     });
     return collectLines;
   }
 
-  async createLinesObject(inputfile: any) {
-    const contentLines = await this.getLines(inputfile);
-    return await this.normalizeLines(contentLines);
-  }
+
 
   createOrderNumber() {
     let birchOrderNumber = this.targetFile.name.split(' ').slice(-1)
@@ -152,32 +162,32 @@ export class ImportDataComponent {
     this.targetFile.found = true;
     this.targetFile.err = false;
     this.targetFile.errMsg = '';
-    this.targetFile.linesObject = await this.createLinesObject(inputfile);
     this.createOrderNumber();
-    this.targetFile.header.forEach((h, i) => {
-      this.tableOptions.push(h)
-    })
-    console.log(this.tableOptions)
+    this.targetFile.linesObject = await this.createLinesObject(inputfile);
+    console.log(this.targetFile.linesObject);
   }
 
   importFormSubmitted(event: Event) {
     event.preventDefault();
-    let orderInfo = {
-      orderNumber: this.targetFile.orderNumber,
-      orderItems: this.targetFile.linesObject,
-    }
-    this.localStorage.set('sales-order', JSON.stringify(orderInfo));
-    this.router
-      .navigate([`/sales-order/${this.targetFile.orderNumber}`])
-      .then((res) => {
-        if (res) {
-          return 'Navigated to sales-order';
-        } else {
-          return 'Failed to navigate to sales-order';
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    console.log(this.selectedHeaders);
+    // let orderInfo = {
+    //   orderNumber: this.targetFile.orderNumber,
+    //   orderItems: this.targetFile.linesObject,
+    // }
+    // this.localStorage.set('sales-order', JSON.stringify(orderInfo));
+    // this.router
+    //   .navigate([`/sales-order/${this.targetFile.orderNumber}`])
+    //   .then((res) => {
+    //     if (res) {
+    //       return 'Navigated to sales-order';
+    //     } else {
+    //       return 'Failed to navigate to sales-order';
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   }
+
+  protected readonly SelectModule = SelectModule;
 }

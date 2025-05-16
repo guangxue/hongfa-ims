@@ -18,6 +18,7 @@ export interface ImportFileInfo {
    * The error message that shows for primeNG message component
    */
   errMsg: string;
+  selectedHeaders: {line: string; item: string, desc: string, qty: string, unit: string};
 
   /**
    * Whether shows data table on page or not.

@@ -1,6 +1,7 @@
-.form-group {
+.form-group,
+.table-headers {
   display: grid;
-  grid-template-columns: 150px 168px;
+  grid-template-columns: 150px 188px;
   margin: 1.5rem 0;
   gap: 1.5rem;
   align-items: center;
@@ -54,3 +55,4 @@ input[type="file"]::file-selector-button:active {
 /*.import-btn {*/
 /*  margin-left: auto;*/
 /*}*/
+
