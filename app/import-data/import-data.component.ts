@@ -39,14 +39,6 @@ export class ImportDataComponent {
     showTable: false,
     linesObject: [],
     header: [],
-    cols: 0,
-    selectedHeaders: {
-      line: 'Line',
-      item: 'Part Num,',
-      desc: 'Description',
-      qty: 'Supplier Quantity',
-      unit: 'UOW'
-    }
   };
   selectedDataType: string = 'Sales Order';
   dataTypeOptions: string[] = ['Sales Order', 'Purchase Order', 'Inventory'];
@@ -72,7 +64,6 @@ export class ImportDataComponent {
     }
     // Remove table header
     this.targetFile.header = contentLines[0]
-    this.targetFile.cols = contentLines[0].length
     return contentLines.slice(1);
   }
 
@@ -188,6 +179,4 @@ export class ImportDataComponent {
     //     console.log(err);
     //   });
   }
-
-  protected readonly SelectModule = SelectModule;
 }
