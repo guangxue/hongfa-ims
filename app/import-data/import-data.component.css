@@ -56,3 +56,10 @@ input[type="file"]::file-selector-button:active {
 /*  margin-left: auto;*/
 /*}*/
 
+::ng-deep #item .p-select-label.p-placeholder,
+::ng-deep #desc .p-select-label.p-placeholder,
+::ng-deep #qty .p-select-label.p-placeholder,
+::ng-deep #unit .p-select-label.p-placeholder,
+::ng-deep #line .p-select-label.p-placeholder {
+  color: #000000;
+}
