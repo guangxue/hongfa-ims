@@ -24,28 +24,21 @@
         </div>
 
         @if(targetFile.showTable){
-          <div class="dt-btns">
-            <button
-              (click)="importFormSubmitted($event)"
-              pButton
-              severity="info"
-              class="import-btn"
-              >
-              Import
-            </button>
-          </div>
+          <p-divider />
+          <h2>Sales Order Headers</h2>
           <div class="table-headers">
-            <label id="line">Line Number</label>
-            <p-select id="line" [options]="targetFile.header" [placeholder]="selectedHeaders.line" [(ngModel)]="selectedHeaders.line"/>
+<!--            <label id="line">Line Number</label>-->
+<!--            <p-select id="line" [options]="targetFile.header" [placeholder]="ph.line"  [(ngModel)]="selectedHeaders.line"/>-->
             <label id="item">Item Name</label>
-            <p-select id="item" [options]="targetFile.header" [placeholder]="selectedHeaders.item" [(ngModel)]="selectedHeaders.item" />
+            <p-select id="item" [options]="targetFile.header" [placeholder]="initialHeaders.item"  [(ngModel)]="selectedHeaders.item" />
             <label id="desc">Description</label>
-            <p-select id="desc" [options]="targetFile.header" [placeholder]="selectedHeaders.desc" [(ngModel)]="selectedHeaders.desc" />
+            <p-select id="desc" [options]="targetFile.header" [placeholder]="initialHeaders.desc"  [(ngModel)]="selectedHeaders.desc" />
             <label id="qty">Order Quantity</label>
-            <p-select id="qty" [options]="targetFile.header" [placeholder]="selectedHeaders.qty" [(ngModel)]="selectedHeaders.qty" />
+            <p-select id="qty" [options]="targetFile.header" [placeholder]="initialHeaders.qty" [(ngModel)]="selectedHeaders.qty" />
             <label id="unit">Unit</label>
-            <p-select id="unit" [options]="targetFile.header" [placeholder]="selectedHeaders.unit" [(ngModel)]="selectedHeaders.unit" />
+            <p-select id="unit" [options]="targetFile.header" [placeholder]="initialHeaders.unit" [(ngModel)]="selectedHeaders.unit" />
           </div>
+          <button (click)="importFormSubmitted($event)" pButton severity="info" class="import-btn">Import</button>
         }
       </form>
     </div>

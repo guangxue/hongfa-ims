@@ -28,11 +28,12 @@ export interface ImportFileInfo {
    * The object format of the target file.
    * with some preset keys
    */
-  linesObject: {
-    line: string;
+  objectLines: {
     item: string;
     description: string;
     qty: string;
     unit: string;
   }[];
+
+  contentLines: string[][];
 }

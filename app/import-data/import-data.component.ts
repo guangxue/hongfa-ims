@@ -10,6 +10,9 @@ import {IconFieldModule} from 'primeng/iconfield';
 import {InputIconModule} from 'primeng/inputicon';
 import {SelectModule} from 'primeng/select';
 import {InputText} from 'primeng/inputtext';
+import {Divider} from "primeng/divider";
+import {LocalStorageService} from "../services/local-storage.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'import-data',
@@ -25,6 +28,7 @@ import {InputText} from 'primeng/inputtext';
     Message,
     SelectModule,
     InputText,
+    Divider,
   ],
   templateUrl: './import-data.component.html',
   styleUrl: './import-data.component.css',
@@ -37,94 +41,98 @@ export class ImportDataComponent {
     err: false,
     errMsg: '',
     showTable: false,
-    linesObject: [],
+    objectLines: [],
     header: [],
+    contentLines: []
   };
   selectedDataType: string = 'Sales Order';
   dataTypeOptions: string[] = ['Sales Order', 'Purchase Order', 'Inventory'];
   selectedHeaders = {
-    line: 'Line',
-    item: 'Part Num,',
+    //line: null,
+    item: null,
+    desc: null,
+    qty: null,
+    unit: null
+  }
+  initialHeaders = {
+    //line: 'Line',
+    item: 'Part Num',
     desc: 'Description',
     qty: 'Supplier Quantity',
-    unit: 'UOW'
+    unit: 'UOM'
   }
 
-  constructor() {}
+  constructor(private localStorage: LocalStorageService, private router: Router) {}
 
-
-  async getLines(inputfile: any) {
-    const blob = new Blob([inputfile], { type: 'text/csv' });
-    let content = await blob.text();
-    // Remove empty lines in case of causing `c.description` undefined.
-    let lines = content.split('\r\n').filter((line) => line.length > 0);
-    let contentLines = [];
-    for (let line of lines) {
-      contentLines.push(line.split(','));
-    }
-    // Remove table header
-    this.targetFile.header = contentLines[0]
-    return contentLines.slice(1);
+  // helper functions
+  filterObject(obj: any, func: Function) {
+    const objectArray = Object.entries(obj);
+    const filteredObject = objectArray.filter(([key, value]) => func(key, value));
+    return Object.fromEntries(filteredObject);
   }
-
-  async createLinesObject(inputfile: any) {
-    const contentLines = await this.getLines(inputfile);
-    return await this.normalizeLines(contentLines);
-  }
-
-  async getHeaderPos() {
-
-    console.log(this.targetFile.header);
-    let line = this.targetFile.header.findIndex(h=>h=="Line");
-    let item = this.targetFile.header.findIndex(h=>h=="Part Num");
-    let desc = this.targetFile.header.findIndex(h=>h=="Description");
-    let qty = this.targetFile.header.findIndex(h=>(h=="Our Quantity" || h=='Supplier Quantity'));
-    let unit = this.targetFile.header.findIndex(h=>h=="UOM");
-    return {line, item, desc, qty, unit};
-  }
-  async normalizeLines(lines: string[][]) {
-    const hp = await this.getHeaderPos()
-
-    // Prepare line object for collection
-    const collectLines: {
-      line: string;
-      item: string;
-      description: string;
-      qty: string;
-      unit: string;
-    }[] = [];
-
-    lines.forEach((l) => {
-      let line = {
-        line: '',
-        item: '',
-        description: '',
-        qty: '',
-        unit: '',
-      };
-
-      line.line = l[hp.line];
-      line.item = l[hp.item];
-      if (l[hp.desc].startsWith('"') && l[hp.desc].endsWith('"')) {
-        line.description = l[hp.desc].replace('""', '"').slice(1, -1);
-      } else {
-        line.description = l[hp.desc];
-      }
-      line.qty = l[hp.qty];
-      line.unit = l[hp.unit];
-      collectLines.push(line);
-    });
-    return collectLines;
-  }
-
-
-
   createOrderNumber() {
     let birchOrderNumber = this.targetFile.name.split(' ').slice(-1)
     this.targetFile.orderNumber = `EB25-001-${birchOrderNumber}`;
   }
 
-  async onFileChange(e: Event) {
+  headerPosition(preset: boolean = true) {
+    let pos = {
+      // line: this.targetFile.header.findIndex(h => h == 'Line'),
+      item: this.targetFile.header.findIndex(h => h == 'Part Num'),
+      desc: this.targetFile.header.findIndex(h => h == 'Description'),
+      qty : this.targetFile.header.findIndex(h => h == 'Supplier Quantity'),
+      unit: this.targetFile.header.findIndex(h => h == 'UOM')
+    }
+    if(preset) {
+      return pos
+    } else {
+      let filteredObject = this.filterObject(this.selectedHeaders, (_key: any, value: null) => value !== null);
+      for (let key in filteredObject) {
+        filteredObject[key] = this.targetFile.header.findIndex(h => h == filteredObject[key]);
+      }
+      console.log("filteredObject",filteredObject)
+      pos = Object.assign(pos, filteredObject)
+      return pos
+    }
+  }
+
+  async readLines(inputfile: any) {
+    const blob = new Blob([inputfile], {type: 'text/csv'});
+    const content = await blob.text();
+    let lines = content.split('\r\n').filter((line) => line.length > 0);
+    let contentLines: string[][] = [];
+    for (let line_1 of lines) {
+      contentLines.push(line_1.split(','));
+    }
+    // Remove table header
+    this.targetFile.header = contentLines[0];
+    return contentLines.slice(1);
+  }
+
+
+  createObjectLines(lines: string[][], pos: any) {
+    // Prepare line object for collection
+    const collectedObjectLines: { item: string; description: string; qty: string; unit: string}[] = [];
+
+    lines.forEach((l) => {
+      let line = { item: '', description: '', qty: '', unit: '',};
+
+      line.item = l[pos.item];
+
+      if (l[pos.desc].startsWith('"') && l[pos.desc].endsWith('"')) {
+        line.description = l[pos.desc].replace('""', '"').slice(1, -1);
+      } else {
+        line.description = l[pos.desc];
+      }
+      line.qty = l[pos.qty];
+      line.unit = l[pos.unit];
+      collectedObjectLines.push(line);
+    });
+    return collectedObjectLines;
+  }
+
+
+  onFileChange(e: Event) {
     // reset all data when input file changed
     this.targetFile.showTable = false;
 
@@ -153,30 +161,39 @@ export class ImportDataComponent {
     this.targetFile.found = true;
     this.targetFile.err = false;
     this.targetFile.errMsg = '';
+    this.readLines(inputfile).then((lines) => {
+      this.targetFile.contentLines = lines;
+    });
     this.createOrderNumber();
-    this.targetFile.linesObject = await this.createLinesObject(inputfile);
-    console.log(this.targetFile.linesObject);
   }
 
   importFormSubmitted(event: Event) {
     event.preventDefault();
-    console.log(this.selectedHeaders);
-    // let orderInfo = {
-    //   orderNumber: this.targetFile.orderNumber,
-    //   orderItems: this.targetFile.linesObject,
-    // }
-    // this.localStorage.set('sales-order', JSON.stringify(orderInfo));
-    // this.router
-    //   .navigate([`/sales-order/${this.targetFile.orderNumber}`])
-    //   .then((res) => {
-    //     if (res) {
-    //       return 'Navigated to sales-order';
-    //     } else {
-    //       return 'Failed to navigate to sales-order';
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    let selectedHeadersChanged = Object.values(this.selectedHeaders).some(v => v !== null);
+    let pos: {}
+    if(selectedHeadersChanged) {
+      pos = this.headerPosition(false);
+    } else {
+      pos = this.headerPosition(true);
+    }
+    this.targetFile.objectLines = this.createObjectLines(this.targetFile.contentLines, pos);
+
+    let orderInfo = {
+      orderNumber: this.targetFile.orderNumber,
+      orderItems: this.targetFile.objectLines,
+    }
+    this.localStorage.set('sales-order', JSON.stringify(orderInfo));
+    this.router
+      .navigate([`/sales-order/${this.targetFile.orderNumber}`])
+      .then((res: any) => {
+        if (res) {
+          return 'Navigated to sales-order';
+        } else {
+          return 'Failed to navigate to sales-order';
+        }
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
   }
 }

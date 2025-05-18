@@ -1,5 +1,4 @@
-.form-group,
-.table-headers {
+.form-group {
   display: grid;
   grid-template-columns: 150px 188px;
   margin: 1.5rem 0;
@@ -48,13 +47,9 @@ input[type="file"]::file-selector-button:active {
   border-color: #e2e8f0;
 }
 
-.dt-btns {
-  display: flex;
-  margin-bottom: 1rem;
+.import-btn {
+  margin-left: auto;
 }
-/*.import-btn {*/
-/*  margin-left: auto;*/
-/*}*/
 
 ::ng-deep #item .p-select-label.p-placeholder,
 ::ng-deep #desc .p-select-label.p-placeholder,
@@ -62,4 +57,11 @@ input[type="file"]::file-selector-button:active {
 ::ng-deep #unit .p-select-label.p-placeholder,
 ::ng-deep #line .p-select-label.p-placeholder {
   color: #000000;
+}
+.table-headers {
+  display: grid;
+  grid-template-columns: 110px 175px 110px 175px;
+  margin: 1.5rem 0;
+  gap: 1.5rem;
+  align-items: center;
 }
