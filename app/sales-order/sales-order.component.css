@@ -48,3 +48,11 @@ h1 {
 .p-datatable-thead {
   background: #7a3131;
 }
+
+#edit-input {
+  width: 38px;
+  padding: 0 5px;
+  font-size: 13px;
+  height: 24px;
+  border-radius: 4px;
+}

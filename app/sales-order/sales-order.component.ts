@@ -1,12 +1,13 @@
-import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { LocalStorageService } from '../services/local-storage.service';
-import {TableModule} from "primeng/table";
+import {Component} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {LocalStorageService} from '../services/local-storage.service';
+import {TableEditCompleteEvent, TableModule} from "primeng/table";
 import {NgOptimizedImage} from "@angular/common";
 import {Step, StepList, StepPanel, StepPanels, Stepper} from "primeng/stepper";
 import {InputText} from "primeng/inputtext";
 import {FormsModule} from "@angular/forms";
 import {BirchService} from "../services/birch.service";
+import {Tag} from "primeng/tag";
 
 @Component({
   selector: 'sales-order',
@@ -20,11 +21,12 @@ import {BirchService} from "../services/birch.service";
     StepPanel,
     InputText,
     FormsModule,
+    Tag,
   ],
   templateUrl: './sales-order.component.html',
   styleUrl: './sales-order.component.css',
 })
-export class SalesOrderComponent implements AfterContentInit {
+export class SalesOrderComponent {
   protected orderNumber: string | null = null;
   orderItems: any[] = [];
 
@@ -41,41 +43,32 @@ export class SalesOrderComponent implements AfterContentInit {
       let orderData = JSON.parse((order));
       if(this.orderNumber == orderData.orderNumber) {
         this.orderItems = orderData.orderItems;
+        this.orderItems.forEach(item => {
+          if(item.qty % 50 !== 0 || item.unit !== 'EA') {
+            item.status = 'check'
+          } else {
+            item.status = ''
+          }
+        })
       }
     }
   }
 
-  ngAfterContentInit(): void {
-    console.info('ngAfterContentInit() done');
-    if(this.orderItems.length == 0){
-      this.orderItems = [
-        {
-          item: '011253',
-          line: '1',
-          description: 'BAG SUIT PREMIUM 60 X 98CM BLACK',
-          qty: "100",
-          unit: "EA"
-        },
-        {
-          item: '011254',
-          line: '2',
-          description: 'BAG DRESS OR COAT PREMIUM 60 X 136CM BLACK',
-          qty: "100",
-          unit: "EA"
-        }
-      ]
-      console.error('No sales data:', this.orderNumber);
-    }
-  }
 
   createPickList() {
     console.log("Creating Pick List: with data below");
     let namesBody: any[] = []
     this.orderItems.forEach(item=>{
-      namesBody.push(item.item)
+      let order = {item: item.item, qty: item.qty};
+      namesBody.push(order);
     })
-    this.birchService.getBirchItemCodesByNames(namesBody).subscribe(res=>{
-      console.log(res)
-    })
+    console.log(namesBody);
+  }
+  editCompleted(enteredValues: string, order: any) {
+    if(enteredValues.includes("*")) {
+      const [v1, v2] = enteredValues.split("*");
+      order.qty = Number(v1) * Number(v2);
+    }
+
   }
 }
