@@ -44,13 +44,13 @@
             <div>Ryan</div>
           </div>
           <div class="sales-order-table">
-            <p-table [value]="orderItems" showGridlines>
+            <p-table [value]="orderItems" showGridlines [scrollable]="true" scrollHeight="600px">
               <ng-template #header>
                 <tr>
                   <th>Item</th>
                   <th>Description</th>
                   <th>Quantity</th>
-                  <th>Status</th>
+<!--                  <th>Status</th>-->
                 </tr>
               </ng-template>
               <ng-template #body let-order>
@@ -63,22 +63,26 @@
                         <input id="edit-input" type="text" pInputText #editInput (keydown.enter)="editCompleted(editInput.value, order)" [(ngModel)]="order.qty">
                       </ng-template>
                       <ng-template #output>
-                        {{order.qty}} {{order.unit}}
+                        @if (order.status !== '') {
+                          <p-tag [value]="order.qty + ' '  + order.unit" />
+                        } @else {
+                          {{order.qty}} {{order.unit}}
+                        }
                       </ng-template>
                     </p-cellEditor>
                   </td>
-                  <td>
-                    @if(order.status !== '') {
-                      <p-tag [value]="order.status" />
-                    }
-                  </td>
+<!--                  <td>-->
+<!--                    @if(order.status !== '') {-->
+<!--                      <p-tag [value]="order.status" />-->
+<!--                    }-->
+<!--                  </td>-->
                 </tr>
               </ng-template>
             </p-table>
           </div>
         </ng-template>
       </p-step-panel>
-
+      <!--Pick List-->
       <p-step-panel [value]="2">
         <ng-template #content>
           <h1>Pick List</h1>
@@ -114,10 +118,11 @@
             <div>Ryan</div>
           </div>
           <div class="sales-order-table">
-            <p-table [value]="orderItems" showGridlines>
+            <p-table [value]="pickData" showGridlines>
               <ng-template #header>
                 <tr>
                   <th>Item</th>
+                  <th>Item Code</th>
                   <th>Description</th>
                   <th>Quantity</th>
                 </tr>
@@ -125,7 +130,8 @@
               <ng-template #body let-order>
                 <tr>
                   <td>{{order.item}}</td>
-                  <td>{{order.description}}</td>
+                  <td>{{order.code}}</td>
+                  <td>{{order.desc}}</td>
                   <td>{{order.qty}} {{order.unit}}</td>
                 </tr>
               </ng-template>

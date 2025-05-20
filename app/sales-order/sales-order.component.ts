@@ -29,6 +29,7 @@ import {Tag} from "primeng/tag";
 export class SalesOrderComponent {
   protected orderNumber: string | null = null;
   orderItems: any[] = [];
+  pickData: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -57,12 +58,21 @@ export class SalesOrderComponent {
 
   createPickList() {
     console.log("Creating Pick List: with data below");
-    let namesBody: any[] = []
-    this.orderItems.forEach(item=>{
-      let order = {item: item.item, qty: item.qty};
-      namesBody.push(order);
+    let inv = this.localstorage.get('inventory')
+    let inventory: any[] = []
+    if (inv) { inventory = JSON.parse(inv); }
+    this.orderItems.forEach(item => {
+      let order = {item: item.item, qty: item.qty, desc: item.description};
+      let foundCode = {}
+      inventory.forEach(stock=> {
+        if (stock.item_name == item.item) {
+          foundCode = {code: stock.item_code}
+        }
+      })
+      let po = {...order, ...foundCode}
+      this.pickData.push(po)
     })
-    console.log(namesBody);
+
   }
   editCompleted(enteredValues: string, order: any) {
     if(enteredValues.includes("*")) {
