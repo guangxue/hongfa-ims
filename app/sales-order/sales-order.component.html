@@ -43,11 +43,23 @@
             <div>Ryan</div>
           </div>
           <div class="sales-order-table">
-            <p-table [value]="salesOrderTableData" showGridlines [scrollable]="true" scrollHeight="600px">
+            <p-table #dt
+                     [value]="salesOrderTableData"
+                     showGridlines
+                     [scrollable]="true"
+                     scrollHeight="600px"
+                     [globalFilterFields]="['item', 'description']"
+            >
               <ng-template #caption>
-                <div class="toggle-button">
+                <div class="sotable-toolbar">
                   <label>Quantity</label>
                   <p-toggleswitch [(ngModel)]="toggled" (onChange)="toggledChange($event)" />
+                  <div class="search-field">
+                    <p-iconfield>
+                      <p-inputicon styleClass="pi pi-search" />
+                      <input pInputText type="text" #type (input)="dt.filterGlobal(type.value, 'contains')" placeholder="Search..." />
+                    </p-iconfield>
+                  </div>
                 </div>
               </ng-template>
               <ng-template #header>

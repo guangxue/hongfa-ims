@@ -8,6 +8,8 @@ import {InputText} from "primeng/inputtext";
 import {FormsModule} from "@angular/forms";
 import {Tag} from "primeng/tag";
 import {ToggleSwitch, ToggleSwitchChangeEvent} from "primeng/toggleswitch";
+import {IconField} from "primeng/iconfield";
+import {InputIcon} from "primeng/inputicon";
 
 @Component({
   selector: 'sales-order',
@@ -24,6 +26,8 @@ import {ToggleSwitch, ToggleSwitchChangeEvent} from "primeng/toggleswitch";
     Tag,
     ToggleSwitch,
     NgStyle,
+    IconField,
+    InputIcon,
   ],
   templateUrl: './sales-order.component.html',
   styleUrl: './sales-order.component.css',

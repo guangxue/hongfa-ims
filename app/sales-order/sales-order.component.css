@@ -59,8 +59,12 @@ h1 {
 .p-datatable-tbody > tr > td {
   padding: 12px;
 }
-.toggle-button {
+.sotable-toolbar {
   display: flex;
   gap: 1rem;
   align-items: center;
+}
+
+.search-field {
+  margin-left: auto;
 }
