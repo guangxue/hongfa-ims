@@ -1,13 +1,13 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {LocalStorageService} from '../services/local-storage.service';
-import {TableEditCompleteEvent, TableModule} from "primeng/table";
-import {NgOptimizedImage} from "@angular/common";
+import {TableModule} from "primeng/table";
+import {NgOptimizedImage, NgStyle} from "@angular/common";
 import {Step, StepList, StepPanel, StepPanels, Stepper} from "primeng/stepper";
 import {InputText} from "primeng/inputtext";
 import {FormsModule} from "@angular/forms";
-import {BirchService} from "../services/birch.service";
 import {Tag} from "primeng/tag";
+import {ToggleSwitch, ToggleSwitchChangeEvent} from "primeng/toggleswitch";
 
 @Component({
   selector: 'sales-order',
@@ -22,46 +22,47 @@ import {Tag} from "primeng/tag";
     InputText,
     FormsModule,
     Tag,
+    ToggleSwitch,
+    NgStyle,
   ],
   templateUrl: './sales-order.component.html',
   styleUrl: './sales-order.component.css',
 })
 export class SalesOrderComponent {
   protected orderNumber: string | null = null;
-  orderItems: any[] = [];
+  salesOrderTableData: any[] = [];
+  salesOrderItemsData: any[] = [];
   pickData: any[] = [];
+  toggled: boolean = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private localstorage: LocalStorageService,
-    private birchService: BirchService,)
-  {
+  constructor(private route: ActivatedRoute, private localstorage: LocalStorageService) {
     this.route.paramMap.subscribe(url => {
       this.orderNumber = url.get('orderNumber');
     })
-    let order = this.localstorage.get('sales-order')
-    if (order) {
-      let orderData = JSON.parse((order));
-      if(this.orderNumber == orderData.orderNumber) {
-        this.orderItems = orderData.orderItems;
-        this.orderItems.forEach(item => {
+    let salesOrderNum= this.localstorage.get('order-number')
+    let salesOrderData = this.localstorage.get('order-data')
+    if (salesOrderNum && salesOrderData) {
+      if(this.orderNumber == JSON.parse(salesOrderNum)) {
+        this.salesOrderItemsData = JSON.parse(salesOrderData);
+        this.salesOrderItemsData.forEach(item => {
           if(item.qty % 50 !== 0 || item.unit !== 'EA') {
-            item.status = 'check'
+            item.status = 'check';
           } else {
-            item.status = ''
+            item.status = '';
           }
         })
+        this.salesOrderTableData = this.salesOrderItemsData;
+      } else {
+        console.error("Sales order number not found.");
       }
     }
   }
 
-
   createPickList() {
-    console.log("Creating Pick List: with data below");
     let inv = this.localstorage.get('inventory')
     let inventory: any[] = []
     if (inv) { inventory = JSON.parse(inv); }
-    this.orderItems.forEach(item => {
+    this.salesOrderTableData.forEach(item => {
       let order = {item: item.item, qty: item.qty, desc: item.description};
       let foundCode = {}
       inventory.forEach(stock=> {
@@ -79,6 +80,14 @@ export class SalesOrderComponent {
       const [v1, v2] = enteredValues.split("*");
       order.qty = Number(v1) * Number(v2);
     }
+  }
 
+  toggledChange($event: ToggleSwitchChangeEvent) {
+    this.toggled = $event.checked;
+    if(this.toggled) {
+      this.salesOrderTableData = this.salesOrderItemsData.filter(item => item.status == 'check');
+    }else {
+      this.salesOrderTableData = this.salesOrderItemsData;
+    }
   }
 }

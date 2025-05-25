@@ -12,10 +12,10 @@
         <form #productInfoForm="ngForm" (ngSubmit)="productInfoFormSubmitted(productInfoForm)">
           <nav>
             <div class="nav-button">
-              <p-button icon="pi pi-save" label="Save" styleClass="toolbar-buttons" type="submit" />
-              <p-button icon="pi pi-plus" label="New" styleClass="toolbar-buttons"/>
-              <p-button icon="pi pi-ban" label="Deactive" styleClass="toolbar-buttons"/>
-              <p-button routerLink="/inventory" icon="pi pi-times" label="Close" styleClass="toolbar-buttons"/>
+              <p-button variant="outlined" icon="pi pi-save" label="Save" styleClass="toolbar-buttons" type="submit" />
+              <p-button variant="outlined" icon="pi pi-plus" label="New" styleClass="toolbar-buttons"/>
+              <p-button variant="outlined" icon="pi pi-ban" label="Deactive" styleClass="toolbar-buttons"/>
+              <p-button variant="outlined" routerLink="/inventory" icon="pi pi-times" label="Close" styleClass="toolbar-buttons"/>
             </div>
           </nav>
           <p-tabs value="0">

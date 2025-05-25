@@ -178,11 +178,8 @@ export class ImportDataComponent {
     }
     this.targetFile.objectLines = this.createObjectLines(this.targetFile.contentLines, pos);
 
-    let orderInfo = {
-      orderNumber: this.targetFile.orderNumber,
-      orderItems: this.targetFile.objectLines,
-    }
-    this.localStorage.set('sales-order', JSON.stringify(orderInfo));
+    this.localStorage.set('order-number', JSON.stringify(this.targetFile.orderNumber));
+    this.localStorage.set('order-data', JSON.stringify(this.targetFile.objectLines));
     this.router
       .navigate([`/sales-order/${this.targetFile.orderNumber}`])
       .then((res: any) => {

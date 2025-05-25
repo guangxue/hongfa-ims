@@ -70,20 +70,20 @@ body {
   width: 180px;
 }
 
-.toolbar-buttons.p-button {
-  padding: 0.5rem;
-  background: #fff;
-  font-size: 12px;
-  color: #000;
-  border: 1px solid #fff;
-  border-radius: 2px;
-}
+/*.toolbar-buttons.p-button {*/
+/*  padding: 0.5rem;*/
+/*  background: #fff;*/
+/*  font-size: 12px;*/
+/*  color: #000;*/
+/*  border: 1px solid #fff;*/
+/*  border-radius: 2px;*/
+/*}*/
 
-.toolbar-buttons.p-button:hover {
-  background: #6366F1;
-  color: #ffffff;
-  border: 1px solid #6366F1;
-}
+/*.toolbar-buttons.p-button:hover {*/
+/*  background: #6366F1;*/
+/*  color: #ffffff;*/
+/*  border: 1px solid #6366F1;*/
+/*}*/
 
 .file-err-msg .p-message .p-message-wrapper {
   padding: 0.35rem 0.55rem;
