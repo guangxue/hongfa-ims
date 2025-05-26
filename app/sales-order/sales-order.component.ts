@@ -49,7 +49,7 @@ export class SalesOrderComponent {
       if(this.orderNumber == JSON.parse(salesOrderNum)) {
         this.salesOrderItemsData = JSON.parse(salesOrderData);
         this.salesOrderItemsData.forEach(item => {
-          if(item.qty % 50 !== 0 || item.unit !== 'EA') {
+          if(item.qty % 50 !== 0 && item.unit == 'EA') {
             item.status = 'check';
           } else {
             item.status = '';
@@ -67,7 +67,7 @@ export class SalesOrderComponent {
     let inventory: any[] = []
     if (inv) { inventory = JSON.parse(inv); }
     this.salesOrderTableData.forEach(item => {
-      let order = {item: item.item, qty: item.qty, desc: item.description};
+      let order = {item: item.item, qty: item.qty, desc: item.desc, unit: item.unit};
       let foundCode = {}
       inventory.forEach(stock=> {
         if (stock.item_name == item.item) {
@@ -77,7 +77,7 @@ export class SalesOrderComponent {
       let po = {...order, ...foundCode}
       this.pickData.push(po)
     })
-
+    this.localstorage.set('order-data', JSON.stringify(this.pickData))
   }
   editCompleted(enteredValues: string, order: any) {
     if(enteredValues.includes("*")) {

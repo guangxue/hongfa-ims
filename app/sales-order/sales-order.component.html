@@ -48,7 +48,7 @@
                      showGridlines
                      [scrollable]="true"
                      scrollHeight="600px"
-                     [globalFilterFields]="['item', 'description']"
+                     [globalFilterFields]="['item', 'qty']"
             >
               <ng-template #caption>
                 <div class="sotable-toolbar">
@@ -72,7 +72,7 @@
               <ng-template #body let-order>
                 <tr>
                   <td>{{order.item}}</td>
-                  <td>{{order.description}}</td>
+                  <td>{{order.desc}}</td>
                   <td [pEditableColumn]="salesOrderTableData" >
                     <p-cellEditor>
                       <ng-template #input>
@@ -130,6 +130,9 @@
           </div>
           <div class="sales-order-table">
             <p-table [value]="pickData" showGridlines>
+              <ng-template #caption>
+
+              </ng-template>
               <ng-template #header>
                 <tr>
                   <th>Item</th>

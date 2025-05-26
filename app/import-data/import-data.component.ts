@@ -112,17 +112,17 @@ export class ImportDataComponent {
 
   createObjectLines(lines: string[][], pos: any) {
     // Prepare line object for collection
-    const collectedObjectLines: { item: string; description: string; qty: string; unit: string}[] = [];
+    const collectedObjectLines: { item: string; desc: string; qty: string; unit: string}[] = [];
 
     lines.forEach((l) => {
-      let line = { item: '', description: '', qty: '', unit: '',};
+      let line = { item: '', desc: '', qty: '', unit: '',};
 
       line.item = l[pos.item];
 
       if (l[pos.desc].startsWith('"') && l[pos.desc].endsWith('"')) {
-        line.description = l[pos.desc].replace('""', '"').slice(1, -1);
+        line.desc = l[pos.desc].replace('""', '"').slice(1, -1);
       } else {
-        line.description = l[pos.desc];
+        line.desc = l[pos.desc];
       }
       line.qty = l[pos.qty];
       line.unit = l[pos.unit];

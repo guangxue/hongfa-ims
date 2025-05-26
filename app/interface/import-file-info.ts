@@ -30,7 +30,7 @@ export interface ImportFileInfo {
    */
   objectLines: {
     item: string;
-    description: string;
+    desc: string;
     qty: string;
     unit: string;
   }[];
