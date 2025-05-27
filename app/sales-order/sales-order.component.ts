@@ -43,22 +43,18 @@ export class SalesOrderComponent {
     this.route.paramMap.subscribe(url => {
       this.orderNumber = url.get('orderNumber');
     })
-    let salesOrderNum= this.localstorage.get('order-number')
-    let salesOrderData = this.localstorage.get('order-data')
-    if (salesOrderNum && salesOrderData) {
-      if(this.orderNumber == JSON.parse(salesOrderNum)) {
-        this.salesOrderItemsData = JSON.parse(salesOrderData);
-        this.salesOrderItemsData.forEach(item => {
-          if(item.qty % 50 !== 0 && item.unit == 'EA') {
-            item.status = 'check';
-          } else {
-            item.status = '';
-          }
-        })
-        this.salesOrderTableData = this.salesOrderItemsData;
-      } else {
-        console.error("Sales order number not found.");
-      }
+    let salesOrderNum= this.localstorage.get('order-number') ? JSON.parse(<string>this.localstorage.get('order-number')) : null;
+    this.salesOrderItemsData = this.localstorage.get('order-data') ? JSON.parse(<string>this.localstorage.get('order-data')) : null;
+
+    if(this.orderNumber == salesOrderNum) {
+      this.salesOrderItemsData.forEach(item => {
+        if(item.qty % 50 !== 0 && item.unit == 'EA') {
+          item.status = 'check';
+        } else {
+          item.status = '';
+        }
+      })
+      this.salesOrderTableData = this.salesOrderItemsData;
     }
   }
 
