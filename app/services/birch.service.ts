@@ -9,13 +9,13 @@ export class BirchService {
   private http: HttpClient = inject(HttpClient);
   private birchApiUrl: string = 'https://api.guangxuezhang.com/v1/hongfa/birch';
 
-  constructor() {}
+  constructor() { }
 
   getItemNameList(): Observable<any> {
-    return this.http.get<JSON>(`${this.birchApiUrl}/items/item-name`, {});
+    return this.http.get<JSON>(`${this.birchApiUrl}/stock/item-names`, {});
   }
   getBirchItems(): Observable<any> {
-    return this.http.get<JSON>(`${this.birchApiUrl}/items`, {});
+    return this.http.get<JSON>(`${this.birchApiUrl}/stock`, {});
   }
 
   /**

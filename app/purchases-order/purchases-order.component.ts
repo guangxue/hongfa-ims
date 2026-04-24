@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import {TabViewModule} from "primeng/tabview";
-import {SplitterModule} from "primeng/splitter";
+import { TabsModule } from 'primeng/tabs';
+import { SplitterModule } from "primeng/splitter";
 
 @Component({
     selector: 'purchases-order',
     imports: [
-        TabViewModule,
+        TabsModule,
         SplitterModule
     ],
     templateUrl: './purchases-order.component.html',
@@ -13,5 +13,5 @@ import {SplitterModule} from "primeng/splitter";
 })
 export class PurchasesOrderComponent {
 
-  panelRatio: number[] = [];
+    panelRatio: number[] = [];
 }

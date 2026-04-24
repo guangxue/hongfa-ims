@@ -1,23 +1,23 @@
-import {Component} from '@angular/core';
-import {DropdownModule} from 'primeng/dropdown';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {TableModule} from 'primeng/table';
-import {ButtonDirective} from 'primeng/button';
-import {ImportFileInfo} from '../interface/import-file-info';
-import {Message} from 'primeng/message';
-import {ConfirmPopupModule} from 'primeng/confirmpopup';
-import {IconFieldModule} from 'primeng/iconfield';
-import {InputIconModule} from 'primeng/inputicon';
-import {SelectModule} from 'primeng/select';
-import {InputText} from 'primeng/inputtext';
-import {Divider} from "primeng/divider";
-import {LocalStorageService} from "../services/local-storage.service";
-import {Router} from "@angular/router";
+import { Component } from '@angular/core';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TableModule } from 'primeng/table';
+import { ButtonDirective } from 'primeng/button';
+import { ImportFileInfo } from '../interface/import-file-info';
+import { Message } from 'primeng/message';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { SelectModule } from 'primeng/select';
+import { InputText } from 'primeng/inputtext';
+import { Divider } from "primeng/divider";
+import { LocalStorageService } from "../services/local-storage.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'import-data',
   imports: [
-    DropdownModule,
+    AutoCompleteModule,
     FormsModule,
     ReactiveFormsModule,
     TableModule,
@@ -62,7 +62,7 @@ export class ImportDataComponent {
     unit: 'UOM'
   }
 
-  constructor(private localStorage: LocalStorageService, private router: Router) {}
+  constructor(private localStorage: LocalStorageService, private router: Router) { }
 
   // helper functions
   filterObject(obj: any, func: Function) {
@@ -80,24 +80,24 @@ export class ImportDataComponent {
       // line: this.targetFile.header.findIndex(h => h == 'Line'),
       item: this.targetFile.header.findIndex(h => h == 'Part Num'),
       desc: this.targetFile.header.findIndex(h => h == 'Description'),
-      qty : this.targetFile.header.findIndex(h => h == 'Supplier Quantity'),
+      qty: this.targetFile.header.findIndex(h => h == 'Supplier Quantity'),
       unit: this.targetFile.header.findIndex(h => h == 'UOM')
     }
-    if(preset) {
+    if (preset) {
       return pos
     } else {
       let filteredObject = this.filterObject(this.selectedHeaders, (_key: any, value: null) => value !== null);
       for (let key in filteredObject) {
         filteredObject[key] = this.targetFile.header.findIndex(h => h == filteredObject[key]);
       }
-      console.log("filteredObject",filteredObject)
+      console.log("filteredObject", filteredObject)
       pos = Object.assign(pos, filteredObject)
       return pos
     }
   }
 
   async readLines(inputfile: any) {
-    const blob = new Blob([inputfile], {type: 'text/csv'});
+    const blob = new Blob([inputfile], { type: 'text/csv' });
     const content = await blob.text();
     let lines = content.split('\r\n').filter((line) => line.length > 0);
     let contentLines: string[][] = [];
@@ -112,10 +112,10 @@ export class ImportDataComponent {
 
   createObjectLines(lines: string[][], pos: any) {
     // Prepare line object for collection
-    const collectedObjectLines: { item: string; desc: string; qty: string; unit: string}[] = [];
+    const collectedObjectLines: { item: string; desc: string; qty: string; unit: string }[] = [];
 
     lines.forEach((l) => {
-      let line = { item: '', desc: '', qty: '', unit: '',};
+      let line = { item: '', desc: '', qty: '', unit: '', };
 
       line.item = l[pos.item];
 
@@ -171,7 +171,7 @@ export class ImportDataComponent {
     event.preventDefault();
     let selectedHeadersChanged = Object.values(this.selectedHeaders).some(v => v !== null);
     let pos: {}
-    if(selectedHeadersChanged) {
+    if (selectedHeadersChanged) {
       pos = this.headerPosition(false);
     } else {
       pos = this.headerPosition(true);

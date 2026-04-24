@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import {SplitterModule} from "primeng/splitter";
-import {TabViewModule} from "primeng/tabview";
+import { SplitterModule } from "primeng/splitter";
+import { TabsModule } from 'primeng/tabs';
 
 @Component({
     selector: 'purchases',
     imports: [
         SplitterModule,
-        TabViewModule,
+        TabsModule,
     ],
     templateUrl: './purchases.component.html',
     styleUrl: './purchases.component.css'
