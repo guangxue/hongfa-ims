@@ -1,15 +1,15 @@
-import {Component} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {LocalStorageService} from '../services/local-storage.service';
-import {TableModule} from "primeng/table";
-import {NgOptimizedImage, NgStyle} from "@angular/common";
-import {Step, StepList, StepPanel, StepPanels, Stepper} from "primeng/stepper";
-import {InputText} from "primeng/inputtext";
-import {FormsModule} from "@angular/forms";
-import {Tag} from "primeng/tag";
-import {ToggleSwitch, ToggleSwitchChangeEvent} from "primeng/toggleswitch";
-import {IconField} from "primeng/iconfield";
-import {InputIcon} from "primeng/inputicon";
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AppDataService } from '../services/appdata.service';
+import { TableModule } from "primeng/table";
+import { NgOptimizedImage, NgStyle } from "@angular/common";
+import { Step, StepList, StepPanel, StepPanels, Stepper } from "primeng/stepper";
+import { InputText } from "primeng/inputtext";
+import { FormsModule } from "@angular/forms";
+import { Tag } from "primeng/tag";
+import { ToggleSwitch, ToggleSwitchChangeEvent } from "primeng/toggleswitch";
+import { IconField } from "primeng/iconfield";
+import { InputIcon } from "primeng/inputicon";
 
 @Component({
   selector: 'sales-order',
@@ -39,16 +39,16 @@ export class SalesOrderComponent {
   pickData: any[] = [];
   toggled: boolean = false;
 
-  constructor(private route: ActivatedRoute, private localstorage: LocalStorageService) {
+  constructor(private route: ActivatedRoute, private appData: AppDataService) {
     this.route.paramMap.subscribe(url => {
       this.orderNumber = url.get('orderNumber');
     })
-    let salesOrderNum= this.localstorage.get('order-number') ? JSON.parse(<string>this.localstorage.get('order-number')) : null;
-    this.salesOrderItemsData = this.localstorage.get('order-data') ? JSON.parse(<string>this.localstorage.get('order-data')) : null;
+    let salesOrderNum = this.appData.get('order-number') ? JSON.parse(<string>this.appData.get('order-number')) : null;
+    this.salesOrderItemsData = this.appData.get('order-data') ? JSON.parse(<string>this.appData.get('order-data')) : null;
 
-    if(this.orderNumber == salesOrderNum) {
+    if (this.orderNumber == salesOrderNum) {
       this.salesOrderItemsData.forEach(item => {
-        if(item.qty % 50 !== 0 && item.unit == 'EA') {
+        if (item.qty % 50 !== 0 && item.unit == 'EA') {
           item.status = 'check';
         } else {
           item.status = '';
@@ -59,24 +59,24 @@ export class SalesOrderComponent {
   }
 
   createPickList() {
-    let inv = this.localstorage.get('inventory')
+    let inv = this.appData.get('inventory')
     let inventory: any[] = []
     if (inv) { inventory = JSON.parse(inv); }
     this.salesOrderTableData.forEach(item => {
-      let order = {item: item.item, qty: item.qty, desc: item.desc, unit: item.unit};
+      let order = { item: item.item, qty: item.qty, desc: item.desc, unit: item.unit };
       let foundCode = {}
-      inventory.forEach(stock=> {
+      inventory.forEach(stock => {
         if (stock.item_name == item.item) {
-          foundCode = {code: stock.item_code}
+          foundCode = { code: stock.item_code }
         }
       })
-      let po = {...order, ...foundCode}
+      let po = { ...order, ...foundCode }
       this.pickData.push(po)
     })
-    this.localstorage.set('order-data', JSON.stringify(this.pickData))
+    this.appData.set('order-data', JSON.stringify(this.pickData))
   }
   editCompleted(enteredValues: string, order: any) {
-    if(enteredValues.includes("*")) {
+    if (enteredValues.includes("*")) {
       const [v1, v2] = enteredValues.split("*");
       order.qty = Number(v1) * Number(v2);
     }
@@ -84,9 +84,9 @@ export class SalesOrderComponent {
 
   toggledChange($event: ToggleSwitchChangeEvent) {
     this.toggled = $event.checked;
-    if(this.toggled) {
+    if (this.toggled) {
       this.salesOrderTableData = this.salesOrderItemsData.filter(item => item.status == 'check');
-    }else {
+    } else {
       this.salesOrderTableData = this.salesOrderItemsData;
     }
   }

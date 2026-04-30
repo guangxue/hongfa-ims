@@ -11,7 +11,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { SelectModule } from 'primeng/select';
 import { InputText } from 'primeng/inputtext';
 import { Divider } from "primeng/divider";
-import { LocalStorageService } from "../services/local-storage.service";
+import { AppDataService } from "../services/appdata.service";
 import { Router } from "@angular/router";
 
 @Component({
@@ -62,7 +62,7 @@ export class ImportDataComponent {
     unit: 'UOM'
   }
 
-  constructor(private localStorage: LocalStorageService, private router: Router) { }
+  constructor(private appData: AppDataService, private router: Router) { }
 
   // helper functions
   filterObject(obj: any, func: Function) {
@@ -178,8 +178,8 @@ export class ImportDataComponent {
     }
     this.targetFile.objectLines = this.createObjectLines(this.targetFile.contentLines, pos);
 
-    this.localStorage.set('order-number', JSON.stringify(this.targetFile.orderNumber));
-    this.localStorage.set('order-data', JSON.stringify(this.targetFile.objectLines));
+    this.appData.set('order-number', JSON.stringify(this.targetFile.orderNumber));
+    this.appData.set('order-data', JSON.stringify(this.targetFile.objectLines));
     this.router
       .navigate([`/sales-order/${this.targetFile.orderNumber}`])
       .then((res: any) => {

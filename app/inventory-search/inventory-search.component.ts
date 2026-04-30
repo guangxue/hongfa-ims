@@ -5,7 +5,7 @@ import { InputText } from 'primeng/inputtext';
 import { Select } from 'primeng/select';
 import { Button } from 'primeng/button';
 import { SearchItem } from '../interface/search-item';
-import { BirchService } from '../services/birch.service';
+import { BirchDbService } from '../services/birchdb.service';
 import { InventorySearchTableComponent } from "../inventory-search-table/inventory-search-table.component";
 
 @Component({
@@ -17,12 +17,12 @@ import { InventorySearchTableComponent } from "../inventory-search-table/invento
     Select,
     Button,
     InventorySearchTableComponent
-],
+  ],
   templateUrl: './inventory-search.component.html',
   styleUrl: './inventory-search.component.css',
 })
 export class InventorySearchComponent {
-  birchService: BirchService = inject(BirchService);
+  birchDb: BirchDbService = inject(BirchDbService);
   searchItem: SearchItem = {
     itemName: '',
     description: '',
@@ -43,7 +43,7 @@ export class InventorySearchComponent {
   itemNameList: string[] = [];
 
   constructor() {
-    this.birchService.getItemNameList().subscribe((data) => {
+    this.birchDb.getItemNameList().subscribe((data) => {
       this.itemNameList = data.map((item: any) => item.item_name);
     });
   }

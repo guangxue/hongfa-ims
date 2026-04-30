@@ -8,9 +8,9 @@ import {
 } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { RouterLink } from '@angular/router';
-import { BirchService } from '../services/birch.service';
+import { BirchDbService } from '../services/birchdb.service';
 import { SearchItem } from '../interface/search-item';
-import {LocalStorageService} from "../services/local-storage.service";
+import { AppDataService } from "../services/appdata.service";
 
 @Component({
   selector: 'inventory-search-table',
@@ -19,7 +19,7 @@ import {LocalStorageService} from "../services/local-storage.service";
   styleUrl: './inventory-search-table.component.css'
 })
 export class InventorySearchTableComponent implements OnChanges {
-  localStorge = inject(LocalStorageService);
+  appData = inject(AppDataService);
   currentStock: any[] = [];
   inventory: Array<any> = [];
   // Receiving value from a parent
@@ -31,7 +31,7 @@ export class InventorySearchTableComponent implements OnChanges {
   };
 
   constructor() {
-    let i = this.localStorge.get('inventory');
+    let i = this.appData.get('inventory');
     if (i) {
       this.inventory = JSON.parse(i);
       this.currentStock = this.inventory;

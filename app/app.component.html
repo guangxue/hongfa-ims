@@ -5,17 +5,10 @@
   </div>
   <div>
     <!--  Navbar -->
-    <p-menubar [model]="navs"/>
+    <p-menubar [model]="navs" />
   </div>
 </header>
 
 <main>
   <router-outlet></router-outlet>
 </main>
-
-<footer *ngIf="isDevMode else isProdMode"></footer>
-<ng-template #isProdMode>
-  <footer>
-    2024 &copy; Hongfa International AUSTRALIA
-  </footer>
-</ng-template>
