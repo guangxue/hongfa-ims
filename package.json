@@ -1,9 +1,9 @@
 {
   "name": "hongfa-ims",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --live-reload=false",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -22,10 +22,13 @@
     "@angular/router": "^21.2.0",
     "@angular/ssr": "^21.2.8",
     "@primeuix/themes": "^2.0.3",
+    "@tailwindcss/postcss": "^4.2.4",
     "express": "^5.1.0",
+    "postcss": "^8.5.12",
     "primeicons": "^7.0.0",
     "primeng": "^21.1.6",
     "rxjs": "^7.8.2",
+    "tailwindcss": "^4.2.4",
     "tslib": "^2.3.0",
     "zone.js": "~0.16.1"
   },
