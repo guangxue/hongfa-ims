@@ -5,7 +5,7 @@ import { InputText } from 'primeng/inputtext';
 import { Select } from 'primeng/select';
 import { Button } from 'primeng/button';
 import { SearchItem } from '../interface/search-item';
-import { BirchDbService } from '../services/birchdb.service';
+import { HongfaService } from '../services/hongfa.service';
 import { InventorySearchTableComponent } from "../inventory-search-table/inventory-search-table.component";
 
 @Component({
@@ -22,7 +22,7 @@ import { InventorySearchTableComponent } from "../inventory-search-table/invento
   styleUrl: './inventory-search.component.css',
 })
 export class InventorySearchComponent {
-  birchDb: BirchDbService = inject(BirchDbService);
+  hongfaBirch: HongfaService = inject(HongfaService);
   searchItem: SearchItem = {
     itemName: '',
     description: '',
@@ -43,9 +43,9 @@ export class InventorySearchComponent {
   itemNameList: string[] = [];
 
   constructor() {
-    this.birchDb.getItemNameList().subscribe((data) => {
-      this.itemNameList = data.map((item: any) => item.item_name);
-    });
+    // this.hongfaBirch.getItemNameList().subscribe((data) => {
+    //   this.itemNameList = data.map((item: any) => item.item_name);
+    // });
   }
   filterSuggestions($event: AutoCompleteCompleteEvent, formName: string) {
     let query = $event.query;

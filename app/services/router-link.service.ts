@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MenuItem, PrimeIcons } from 'primeng/api';
+import { AuthService } from './auth-service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +9,14 @@ export class RouterLinkService {
   badge: string = "";
   menuLinks: MenuItem[] = [
     {
-      label: 'Home',
-      icon: PrimeIcons.HOME,
+      label: 'Main',
+      icon: PrimeIcons.BARS,
       items: [
+        {
+          icon: PrimeIcons.HOME,
+          label: 'Home Page',
+          routerLink: 'home'
+        },
         {
           icon: PrimeIcons.FILE_IMPORT,
           label: "Import Data",
@@ -88,11 +94,12 @@ export class RouterLinkService {
     {
       label: 'Dashboard',
       icon: PrimeIcons.CHART_LINE,
-      routerLink: 'dashboard',
+      routerLink: 'admin',
+      visible: this.authService.getUserRole() === 'ADM'
     },
   ]
 
-  constructor() {
+  constructor(private authService: AuthService) {
   }
 
   getRouterLinks(): MenuItem[] {

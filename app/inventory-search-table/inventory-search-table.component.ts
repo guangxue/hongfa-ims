@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { RouterLink } from '@angular/router';
-import { BirchDbService } from '../services/birchdb.service';
 import { SearchItem } from '../interface/search-item';
 import { AppDataService } from "../services/appdata.service";
 
