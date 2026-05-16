@@ -1,0 +1,49 @@
+<p-card class="ml-10 w-96 p-5" header="Add New User">
+  <form (submit)="onSubmit($event)">
+    <div class="form-container flex flex-col gap-7 w-3xs my-4">
+      <p-inputgroup>
+        <p-inputgroup-addon>
+          <i class="pi pi-user"></i>
+        </p-inputgroup-addon>
+        <p-floatlabel>
+          <label for="username">Username</label>
+          <input pInputText [formField]="addUserForm.username" type="text" id="username">
+        </p-floatlabel>
+      </p-inputgroup>
+
+      <p-inputgroup>
+        <p-inputgroup-addon>
+          <i class="pi pi-envelope"></i>
+        </p-inputgroup-addon>
+        <p-floatlabel>
+          <label for="email">Email</label>
+          <input pInputText [formField]="addUserForm.email" type="email" id="email">
+        </p-floatlabel>
+      </p-inputgroup>
+
+      <p-inputgroup>
+        <p-inputgroup-addon>
+          <i class="pi pi-id-card"></i>
+        </p-inputgroup-addon>
+        <p-floatlabel>
+          <label for="role">Role</label>
+          <p-select id="role" [options]="roles" optionLabel="name" placeholder="Select a Role"
+            [(ngModel)]="selectedRole"></p-select>
+        </p-floatlabel>
+      </p-inputgroup>
+
+      <p-inputgroup>
+        <p-inputgroup-addon>
+          <i class="pi pi-lock"></i>
+        </p-inputgroup-addon>
+        <p-floatlabel>
+          <label for="password">Password</label>
+          <input pInputText [formField]="addUserForm.password" type="password" id="password">
+        </p-floatlabel>
+      </p-inputgroup>
+
+      <p-button label="Add User" type="submit"></p-button>
+    </div>
+  </form>
+
+</p-card>

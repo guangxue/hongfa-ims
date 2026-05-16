@@ -14,6 +14,7 @@ import { roleGuard } from './guards/role-guard';
 import { AuthService } from './services/auth-service';
 import { inject } from '@angular/core';
 import { authGuard } from './guards/auth-guard';
+import { AdminUsersAdd } from './admin-users-add/admin-users-add';
 
 export const routes: Routes = [
   {
@@ -22,7 +23,6 @@ export const routes: Routes = [
     redirectTo: () => {
       const authService = inject(AuthService);
       const role = authService.getUserRole();
-      console.log('all::User role on root redirect:', role); // Debugging statement to check the user role on root redirect
       if (role === 'ADM') {
         return 'admin'
       } else if (role === 'USR' || role === 'GST') {
@@ -36,11 +36,29 @@ export const routes: Routes = [
     path: 'admin',
     component: AdminPage,
     canActivate: [roleGuard],
+    children: [
+      {
+        path: 'users/add',
+        component: AdminUsersAdd,
+      }
+    ]
   },
   {
     path: 'home',
     component: HomePage,
     canActivate: [authGuard],
+  },
+  {
+    path: 'login',
+    component: LoginPage,
+    redirectTo: () => {
+      const authService = inject(AuthService);
+      const isLoggedIn = authService.isLoggedIn();
+      if (isLoggedIn) {
+        return 'home';
+      }
+      return 'login';
+    }
   },
   { path: 'import-data', component: ImportDataComponent },
   { path: 'purchases', component: PurchasesComponent },
@@ -48,7 +66,6 @@ export const routes: Routes = [
   { path: 'vendors', component: VendorsComponent },
   { path: 'inventory-item/:item_name', component: InventoryItemComponent },
   { path: 'sales-order/:orderNumber', component: SalesOrderComponent },
-  { path: 'login', component: LoginPage },
   { path: 'inventory', component: InventoryComponent },
   { path: '**', component: PageNotFoundComponent },
 ];

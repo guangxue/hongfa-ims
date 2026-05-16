@@ -42,7 +42,7 @@ export class LoginPage {
     event.preventDefault();
     console.log("username:", this.loginModel().username, "\npassword:", this.loginModel().password);
 
-    this.hongfaService.hongfaLogin(this.loginModel().username, this.loginModel().password).subscribe({
+    this.hongfaService.login(this.loginModel().username, this.loginModel().password).subscribe({
       next: (response) => {
         console.log("Login successful:", response);
       },

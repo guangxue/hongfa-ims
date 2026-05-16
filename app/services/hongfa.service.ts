@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppEnv } from '../app.env';
 
@@ -12,13 +12,18 @@ export class HongfaService {
   constructor() { }
 
   getBirchInventory(): Observable<any> {
-    return this.http.get<JSON>(`${AppEnv.apiUrl.birch}/inventory`, {});
+    return this.http.get<JSON>(`${AppEnv.apiUrl.birch}/inventory`);
   }
 
 
-  hongfaLogin(username: string, password: string): Observable<any> {
-
+  login(username: string, password: string): Observable<any> {
     const loginData = { username, password };
-    return this.http.post(`${AppEnv.apiUrl.hongfa}/login`, JSON.stringify(loginData), {});
+    return this.http.post(`${AppEnv.apiUrl.hongfa}/login`, JSON.stringify(loginData));
+  }
+
+
+  addUser(username: string, email: string, role: string, password: string): Observable<any> {
+    const userData = { username, email, role, password };
+    return this.http.post(`${AppEnv.apiUrl.hongfa}/users/add`, JSON.stringify(userData));
   }
 }
