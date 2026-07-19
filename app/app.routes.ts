@@ -51,14 +51,7 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginPage,
-    redirectTo: () => {
-      const authService = inject(AuthService);
-      const isLoggedIn = authService.isLoggedIn();
-      if (isLoggedIn) {
-        return 'home';
-      }
-      return 'login';
-    }
+    canActivate: [authGuard]
   },
   { path: 'import-data', component: ImportDataComponent },
   { path: 'purchases', component: PurchasesComponent },

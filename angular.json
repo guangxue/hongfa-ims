@@ -64,7 +64,8 @@
           "options": {
             "allowedHosts": [
               "dev.guangxuezhang.com",
-              "hongfa.guangxuezhang.com"
+              "hongfa.guangxuezhang.com",
+              "demo.guangxuezhang.com"
             ]
           },
           "builder": "@angular-devkit/build-angular:dev-server",
