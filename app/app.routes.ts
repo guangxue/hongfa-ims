@@ -25,8 +25,6 @@ export const routes: Routes = [
       const role = authService.getUserRole();
       if (role === 'ADM') {
         return 'admin'
-      } else if (role === 'USR' || role === 'GST') {
-        return 'home';
       } else {
         return 'login';
       }

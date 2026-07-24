@@ -1,6 +1,14 @@
-@if(authService.isLoggedIn()) {
-<p-menubar [model]="navs"></p-menubar>
-}
+<header>
+  <div class="logo">
+    <a href="/">
+      <img src="/hongfa.png" alt="Logo" height="192" />
+    </a>
+    <h1>Hongfa Inventory Management System</h1>
+  </div>
+  @if(authService.isLoggedIn()) {
+  <p-menubar [model]="navs"></p-menubar>
+  }
+</header>
 <main>
   <router-outlet></router-outlet>
 </main>

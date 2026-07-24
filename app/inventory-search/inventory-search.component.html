@@ -1,69 +1,42 @@
-<form #inventorySearch="ngForm" (ngSubmit)="formSubmission(inventorySearch)" >
-  <div class="search-form" >
+<form #inventorySearch="ngForm" (ngSubmit)="formSubmission(inventorySearch)">
+  <div class="search-form">
     <div>
       <label for="item-name">Item Name</label>
     </div>
     <div>
-      <p-autoComplete
-        (completeMethod)="filterSuggestions($event, 'itemSearch')"
-        [suggestions]="itemNameSuggestions"
-        id="item-name"
-        name="itemName"
-        [(ngModel)]="searchItem.itemName"
-        required
-        [style]="{width: '180px'}"
-      />
+      <p-autocomplete (completeMethod)="filterSuggestions($event, 'itemSearch')" [suggestions]="itemNameSuggestions"
+        id="item-name" name="itemName" [(ngModel)]="searchItem.itemName" required [style]="{width: '180px'}" />
     </div>
     <div>
       <label for="description">Description</label>
     </div>
     <div>
-      <input
-        id="description"
-        name="description"
-        [(ngModel)]="searchItem.description"
-        pInputText
-        type="text"
-        [style]="{width: '180px'}"
-      >
+      <input id="description" name="description" [(ngModel)]="searchItem.description" pInputText type="text"
+        [style]="{width: '180px'}">
     </div>
     <div>
       <label for="category">Category</label>
     </div>
     <div>
-      <p-select id="category"
-        name="category"
-        [(ngModel)]="searchItem.category"
-        [options]="itemCategoryOptions"
-        optionLabel="name"
-        optionValue="code"
-        [style]="{width: '180px'}"
-      />
+      <p-select id="category" name="category" [(ngModel)]="searchItem.category" [options]="itemCategoryOptions"
+        optionLabel="name" optionValue="code" [style]="{width: '180px'}" />
     </div>
     <div>
       <label for="status">Status</label>
     </div>
     <div>
-      <p-select id="status"
-        name="status"
-        [options]="itemStatusOptions"
-        [(ngModel)]="searchItem.status"
-        optionLabel="name"
-        optionValue="code"
-        [style]="{width: '180px'}"
-      />
+      <p-select id="status" name="status" [options]="itemStatusOptions" [(ngModel)]="searchItem.status"
+        optionLabel="name" optionValue="code" [style]="{width: '180px'}" />
     </div>
     <div class="form-submit-button">
       <div>
         <label for="submit-button"></label>
       </div>
       <div>
-        <p-button
-          [style]="{'width': '100%', 'font-size': '13px'}"
-          id="submit-button"
-          label="Search"
-          type="submit"
-        />
+        <button pButton type="submit" [style]="{'width': '100%', 'font-size': '13px'}" id="submit-button"
+          label="Search">
+          Submit
+        </button>
       </div>
     </div>
   </div>

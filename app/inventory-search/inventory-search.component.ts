@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { AutoComplete, AutoCompleteCompleteEvent } from 'primeng/autocomplete';
+import { AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
 import { FormsModule, NgForm } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
 import { Select } from 'primeng/select';
-import { Button } from 'primeng/button';
+import { ButtonDirective } from 'primeng/button';
 import { SearchItem } from '../interface/search-item';
 import { HongfaService } from '../services/hongfa.service';
 import { InventorySearchTableComponent } from "../inventory-search-table/inventory-search-table.component";
@@ -11,11 +11,11 @@ import { InventorySearchTableComponent } from "../inventory-search-table/invento
 @Component({
   selector: 'inventory-search',
   imports: [
-    AutoComplete,
     FormsModule,
+    AutoCompleteModule,
     InputText,
     Select,
-    Button,
+    ButtonDirective,
     InventorySearchTableComponent
   ],
   templateUrl: './inventory-search.component.html',

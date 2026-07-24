@@ -10,7 +10,7 @@ export class AuthService {
   login(username: string, password: string): boolean {
     if (username && password) {
       this.isAuthenticated = true;
-      this.userRole = 'USR';
+      this.userRole = 'ADM';
       return true;
     }
     return false;

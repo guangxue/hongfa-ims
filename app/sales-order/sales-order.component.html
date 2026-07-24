@@ -9,7 +9,7 @@
 
     <p-step-panels>
       <p-step-panel [value]="1">
-        <ng-template #content >
+        <ng-template #content>
           <h1>Sales Order</h1>
           <div class="order-header">
             <div>
@@ -43,13 +43,8 @@
             <div>Ryan</div>
           </div>
           <div class="sales-order-table">
-            <p-table #dt
-                     [value]="salesOrderTableData"
-                     showGridlines
-                     [scrollable]="true"
-                     scrollHeight="600px"
-                     [globalFilterFields]="['item', 'qty']"
-            >
+            <p-table #dt [value]="salesOrderTableData" showGridlines [scrollable]="true" scrollHeight="600px"
+              [globalFilterFields]="['item', 'qty']">
               <ng-template #caption>
                 <div class="sotable-toolbar">
                   <label>Quantity</label>
@@ -57,7 +52,8 @@
                   <div class="search-field">
                     <p-iconfield>
                       <p-inputicon styleClass="pi pi-search" />
-                      <input pInputText type="text" #type (input)="dt.filterGlobal(type.value, 'contains')" placeholder="Search..." />
+                      <input pInputText type="text" #type (input)="dt.filterGlobal(type.value, 'contains')"
+                        placeholder="Search..." />
                     </p-iconfield>
                   </div>
                 </div>
@@ -73,19 +69,20 @@
                 <tr>
                   <td>{{order.item}}</td>
                   <td>{{order.desc}}</td>
-                  <td [pEditableColumn]="salesOrderTableData" >
-                    <p-cellEditor>
+                  <td [pEditableColumn]="salesOrderTableData">
+                    <p-cell-editor>
                       <ng-template #input>
-                        <input id="edit-input" type="text" pInputText #editInput (keydown.enter)="editCompleted(editInput.value, order)" [(ngModel)]="order.qty">
+                        <input id="edit-input" type="text" pInputText #editInput
+                          (keydown.enter)="editCompleted(editInput.value, order)" [(ngModel)]="order.qty">
                       </ng-template>
                       <ng-template #output>
                         @if (order.status !== '') {
-                          <p-tag [value]="order.qty + ' '  + order.unit" />
+                        <p-tag [value]="order.qty + ' '  + order.unit" />
                         } @else {
-                          {{order.qty}} {{order.unit}}
+                        {{order.qty}} {{order.unit}}
                         }
                       </ng-template>
-                    </p-cellEditor>
+                    </p-cell-editor>
                   </td>
                 </tr>
               </ng-template>

@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { PanelMenuModule } from 'primeng/panelmenu';
 import { RouterOutlet } from '@angular/router';
-
+import { SidebarModule } from 'primeng/sidebar';
+import { Home } from "@primeicons/angular/home"
 @Component({
   selector: 'admin-page',
   imports: [
-    PanelMenuModule,
-    RouterOutlet
+    SidebarModule,
+    RouterOutlet,
+    Home
   ],
   templateUrl: './admin-page.html',
   styleUrl: './admin-page.css',

@@ -1,11 +1,30 @@
 <div class="admin-container flex flex-row gap-5 my-11">
   <div class="admin-sidebar flex-1">
-    <p-panelMenu [model]="items"></p-panelMenu>
+    <p-sidebar-layout>
+      <p-sidebar-header>
+
+      </p-sidebar-header>
+      <p-sidebar-content>
+        <p-sidebar-group>
+          <p-sidebar-group-label>Navigation</p-sidebar-group-label>
+          <p-sidebar-group-content>
+            <p-sidebar-menu>
+              <p-sidebar-menu-item>
+                <button pSidebarMenuButton [isActive]="true">
+                  <svg data-p-icon="home"></svg>
+                  <span>Home</span>
+                </button>
+              </p-sidebar-menu-item>
+            </p-sidebar-menu>
+          </p-sidebar-group-content>
+        </p-sidebar-group>
+      </p-sidebar-content>
+    </p-sidebar-layout>
   </div>
   <div class="admin-content flex-4">
     <router-outlet></router-outlet>
   </div>
   <div class="admin-rightbar flex-1">
-    <p>Right Sidebar Content</p>
+
   </div>
 </div>
